@@ -1,0 +1,5 @@
+{
+  "name": "Noor - Shia Companion",
+  "description": "A comprehensive companion app for Shia Muslims featuring prayer times, Duas, Ziyarats, and an Islamic calendar.",
+  "requestFramePermissions": ["geolocation"]
+}
