@@ -16,9 +16,9 @@ export const getDailyRecommendations = (hijriDate: { day: number; month: number 
 
   // 1. Add Events for today
   const todayEvents = EVENTS.filter(e => e.hijriMonth === hijriDate.month && e.hijriDay === hijriDate.day);
-  todayEvents.forEach(event => {
+  todayEvents.forEach((event, idx) => {
     recommendations.push({
-      id: `event-${event.hijriMonth}-${event.hijriDay}`,
+      id: `event-${event.hijriMonth}-${event.hijriDay}-${idx}`,
       title: event.title,
       type: 'event',
       description: event.description
@@ -77,6 +77,10 @@ export const getDailyRecommendations = (hijriDate: { day: number; month: number 
     addById(recommendations, 'dua-alqama', 'dua');
   }
 
+  if (hijriDate.month === 12 && hijriDate.day === 9) { // Day of Arafah
+    addById(recommendations, 'dua-arafah-imam-husain', 'dua');
+  }
+
   // Featured Duas
   addById(recommendations, 'dua-akhasi-sifatik', 'dua');
   addById(recommendations, 'dua-yaman-azharal-jamil', 'dua');
@@ -101,6 +105,9 @@ export const getDailyRecommendations = (hijriDate: { day: number; month: number 
 };
 
 const addById = (list: Recommendation[], id: string, type: Recommendation['type']) => {
+  if (list.some(r => r.id === id && r.type === type)) {
+    return;
+  }
   let item: any;
   switch (type) {
     case 'dua':

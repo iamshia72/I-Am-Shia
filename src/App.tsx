@@ -1402,6 +1402,14 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
   const [nextPrayer, setNextPrayer] = useState<PrayerTime | null>(null);
   const [countdown, setCountdown] = useState<string>('');
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [hideUpdateBanner, setHideUpdateBanner] = useState(() => {
+    return localStorage.getItem('hide_update_banner_v1.0.2') === 'true';
+  });
+
+  const handleDismissBanner = () => {
+    localStorage.setItem('hide_update_banner_v1.0.2', 'true');
+    setHideUpdateBanner(true);
+  };
 
   const isEidDay = useMemo(() => {
     const { day, month } = getHijriDateParts(currentDate, settings.hijriOffset);
@@ -1482,6 +1490,47 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
       exit={{ opacity: 0 }}
       className="p-6 space-y-8"
     >
+      {/* Update Announcement Banner (Shows for 7 days, hidden after June 2, 2026 or when ignored) */}
+      {(() => {
+        if (hideUpdateBanner) return null;
+        const currentDate = new Date();
+        const expiryDate = new Date('2026-06-02T07:15:59Z');
+        if (currentDate < expiryDate) {
+          return (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-gold/10 border border-gold/25 rounded-2xl p-4 flex items-start sm:items-center justify-between gap-3 text-sm text-olive shadow-sm"
+            >
+              <div className="flex items-start sm:items-center gap-3 flex-1">
+                <div className="w-2 h-2 rounded-full bg-gold animate-pulse shrink-0 mt-1.5 sm:mt-0" />
+                <p className="font-medium text-xs sm:text-sm leading-relaxed">
+                  <a 
+                    href="https://limewire.com/d/N1SBw#GRX4G2NV3Y" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="underline font-bold text-gold hover:text-gold/80 transition-colors cursor-pointer"
+                    style={{ textDecorationColor: 'var(--color-gold)' }}
+                  >
+                    Update
+                  </a>{' '}
+                  App now, uninstall previous version 1.0.1  and install new version 1.0.2. Already Updated Ignore this message
+                </p>
+              </div>
+              <button 
+                onClick={handleDismissBanner}
+                className="p-1 hover:bg-gold/15 rounded-full text-olive/60 hover:text-olive transition-colors shrink-0"
+                aria-label="Ignore message"
+                title="Ignore this message"
+              >
+                <X size={16} />
+              </button>
+            </motion.div>
+          );
+        }
+        return null;
+      })()}
+
       {/* Eid Mubarak Banner */}
       {isEidDay && (
         <div className="flex justify-center -mb-8">
