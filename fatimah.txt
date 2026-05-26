@@ -1,0 +1,2 @@
+head: invalid option -- 'r'
+Try 'head --help' for more information.

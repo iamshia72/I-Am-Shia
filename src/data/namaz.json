@@ -1,0 +1,570 @@
+[
+  {
+    "id": "salah-guide",
+    "title": "Complete Salah Guide",
+    "description": "Everything you need for prayer: Adhan, Iqamah, and Step-by-Step Method.",
+    "sections": [
+      {
+        "title": "Adhan (The Call to Prayer)",
+        "content": "The Adhan is the Islamic call to prayer, recited by a muezzin at prescribed times of the day.",
+        "lines": [
+          {
+            "arabic": "اللَّهُ أَكْبَرُ",
+            "english": "Allah is the Greatest",
+            "transliteration": "Allahu akbar",
+            "repeat": 4
+          },
+          {
+            "arabic": "أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللَّهُ",
+            "english": "I bear witness that there is no god but Allah",
+            "transliteration": "Ashhadu an la ilaha illallah",
+            "repeat": 2
+          },
+          {
+            "arabic": "أَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ",
+            "english": "I bear witness that Muhammad is the Messenger of Allah",
+            "transliteration": "Ashhadu anna Muhammadan rasulullah",
+            "repeat": 2
+          },
+          {
+            "arabic": "أَشْهَدُ أَنَّ عَلِيًّا وَلِيُّ اللَّهِ",
+            "english": "I bear witness that Ali is the vicegerent of Allah",
+            "transliteration": "Ashhadu anna 'Aliyan waliyullah",
+            "repeat": 2,
+            "note": "Recited as a recommended part (Mustahab)"
+          },
+          {
+            "arabic": "حَيَّ عَلَى الصَّلَاةِ",
+            "english": "Hasten to prayer",
+            "transliteration": "Hayya 'alas-salah",
+            "repeat": 2
+          },
+          {
+            "arabic": "حَيَّ عَلَى الْفَلَاحِ",
+            "english": "Hasten to success",
+            "transliteration": "Hayya 'alal-falah",
+            "repeat": 2
+          },
+          {
+            "arabic": "حَيَّ عَلَىٰ خَيْرِ الْعَمَلِ",
+            "english": "Hasten to the best of deeds",
+            "transliteration": "Hayya 'ala khayril-'amal",
+            "repeat": 2
+          },
+          {
+            "arabic": "اللَّهُ أَكْبَرُ",
+            "english": "Allah is the Greatest",
+            "transliteration": "Allahu akbar",
+            "repeat": 2
+          },
+          {
+            "arabic": "لَا إِلٰهَ إِلَّا اللَّهُ",
+            "english": "There is no god but Allah",
+            "transliteration": "La ilaha illallah",
+            "repeat": 2
+          }
+        ]
+      },
+      {
+        "title": "Iqamah",
+        "content": "The Iqamah is the second call to Islamic prayer, given immediately before the prayer begins.",
+        "lines": [
+          {
+            "arabic": "اللَّهُ أَكْبَرُ",
+            "english": "Allah is the Greatest",
+            "transliteration": "Allahu akbar",
+            "repeat": 2
+          },
+          {
+            "arabic": "أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللَّهُ",
+            "english": "I bear witness that there is no god but Allah",
+            "transliteration": "Ashhadu an la ilaha illallah",
+            "repeat": 2
+          },
+          {
+            "arabic": "أَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ",
+            "english": "I bear witness that Muhammad is the Messenger of Allah",
+            "transliteration": "Ashhadu anna Muhammadan rasulullah",
+            "repeat": 2
+          },
+          {
+            "arabic": "أَشْهَدُ أَنَّ عَلِيًّا وَلِيُّ اللَّهِ",
+            "english": "I bear witness that Ali is the vicegerent of Allah",
+            "transliteration": "Ashhadu anna 'Aliyan waliyullah",
+            "repeat": 2
+          },
+          {
+            "arabic": "حَيَّ عَلَى الصَّلَاةِ",
+            "english": "Hasten to prayer",
+            "transliteration": "Hayya 'alas-salah",
+            "repeat": 2
+          },
+          {
+            "arabic": "حَيَّ عَلَى الْفَلَاحِ",
+            "english": "Hasten to success",
+            "transliteration": "Hayya 'alal-falah",
+            "repeat": 2
+          },
+          {
+            "arabic": "حَيَّ عَلَىٰ خَيْرِ الْعَمَلِ",
+            "english": "Hasten to the best of deeds",
+            "transliteration": "Hayya 'ala khayril-'amal",
+            "repeat": 2
+          },
+          {
+            "arabic": "قَدْ قَامَتِ الصَّلَاةُ",
+            "english": "Indeed the prayer has been established",
+            "transliteration": "Qad qamatis-salah",
+            "repeat": 2
+          },
+          {
+            "arabic": "اللَّهُ أَكْبَرُ",
+            "english": "Allah is the Greatest",
+            "transliteration": "Allahu akbar",
+            "repeat": 2
+          },
+          {
+            "arabic": "لَا إِلٰهَ إِلَّا اللَّهُ",
+            "english": "There is no god but Allah",
+            "transliteration": "La ilaha illallah",
+            "repeat": 1
+          }
+        ]
+      },
+      {
+        "title": "Method: Niyyah (Intention)",
+        "content": "Intend in your heart to perform the specific prayer (e.g. Fajr) for the sake of Allah."
+      },
+      {
+        "title": "Method: Takbiratul Ihram",
+        "content": "Raise your hands to your ears and say:",
+        "lines": [
+          {
+            "arabic": "اللَّهُ أَكْبَرُ",
+            "english": "Allah is the Greatest",
+            "transliteration": "Allahu akbar"
+          }
+        ]
+      },
+      {
+        "title": "Method: Qiyam & Qira'ah",
+        "content": "Stand straight and recite Surah al-Fatiha followed by another complete Surah (usually Surah al-Ikhlas)."
+      },
+      {
+        "title": "Method: Ruku (Genuflection)",
+        "content": "Bow down until your hands reach your knees and recite:",
+        "lines": [
+          {
+            "arabic": "سُبْحَانَ رَبِّيَ الْعَظِيمِ وَبِحَمْدِهِ",
+            "english": "Glory be to my Great Lord, and I praise Him",
+            "transliteration": "Subhana rabbiyal-'adhimi wa bihamdih"
+          }
+        ]
+      },
+      {
+        "title": "Method: Sujud (Prostration)",
+        "content": "Prostrate yourself with seven parts of your body touching the ground and recite:",
+        "lines": [
+          {
+            "arabic": "سُبْحَانَ رَبِّيَ الْأَعْلَىٰ وَبِحَمْدِهِ",
+            "english": "Glory be to my Most High Lord, and I praise Him",
+            "transliteration": "Subhana rabbiyal-a'la wa bihamdih"
+          }
+        ]
+      },
+      {
+        "title": "Method: Tashahhud",
+        "content": "Sit after the two prostrations in the second Raka'ah and recite:",
+        "lines": [
+          {
+            "arabic": "أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
+            "english": "I bear witness that there is no god but Allah, alone without partner",
+            "transliteration": "Ashhadu an la ilaha illallahu wahdahu la sharika lah"
+          },
+          {
+            "arabic": "وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+            "english": "And I bear witness that Muhammad is His servant and Messenger",
+            "transliteration": "wa ashhadu anna Muhammadan 'abduhu wa rasuluh"
+          },
+          {
+            "arabic": "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَآلِ مُحَمَّدٍ",
+            "english": "O Allah, send blessings upon Muhammad and the family of Muhammad",
+            "transliteration": "Allahumma salli 'ala Muhammadin wa ali Muhammad"
+          }
+        ]
+      },
+      {
+        "title": "Method: Salam (Final Greeting)",
+        "content": "Recite the final greeting to end the prayer:",
+        "lines": [
+          {
+            "arabic": "السَّلَامُ عَلَيْك أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ",
+            "english": "Peace be upon you, O Prophet, and the mercy of Allah and His blessings",
+            "transliteration": "Assalamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuh"
+          },
+          {
+            "arabic": "السَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ",
+            "english": "Peace be upon us and upon the righteous servants of Allah",
+            "transliteration": "Assalamu 'alayna wa 'ala 'ibadillahis-salihin"
+          },
+          {
+            "arabic": "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ",
+            "english": "Peace be upon you all, and the mercy of Allah and His blessings",
+            "transliteration": "Assalamu 'alaykum wa rahmatullahi wa barakatuh"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "salat-masoomeen",
+    "title": "Salaat of Masoomeen",
+    "arabic": "صَلَاةُ الْمَعْصُومِين",
+    "description": "Specific prayers (Salat) attributed to the Prophet (saw) and the Imams (as) for seeking proximity to Allah."
+  },
+  {
+    "id": "namaz-wahshat",
+    "title": "Namaz-e-Wahshat (Hadiya-e-Mayyit)",
+    "description": "Prayer to be offered for the departed soul on the first night of burial.",
+    "audioUrl": "https://mp3.duas.org/others/Namaz_Wahshat.mp3",
+    "sections": [
+      {
+        "title": "Importance",
+        "content": "It is MOST Important to Give Sadaqa on behalf of the deceased ON the FIRST Night of Burial. This has MANY benefits & can only be achieved by giving sadqa on the first night when it is MOST needed by the deceased.\n\nIt is befitting that on the first night after the burial of a dead person, Two Raka'ats of wahshat prayers be offered for it. Wahshat prayers can be offered in the night following the burial of the dead body at any time, but it is better to offer it in the early hours of the night after 'Isha prayers.\n\nIf it is proposed to transfer the dead body to some other town or its burial is delayed owing to some reason, the wahshat prayers should be deferred till the first night of its burial."
+      },
+      {
+        "title": "Method",
+        "content": "In the first Raka'at, after reciting Surah al-Hamd recite Ayatul Kursi once and in the second Raka'at, Surah al-Qadr should be recited 10 times after Surah-al-Hamd.\n\nAfter saying the Salam the following supplication should be recited: Alla humma salli 'ala Muhammadin wa Ali Muhammad wab'ath thawabaha ila qabri ......(here the name of the dead person and his father's name should be mentioned)."
+      },
+      {
+        "title": "Ayatul Kursi",
+        "lines": [
+          {
+            "arabic": "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+            "english": "Allah—there is no god except Him—is the Living One, the All-sustainer. Neither drowsiness befalls Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that may intercede with Him except with His permission? He knows what is before them and what is behind them, and they do not comprehend anything of His knowledge except what He wishes. His seat embraces the heavens and the earth and He is not wearied by their preservation, and He is the All-exalted, the All-supreme.",
+            "transliteration": "ALLAAHO LAA ELAAHA ILLAA HOWA, AL-HAYYUL QAYYOOMO, LAA TAAKHOZOHU SENATUWN WALAA NAWMUN, LAHU MAA FIS SAMAAWAATE WA MAA FIL ARZE, MAN ZAL LAZE YASH-FA-O' I'NDAHU ILLAA BE-IZNEHI, YA'LAMO MAA BAYNA AYDEEHIM WA MAA KHALFAHUM, WA LAA YOHEETOONA BE SHAYIM MIN I'LMEHI ILLAA BEMAA SHAAA-A, WASE-A' KURSIYYOHUS SAMAAWAATE WAL ARZA, WA LAA YA-OODOHU HIFZOHOMAA, WA HOWAL A'LIYYUL A'ZEEMO."
+          },
+          {
+            "arabic": "لَا إِكْرَاهَ فِي الدِّينِ قَدْ تَبَيَّنَ الرُّشْدُ مِنَ الْغَيِّ فَمَنْ يَكْفُرْ بِالطَّاغُوتِ وَيُؤْمِنْ بِاللَّهِ فَقَدِ اسْتَمْسَكَ بِالْعُرْوَةِ الْوُثْقَى لَا انْفِصَامَ لَهَا وَاللَّهُ سَمِيعٌ عَلِيمٌ",
+            "english": "There is no compulsion in religion: rectitude has become distinct from error. So one who disavows fake deities and has faith in Allah has held fast to the firmest handle for which there is no breaking; and Allah is all-hearing, all-knowing.",
+            "transliteration": "LAA IKRAAHA FID DEENE, QAD TABAYYANAR RUSHDO MENAL GHAYYE, FAMAYN YAKFUR BIT-TAAGHOOTE WA YOO-MIM BILLAAHE FAQADIS TAMSAKA BIL-U'RWATIL WUSQAA, LANFESAAMA LAHAA, WALLAAHO SAMEE-U'N A'LEEMUN."
+          },
+          {
+            "arabic": "اللَّهُ وَلِيُّ الَّذِينَ آمَنُوا يُخْرِجُهُمْ مِنَ الظُّلُمَاتِ إِلَى النُّورِ وَالَّذِينَ كَفَرُوا أَوْلِيَاؤُهُمُ الطَّاغُوتُ يُخْرِجُونَهُمْ مِنَ النُّورِ إِلَى الظُّلُمَاتِ أُولَئِكَ أَصْحَابُ النَّارِ هُمْ فِيهَا خَالِدُونَ",
+            "english": "Allah is the wali of the faithful: He brings them out of darkness into light. As for the faithless, their awliya are the fake deities, who drive them out of light into darkness. They shall be the inmates of the Fire, and they will remain in it [forever].",
+            "transliteration": "ALLAAHO WALIYYUL LAZEENA AAMANOO, YUKHREJOHUM MENAZ ZOLOMAATE ELAN NOORE, WALLAZEENA KAFAROO AWLEYAAA-O-HOMUT TAAGHOOTO YUKHREJOONAHUM MENAN NOORE ELAZ ZOLOMAATE, OOLAA-EKA ASHAABUN NAARE, HUM FEEHAA KHAALEDOON."
+          }
+        ]
+      },
+      {
+        "title": "Surah al-Qadr",
+        "lines": [
+          {
+            "arabic": "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
+            "english": "In the name of Allah, the Beneficent, the Merciful.",
+            "transliteration": "Bis-millahir-rahmaanir-raheem"
+          },
+          {
+            "arabic": "إِنَّا أَنْزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ",
+            "english": "Surely We revealed it on the grand night.",
+            "transliteration": "Innaa anzalnaahu fee laylatil-qadr"
+          },
+          {
+            "arabic": "وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ",
+            "english": "And what will make you comprehend what the grand night is?",
+            "transliteration": "Wa maa adraaka maa laylatul-qadr"
+          },
+          {
+            "arabic": "لَيْلَةُ الْقَدْرِ خَيْرٌ مِنْ أَلْفِ شَهْرٍ",
+            "english": "The grand night is better than a thousand months.",
+            "transliteration": "Laylatul-qadri khayrum-min alfi shahr"
+          },
+          {
+            "arabic": "تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِمْ مِنْ كُلِّ أَمْرٍ",
+            "english": "The angels and the Spirit descend in it by the permission of their Lord for every affair,",
+            "transliteration": "Tanazzalul-malaa-ikatu war-roohu feehaa bi-idhni rabbihim-min kulli amr"
+          },
+          {
+            "arabic": "سَلَامٌ هِيَ حَتَّى مَطْلَعِ الْفَجْرِ",
+            "english": "Peace! it is till the break of the morning.",
+            "transliteration": "Salaamun hiya hattaa matla'il fajr"
+          }
+        ]
+      },
+      {
+        "title": "Supplication",
+        "lines": [
+          {
+            "arabic": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ وَابْعَثْ ثَوَابَهَا إِلَى قَبْرِ ...... بن ...... ",
+            "english": "O Allah, bless Muhammad and the Family of Muhammad, and convey its reward to the grave of (name) son/daughter of (father's name).",
+            "transliteration": "Alla humma salli 'ala Muhammadin wa Ali Muhammad wab'ath thawabaha ila qabri ... (name and father's name)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "namaz-ghufaylah",
+    "title": "Salat al-Ghufaylah",
+    "description": "Recommended prayer recited between Maghrib and Isha prayers, known for its great benefits in having supplications granted.",
+    "audioUrl": "https://mp3.duas.org/others/Namaz_e_Ghufayla.mp3",
+    "sections": [
+      {
+        "title": "Benefits",
+        "content": "Salat al-Ghufaylah is one of the highly recommended Mustahab prayers. 'Ghufaylah' means 'negligent' or 'heedless,' referring to the hour between Maghrib and Isha when people are often busy with worldly affairs. \n\nBenefits include:\n1. Requests Granted: It is narrated that anyone who offers this prayer and supplicates to Almighty Allah will have his requests granted.\n2. Spiritual Protection: It serves as a shield against spiritual negligence.\n3. Proximity to Allah: A powerful means of seeking nearness to the Divine during a blessed time."
+      },
+      {
+        "title": "Method",
+        "content": "The time for this prayer is between Maghrib and Isha prayers. It consists of two Raka'ats.\n\nIn the first Raka'at, after Surah al-Hamd, instead of another Surah, recite the 'Dhun-Nun' verse (Prophet Yunus's prayer). In the second Raka'at, after Surah al-Hamd, recite Verse 6:59 of Surah al-An'am."
+      },
+      {
+        "title": "1st Raka'at",
+        "lines": [
+          {
+            "arabic": "وَذَا النُّونِ إِذْ ذَهَبَ مُغَاضِبًا فَظَنَّ أَنْ لَنْ نَقْدِرَ عَلَيْهِ فَنَادَى فِي الظُّلُمَاتِ أَنْ لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
+            "transliteration": "Wa dhaan-nooni idh dhahaba mughaadhiban fad hanna al-lan naqdira 'alayhi fanaadaa fidh-dhulumaati al-laa ilaaha illaa anta sub'haanaka innee kuntu minadh-dhaalimeen",
+            "english": "And (remember) Dhun-Nun (Yunus), when he went off in anger and deemed that We would not straiten him, then he cried out in the darkness: There is no god but You, glory be to You, surely I am of those who do wrong."
+          },
+          {
+            "arabic": "فَاسْتَجَبْنَا لَهُ وَنَجَّيْنَاهُ مِنَ الْغَمِّ وَكَذَلِك نُنْجِي الْمُؤْمِنِينَ",
+            "transliteration": "Fastajabnaa lahoo wa najjaynaahu minal-ghammi wa kadhaalika nunjil-mu'mineen",
+            "english": "So We responded to him and delivered him from the grief, and thus do We deliver the believers."
+          }
+        ]
+      },
+      {
+        "title": "2nd Raka'at",
+        "lines": [
+          {
+            "arabic": "وَعِنْدَهُ مَفَاتِحُ الْغَيْبِ لَا يَعْلَمُهَا إِلَّا هُوَ وَيَعْلَمُ مَا فِي الْبَرِّ وَالْبَحْرِ وَمَا تَسْقُطُ مِنْ وَرَقَةٍ إِلَّا يَعْلَمُهَا وَلَا حَبَّةٍ فِي ظُلُمَاتِ الْأَرْضِ وَلَا رَطْبٍ وَلَا يَابِسٍ إِلَّا فِي كِتَابٍ مُبِينٍ",
+            "transliteration": "Wa 'indahoo mafaatihul-ghaybi laa ya'lamuhaa illaa huwa wa ya'lamu maa fil-barri wal-bah'ri wa maa tasqutu miw-waraqatin illaa ya'lamuhaa wa laa hab batin fee dhulumaatil-ardhi wa laa rat'biw-wa laa yaabisin illaa fee kitaabim-mubeen",
+            "english": "And with Him are the keys of the unseen treasures-- none knows them but He; and He knows what is in the land and the sea, and there falls not a leaf but He knows it, nor a grain in the darkness of the earth, nor anything green nor dry but (it is all) in a clear book."
+          }
+        ]
+      },
+      {
+        "title": "Qunoot",
+        "lines": [
+          {
+            "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُك بِمَفَاتِيحِ الْغَيْبِ الَّتِي لَا يَعْلَمُهَا إِلَّا أَنْتَ أَنْ تُصَلِّيَ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ وَأَنْ تَفْعَلَ بِي [Mention your wishes]",
+            "transliteration": "Allaahumma innee as-aluka bimafaati-hil ghaybil-latee laa ya'lamuhaa illaa anta an tusalliya 'alaa Muhammadin wa aali Muhammadin wa an taf'ala bee ... (mention your wishes)",
+            "english": "O Allah, I ask You for the sake of the keys of the Unseen which no one knows but You, that You bless Muhammad and the household of Muhammad, and that You do for me... (mention your wishes)"
+          },
+          {
+            "arabic": "اللَّهُمَّ أَنْتَ وَلِيُّ نِعْمَتِي وَالْقَادِرُ عَلَى طَلِبَتِي تَعْلَمُ حَاجَتِي فَأَسْأَلُك بِحقِّ مُحَمَّدٍ وَآلِ مُحَمَّدٍ عَلَيْهِ وَعَلَيْهِمُ السَّلَامُ لَمَّا قَضَيْتَهَا لِي",
+            "transliteration": "Allaahumma anta waliyyu ni'matee wal-qaadiru 'alaa talibatee ta'lamu haajatee fa-as-aluka bi-haqqi Muhammadin wa aali Muhammadin 'alayhi wa 'alayhimus-salaamu lammaa qadhaytahaa lee",
+            "english": "O Allah, You are the Master of my soul, the Disposer of my needs, You know my requirements; so I ask You for the sake of Muhammad and the household of Muhammad, peace be on him and them, to fulfill my need."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "namaz-jafar-tayyar",
+    "title": "Salat Jafar-e-Tayyar",
+    "description": "The Prophet's (saw) gift to Hazrat Jafar (as) for forgiveness of sins and fulfillment of needs.",
+    "audioUrl": "https://mp3.duas.org/Namazmasoomeen/namaz-hazrat-jafar-tayyar.mp3",
+    "id_ar": "صلاة جعفر الطيار",
+    "sections": [
+      {
+        "title": "Method of Salat",
+        "content": "**Importance**\nSalat al-Ja'far al-Tayyar is famously known as the 'Greatest Tasbih.' It was a gift from the Holy Prophet (saw) to Jafar ibn Abi Talib (as). Imam al-Sadiq (as) said: 'If anyone recites this prayer once a day, or once a week, or once a month, or once a year, Allah (swt) will forgive his major and minor sins.'\n\n**Method**\nIt consists of 4 Raka'at (2 x 2 rakat).\n\n1st Raka'at: Surah al-Hamd + Surah al-Zilzal\n2nd Raka'at: Surah al-Hamd + Surah al-Adiyat\n3rd Raka'at: Surah al-Hamd + Surah al-Nasr\n4th Raka'at: Surah al-Hamd + Surah al-Ikhlas"
+      },
+      {
+        "title": "Tasbihat-e-Arba'a",
+        "content": "In each Raka'at, recite the **Tasbihat-e-Arba'a** 75 times (15 times after Qira'ah, 10 in Ruku, 10 after Ruku, 10 in 1st Sajdah, 10 after 1st Sajdah, 10 in 2nd Sajdah, 10 after 2nd Sajdah):",
+        "lines": [
+          {
+            "arabic": "سُبْحَانَ اللهِ وَ الْحَمْدُ لِلهِ وَ لَا اِلٰهَ اِلَّا اللهُ وَ اللهُ اَكْبَر",
+            "transliteration": "subhaanallaahi wal hamdu lillaahi wa laa ilaaha illallaahu wallaahu akbar",
+            "english": "Glory be to Allah, Praise be to Allah, there is no god but Allah, and Allah is Great."
+          }
+        ]
+      },
+      {
+        "title": "Supplication in Last Sajdah",
+        "content": "In the last Sajdah of the 4th Raka'at, recite:",
+        "audioUrl": "https://mp3.duas.org/jafar%20tayyar%20last%20sajda%20dua.mp3",
+        "lines": [
+          {
+            "arabic": "سُبْحَانَ مَنْ لَبِسَ الْعِزَّ وَالْوَقَارَ، سُبْحَانَ مَنْ تَعَطَّفَ بِالْمَجْدِ وَتَكَرَّمَ بِهِ، سُبْحَانَ مَنْ لاَ يَنْبَغِي التَّسْبِيحُ إِلاَّ لَهُ، سُبْحَانَ مَنْ أَحْصَى كُلَّ شَيْءٍ عِلْمُهُ، سُبْحَانَ ذِي الْمَنِّ وَالنِّعَمِ، سُبْحَانَ ذِي الْقُدْرَةِ وَالْكَرَمِ. اللَّهُمَّ إِنِّي أَسْأَلُك بِمَعَاقِدِ الْعِزِّ مِنْ عَرْشِك، وَمُنْتَهَى الرَّحْمَةِ مِنْ كِتَابِك وَاسْمِك الأَعْظَمِ وَكَلِمَاتِك التَّامَّةِ الَّتِي تَمَّتْ صِدْقاً وَعَدْلاً، صَلِّ عَلَى مُحَمَّدٍ وَأَهْلِ بَيْتِهِ وَافْعَلْ بِي .......",
+            "transliteration": "Subhana man labisal 'izza wal-waqaar, sub-haana man ta'attafa bil-majdi wa takarrama bi-hee, sub-haana man laa yanbaghit tas-beehu illaa la-hu, sub-haana man ah-saa kulla shay-in 'ilmuh, sub-haana dhil manni wan ni'am, sub-haana dhil qudrati wal-karam. Allaahumma innee as-aluka bi-ma'aaqidil 'izzi min 'arshika wa muntahar rahmati min kitaabika was-mikal a'zami wa kalimaatikat taammaatil-latee tammat sidqaw-wa 'ad-lan, salli 'ala Muhammadin wa ahli baytihi waf-al bee... (mention your wishes)",
+            "english": "Glory be to Him Who is clothed in Honor and Dignity; Glory be to Him Who is Gracious in Majesty and Generous in it; Glory be to Him save Whom tasbih is not worthy for anyone; Glory be to Him Whose knowledge encompasses everything; Glory be to the Lord of Favor and Bounties; Glory be to the Lord of Power and Generosity. O Allah, I beseech You by the seats of Might in Your Throne, and by the utmost degree of Mercy in Your Book, and by Your Great Name, and by Your Perfect Words which are complete in truth and justice, to send blessings upon Muhammad and the family of Muhammad, and do for me... (mention your wishes)"
+          }
+        ]
+      },
+      {
+        "title": "Supplication after Salat",
+        "content": "After the Salaat, recite the following. Say each of the first six lines as many times as possible in one breath.",
+        "lines": [
+          {
+            "arabic": "يَا رَبَّاهُ يَا رَبَّاهُ",
+            "transliteration": "Ya Rabbahu Ya Rabbahu",
+            "english": "O my Lord, O my Lord! (Repeat as many times as possible in one breath)"
+          },
+          {
+            "arabic": "يَا رَبَّاهُ يَا رَبَّاهُ",
+            "transliteration": "Ya Rabbahu Ya Rabbahu",
+            "english": "O my Lord, O my Lord! (Second time, repeat in one breath)"
+          },
+          {
+            "arabic": "يَا رَبِّ يَا رَبِّ",
+            "transliteration": "Ya Rabbi Ya Rabbi",
+            "english": "O Lord, O Lord! (Repeat in one breath)"
+          },
+          {
+            "arabic": "يَا اَللّٰهُ يَا اَللّٰهُ",
+            "transliteration": "Ya Allahu Ya Allahu",
+            "english": "O Allah, O Allah! (Repeat in one breath)"
+          },
+          {
+            "arabic": "يَا حَيُّ يَا حَيُّ",
+            "transliteration": "Ya Hayyu Ya Hayyu",
+            "english": "O Ever-Living, O Ever-Living! (Repeat in one breath)"
+          },
+          {
+            "arabic": "يَا رَحِيمُ يَا رَحِيمُ",
+            "transliteration": "Ya Rahimu Ya Rahimu",
+            "english": "O All-Merciful, O All-Merciful! (Repeat in one breath)"
+          },
+          {
+            "arabic": "يَا رَحْمٰنُ يَا رَحْمٰنُ",
+            "transliteration": "Ya Rahmanu Ya Rahmanu",
+            "english": "O All-Compassionate, O All-Compassionate! (7 times)"
+          },
+          {
+            "arabic": "يَا اَرْحَمَ الرَّاحِمِينَ",
+            "transliteration": "Ya Arhamar Rahimin",
+            "english": "O Most Merciful of the merciful! (7 times)"
+          }
+        ]
+      },
+      {
+        "title": "Ritual & Supplication for Special Needs",
+        "content": "### For Special needs - Severe Problems\n\nOne should perform Ghusl before the noon and if the problem is severe he should go in wilderness and pray Namaz-e-Ja’far-e-Tayyar. Shaykh al-Tusi has narrated that Imam al-Sadiq (`a) recommended the following prayer for having one’s requests granted:\n\n1. Observe fasting on consecutive Wednesday, Thursday, and Friday.\n2. At Thursday evening, give half bushel of food for ten poor people as alms.\n3. On Friday, wash yourself and go out to a wasteland and offer therein Ja`far al-Tayyar’s Prayer.\n4. Kneel down on the ground & say the following prayer while kneeling on the ground after the Salat:",
+        "lines": [
+          {
+            "arabic": "يَا مَنْ اَظْهَرَ الْجَمِيْلَ وَ سَتَرَ الْقَبِيْحَ، يَا مَنْ لَمْ يُؤَاخِذْ بِالْجَرِيْرَةِ وَ لَمْ يَهْتِكِ السِّتْرَ",
+            "transliteration": "Ya man azhara al-jamila wa satara al-qabiha, ya man lam yu'akhidh bil-jarirati wa lam yahtik-is-sitra",
+            "english": "O He Who shows the beautiful and covers the ugly! O He Who does not take (anyone) to task for his crime, nor does He pull down the screen!"
+          },
+          {
+            "arabic": "يَا عَظِيْمَ الْعَفْوِ، يَا حَسَنَ التَّجَاوُزِ، يَا وَاسِعَ الْمَغْفِرَةِ، يَا بَاسِطَ الْيَدَيْنِ بِالرَّحْمَةِ",
+            "transliteration": "Ya 'adhemal 'afwi, ya hasanat-tajawuzi, ya wasi'al maghfirah, ya basit-al yadayni bir-rahmah",
+            "english": "O Great Forgiver! O Excellent Overlooker! O He Who is liberal in forbearances! O He Who extends His hands with mercy!"
+          },
+          {
+            "arabic": "يَا صَاحِبَ كُلِّ نَجْوَى، وَ يَا مُنْتَهَى كُلِّ شَكْوَى، يَا كَرِيْمَ الصَّفْحِ، يَا عَظِيْمَ الْمَنِّ",
+            "transliteration": "Ya sahiba kulli najwa, wa ya muntaha kulli shakwa, ya karimas-saf-hi, ya 'adhemal manni",
+            "english": "O Hearer of all secret whisperings! O End of all complaints! O Beneficent in pardoning! O Great in rewarding!"
+          },
+          {
+            "arabic": "يَا مُبْتَدِئاً بِالنِّعَمِ قَبْلَ اسْتِحْقَاقِهَا",
+            "transliteration": "Ya mubtadi'an bin-ni'ami qabla-stihqaqiha",
+            "english": "O He Who begins with favors before they are deserved!"
+          },
+          {
+            "arabic": "يَا رَبَّاهُ",
+            "transliteration": "Ya Rabbahu (10 times)",
+            "english": "O my Lord! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا اَللَّهُ",
+            "transliteration": "Ya Allahu (10 times)",
+            "english": "O Allah! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا سَيِّدَاهُ",
+            "transliteration": "Ya Sayyidahu (10 times)",
+            "english": "O my Master! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا مَوْلَاهُ",
+            "transliteration": "Ya Mawlahu (10 times)",
+            "english": "O my Protector! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا رَجَاءَاهُ",
+            "transliteration": "Ya Raja'ahu (10 times)",
+            "english": "O my Hope! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا غِيَاثَاهُ",
+            "transliteration": "Ya Ghiyathahu (10 times)",
+            "english": "O my Helper! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا غَايَةَ رَغْبَتَاهُ",
+            "transliteration": "Ya Ghayata Raghbatahu (10 times)",
+            "english": "O End of my desires! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا رَحْمٰنُ",
+            "transliteration": "Ya Rahmanu (10 times)",
+            "english": "O All-Compassionate! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا رَحِيْمُ",
+            "transliteration": "Ya Rahimu (10 times)",
+            "english": "O All-Merciful! (Repeat 10 times)"
+          },
+          {
+            "arabic": "يَا مُعْطِيَ الْخَيْرَاتِ",
+            "transliteration": "Ya Mu'tiyal Khayrat (10 times)",
+            "english": "O Bestower of good things! (Repeat 10 times)"
+          },
+          {
+            "arabic": "صَلِّ عَلَى مُحَمَّدٍ وَ آلِ مُحَمَّدٍ كَأَفْضَلِ مَا صَلَّيْتَ عَلَى أَحَدٍ مِنْ خَلْقِكَ",
+            "transliteration": "Salli 'ala Muhammadin wa ali Muhammadin ka-afdali ma sallayta 'ala ahadin min khalqika",
+            "english": "Bless Muhammad and the household of Muhammad as the best You have ever blessed any of Your creatures."
+          },
+          {
+            "english": "(After this mention your needs/desires)"
+          }
+        ]
+      },
+      {
+        "title": "Dua from the book Rabi Al Anam",
+        "content": "After the last unit of the prayer of Ja’far Ibn Abi Taalib (a.s.), Imam Sadeq (a.s.) used to recite the following:",
+        "audioUrl": "https://mp3.duas.org/jaffer%20tayyar%20dua%20from%20rabi%20al%20anam.mp3",
+        "lines": [
+          {
+            "arabic": "سُبْحَانَ اللهِ الْوَاحِدِ اْلأَحَدِ، سُبْحَانَ اللهِ الْفَرْدِ الصَّمَدِ، سُبْحَانَ اللهِ الَّذِي لَمْ يَلِدْ وَ لَمْ يُولَدْ وَ لَمْ يَكُنْ لَهُ كُفُواً أَحَدٌ،",
+            "transliteration": "Subḥāna Allāhi al-wāḥidi al-aḥadi, subḥāna Allāhi al-fardi al-ṣamadi, subḥāna Allāhi al-ladhī lam yalid wa lam yūlad wa lam yakun lahu kufuwan aḥadun,",
+            "english": "Glory be to Allah, the One, the Unique; Glory be to Allah, the Single, the Absolute; Glory be to Allah Who begets not, nor is He begotten, and there is none like unto Him."
+          },
+          {
+            "arabic": "سُبْحَانَ اللهِ الَّذِي لَمْ يَتَّخِذْ صَاحِبَةً وَ لاَ وَلَداً، سُبْحَانَ مَنْ أَرْسَلَ الرُّسُلَ مُبَشِّرِينَ وَ مُنْذِرِينَ،",
+            "transliteration": "Subḥāna Allāhi al-ladhī lam yattakhidh ṣāḥibatan wa lā waladan, subḥāna man arsala al-rusula mubashshirīna wa mundhirīna,",
+            "english": "Glory be to Allah Who has not taken a spouse nor a son; Glory be to Him Who sent the Messengers as givers of glad tidings and as warners."
+          },
+          {
+            "arabic": "سُبْحَانَ مَنْ خَلَقَ الْجَنَّةَ وَ النَّارَ، سُبْحَانَ مَنْ ذَلَّ كُلَّ شَيْءٍ لِعَظَمَتِهِ،",
+            "transliteration": "Subḥāna man khalaqa al-jannata wa al-nāra, subḥāna man dhalla kulla shay’in li-’aẓamatihi,",
+            "english": "Glory be to Him Who created Paradise and the Fire; Glory be to Him before Whose Greatness everything is humbled."
+          },
+          {
+            "arabic": "سُبْحَانَ مَنِ انْقَادَ لَهُ كُلُّ شَيْءٍ بِقُدْرَتِهِ، سُبْحَانَ الَّذِي لَيْسَ كَمِثْلِهِ شَيْءٌ وَ هُوَ السَّمِيعُ الْبَصِيرُ،",
+            "transliteration": "Subḥāna man inqāda lahu kulla shay’in bi-qudratihi, subḥāna al-ladhī laysa ka-mithlihi shay’un wa huwa al-samī’u al-baṣīru,",
+            "english": "Glory be to Him to Whom everything is subjected by His Power; Glory be to Him for Whose like there is nothing, and He is the All-Hearing, the All-Seeing."
+          },
+          {
+            "arabic": "سُبْحَانَ الْعَلِيمِ الْحَكِيمِ، سُبْحَانَ الْجَبَّارِ الْمُتَكَبِّرِ، سُبْحَانَ الْعَزِيزِ الْغَفَّارِ، سُبْحَانَ مَنْ لاَ يَعْلَمُ الْغَيْبَ إِلاَّ هُوَ،",
+            "transliteration": "Subḥāna al-’alīmi al-ḥakīmi, subḥāna al-jabbāri al-mutakabbiri, subḥāna al-’azīzi al-ghaffāri, subḥāna man lā ya’lamu al-ghayba illā huwa,",
+            "english": "Glory be to the All-Knowing, the All-Wise; Glory be to the Compeller, the Supreme; Glory be to the Mighty, the All-Forgiving; Glory be to Him Whom none knows the Unseen except Him."
+          },
+          {
+            "arabic": "أَسْأَلُكَ اَللَّهُمَّ بِأَسْمَائِكَ الْحُسْنَى كُلِّهَا، وَ بِاسْمِكَ الأَعْظَمِ الأَجَلِّ الأَكْرَمِ،",
+            "transliteration": "As’aluka Allahumma bi-asmā’ika al-ḥusná kullihā, wa bi-ismika al-a’ẓami al-ajalli al-akrami,",
+            "english": "I beseech You, O Allah, by all Your most beautiful names, and by Your Great, Most Majestic, and Most Noble Name,"
+          },
+          {
+            "arabic": "أَنْ تُصَلِّيَ عَلَى مُحَمَّدٍ وَ آلِ مُحَمَّدٍ وَ أَنْ تَعْمَل بِي كذَا وَ كذَا.",
+            "transliteration": "An tuṣallī ‘alá Muḥammadin wa āli Muḥammadin wa an taf‘al bī kadhā wa kadhā.",
+            "english": "That You send blessings upon Muhammad and the family of Muhammad and that You do for me thus and thus. (Mention your needs)"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,427 @@
+      {
+        "arabic": "وَمَعِي وَقَبْلِي وَبَعْدِي",
+        "transliteration": "wa ma`i wa qabli wa ba`di",
+        "english": "along with me, before me, after me,"
+      },
+      {
+        "arabic": "وَامَامِي وَفَوْقِي وَتَحْتِي",
+        "transliteration": "wa amami wa fawqi wa tahti",
+        "english": "in front of me, over me, beneath me,"
+      },
+      {
+        "arabic": "وَإِذَا مِتُّ وَبَقِيتُ فَرْداً وَحِيداً ثُمَّ فَنِيتُ",
+        "transliteration": "wa idha mittu wa baqitu fardan wahidan thumma fanitu",
+        "english": "when I die, remain totally alone, and will be then terminated."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ إِذَا نُشِرْتُ وَبُعِثْتُ",
+        "transliteration": "wa laka alhamdu idha nushirtu wa bu`ithtu",
+        "english": "To You be all praise when I shall be resurrected and raised up (from grave)."
+      },
+      {
+        "arabic": "يَا مَوْلاَيَ اللَّهُمَ وَلَكَ ٱلْحَمْدُ",
+        "transliteration": "ya mawlaya allahumma wa laka alhamdu",
+        "english": "O my Lord, O Allah, to You be all praise"
+      },
+      {
+        "arabic": "وَلَكَ ٱلشُّكْرُ بِجَمِيعِ مَحَامِدِكَ كُلِّهَا",
+        "transliteration": "wa laka alshshukru bijami`i mahamidika kulliha",
+        "english": "and all thanks in all forms of praising You"
+      },
+      {
+        "arabic": "عَلَىٰ جَمِيعِ نَعْمَائِكَ كُلِّهَا",
+        "transliteration": "`ala jami`i na`ma'ika kulliha",
+        "english": "for all Your favors"
+      },
+      {
+        "arabic": "حَتَّىٰ يَنْتَهِيَ ٱلْحَمْدُ إِلَىٰ مَا تُحِبُّ رَبَّنَا وَتَرْضَىٰ",
+        "transliteration": "hatta yantahiya alhamdu ila ma tuhibbu rabbana wa tarda",
+        "english": "until (this) praise achieves the pleasure and satisfaction of You, O our Lord."
+      },
+      {
+        "arabic": "اللَّهُمَّ لَكَ ٱلْحَمْدُ عَلَىٰ كُلِّ اكْلَةٍ وَشَرْبَةٍ",
+        "transliteration": "allahumma laka alhamdu `ala kulli aklatin wa sharbatin",
+        "english": "O Allah, to You be all praise for each and every food, drink,"
+      },
+      {
+        "arabic": "وَبَطْشَةٍ وَقَبْضَةٍ",
+        "transliteration": "wa batshatin wa qabdatin",
+        "english": "power, grip,"
+      },
+      {
+        "arabic": "وَبَسْطَةٍ وَفِي كُلِّ مَوْضِعِ شَعْرَةٍ",
+        "transliteration": "wa bastatin wa fi kulli mawdi`i sha`ratin",
+        "english": "extension, and for each place of a single hair."
+      },
+      {
+        "arabic": "اللَّهُمَّ لَكَ ٱلْحَمْدُ حَمْداً خَالِداً مَعَ خُلُودِكَ",
+        "transliteration": "allahumma laka alhamdu hamdan khalidan ma`a khuludika",
+        "english": "O Allah, to You be all praise that is as eternal as You are."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ حَمْداً لاَ مُنْتَهَىٰ لَهُ دُونَ عِلْمِكَ",
+        "transliteration": "wa laka alhamdu hamdan la muntaha lahu duna `ilmika",
+        "english": "To You be all praise that never ends save Your knowledge (about it)."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ حَمْداً لاَ امَدَ لَهُ دُونَ مَشِيَّتِكَ",
+        "transliteration": "wa laka alhamdu hamdan la amada lahu duna mashi'atika",
+        "english": "To You be all praise that has no limit save when You will."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ حَمْداً لاَ اجْرَ لِقَائِلِهِ إِلاَّ رِضَاكَ",
+        "transliteration": "wa laka alhamdu hamdan la ajra liqa'ilihi illa ridaka",
+        "english": "To You be all praise the one and only reward of its sayer is nothing save Your pleasure."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَلَىٰ حِلْمِكَ بَعْدَ عِلْمِكَ",
+        "transliteration": "wa laka alhamdu `ala hilmika ba`da `ilmika",
+        "english": "To You be all praise for You act forbearingly though You know."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَلَىٰ عَفْوِكَ بَعْدَ قُدْرَتِكَ",
+        "transliteration": "wa laka alhamdu `ala `afwika ba`da qudratika",
+        "english": "To You be all praise for You pardon though You have power (not to do)."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ بَاعِثَ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu ba`itha alhamdi",
+        "english": "To You be all praise and You are the source of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ وَارِثَ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu waritha alhamdi",
+        "english": "To You be all praise and You are the inheritor of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ بَدِيعَ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu badi`a alhamdi",
+        "english": "To You be all praise and You are the fashioner of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ مُنْتَهَىٰ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu muntaha alhamdi",
+        "english": "To You be all praise and You are the utmost of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ مُبْتَدِعَ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu mubtadi`a alhamdi",
+        "english": "To You be all praise and You are the author of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ مُشْتَرِيَ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu mushtariya alhamdi",
+        "english": "To You be all praise and You are the object of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ وَلِيَّ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu waliyya alhamdi",
+        "english": "To You be all praise and You are the lord of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ قَدِيمَ ٱلْحَمْدِ",
+        "transliteration": "wa laka alhamdu qadima alhamdi",
+        "english": "To You be all praise and You are the ultimate objective of praise."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ صَادِقَ ٱلْوَعْدِ وَفِيَّ ٱلْعَهْدِ",
+        "transliteration": "wa laka alhamdu sadiqa alwa`di wafiyya al`ahdi",
+        "english": "To You be all praise and You are truthful in promise, fulfiller of pledge,"
+      },
+      {
+        "arabic": "عَزِيزَ ٱلْجُنْدِ قَائِمَ ٱلْمَجْدِ",
+        "transliteration": "`aziza aljundi qa'ima almajdi",
+        "english": "mighty in power, and subsistingly glorious."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ رَفِيعَ ٱلدَّرَجَاتِ مُجِيبَ ٱلدَّعَوَاتِ",
+        "transliteration": "wa laka alhamdu rafi`a alddarajati mujiba aldda`awati",
+        "english": "To You be all praise and You are the highest in ranks, the responsive to prayers,"
+      },
+      {
+        "arabic": "مُنَزِّلَ ٱلآيَاتِ مِنْ فَوْقِ سَبْعِ سَمَاوَاتٍ",
+        "transliteration": "munazzila al-ayati min fawqi sab`i samawatin",
+        "english": "the descender of sings (or Verses) from above seven skies,"
+      },
+      {
+        "arabic": "عَظِيمَ ٱلْبَرَكَاتِ",
+        "transliteration": "`azima albarakati",
+        "english": "the grantor of outstanding blessings,"
+      },
+      {
+        "arabic": "مُخْرِجَ ٱلنُّورِ مِنَ ٱلظُّلُمَاتِ",
+        "transliteration": "mukhrija alnnuri mina alzzulumati",
+        "english": "the bringer forth of light from utter darkness,"
+      },
+      {
+        "arabic": "وَمُخْرِجَ مَنْ فِي ٱلظُّلُمَاتِ إِلَىٰ ٱلنُّورِ",
+        "transliteration": "wa mukhrija man fi alzzulumati ila alnnuri",
+        "english": "the bringer forth of those who are in darkness to light,"
+      },
+      {
+        "arabic": "مُبَدِّلَ ٱلسَّيِّئَاتِ حَسَنَاتٍ",
+        "transliteration": "mubaddla alssayyi'ati hasanatin",
+        "english": "the changer of evil deeds into good deeds,"
+      },
+      {
+        "arabic": "وَجَاعِلَ ٱلْحَسَنَاتِ دَرَجَاتٍ",
+        "transliteration": "wa ja`ila alhasanati darajatin",
+        "english": "and the maker of good deeds raise to high ranks."
+      },
+      {
+        "arabic": "اَللَّهُمَّ لَكَ ٱلْحَمْدُ غَافِرَ ٱلذَّنْبِ وَقَابِلَ ٱلتَّوْبِ",
+        "transliteration": "allahumma laka alhamdu ghafira aldhdhanbi wa qabila alttawbi",
+        "english": "O Allah, to You be all praise and You are the Forgiver of the faults, the Acceptor of repentance,"
+      },
+      {
+        "arabic": "شَدِيدَ ٱلْعِقَابِ ذَا ٱلطَّوْلِ",
+        "transliteration": "shadida al`iqabi dhalttawli",
+        "english": "severe to punish, and Lord of bounty."
+      },
+      {
+        "arabic": "لاَ إِلٰهَ إِلاَّ انْتَ إِلَيْكَ ٱلْمَصِيرُ",
+        "transliteration": "la ilaha illa anta ilayka almasiru",
+        "english": "There is no god save You; to You shall be the return."
+      },
+      {
+        "arabic": "اَللَّهُمَّ لَكَ ٱلْحَمْدُ فِي ٱللَّيْلِ إِذَا يَغْشَىٰ",
+        "transliteration": "allahumma laka alhamdu fi allayli idha yaghsha",
+        "english": "O Allah, to You be all praise in the night when it draws a veil."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ فِي ٱلنَّهَارِ إِذَا تَجَلَّىٰ",
+        "transliteration": "wa laka alhamdu fi alnnahari idha tajalla",
+        "english": "To You be all praise in the day when it shines in brightness."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ فِي ٱلآخِرَةِ وَٱلاولَىٰ",
+        "transliteration": "wa laka alhamdu fi al-akhirati wal-ula",
+        "english": "To You be all praise in the Hereafter and the former life."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ كُلِّ نَجْمٍ وَمَلَكٍ فِي ٱلسَّمَاءِ",
+        "transliteration": "wa laka alhamdu `adada kulli najmin wa malakin fi alssama'i",
+        "english": "To You be all praise as many as the numbers of all stars and angels in the heavens."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ ٱلثَّرَىٰ وَٱلْحَصَىٰ وَٱلنَّوَىٰ",
+        "transliteration": "wa laka alhamdu `adada alththara walhasa walnnawa",
+        "english": "To You be all praise as much as dust and as many as pebbles and seeds."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ مَا فِي جَوِّ ٱلسَّمَاءِ",
+        "transliteration": "wa laka alhamdu `adada ma fi jawwi alssama'i",
+        "english": "To You be all praise as many as all that which is in the air."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ مَا فِي جَوْفِ ٱلارْضِ",
+        "transliteration": "wa laka alhamdu `adada ma fi jawfi al-ardi",
+        "english": "To You be all praise as many as all that which is in the interior of the earth."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ اوْزَانِ مِيَاهِ ٱلْبِحَارِ",
+        "transliteration": "wa laka alhamdu `adada awzani miyahi albihari",
+        "english": "To You be all praise as much as the weight of sea water."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ اوْرَاقِ ٱلاشْجَارِ",
+        "transliteration": "wa laka alhamdu `adada awraqi al-ashjari",
+        "english": "To You be all praise as many as leaves of trees."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ مَا عَلَىٰ وَجْهِ ٱلارْضِ",
+        "transliteration": "wa laka alhamdu `adada ma `ala wajhi al-ardi",
+        "english": "To You be all praise as many as all that which exists on the earth surface."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ مَا احْصَىٰ كِتَابُكَ",
+        "transliteration": "wa laka alhamdu `adada ma ahsa kitabuka",
+        "english": "To You be all praise as much as that which has been counted by Your Book."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ مَا احَاطَ بِهِ عِلْمُكَ",
+        "transliteration": "wa laka alhamdu `adada ma ahata bihi `ilmuka",
+        "english": "To You be all praise as much as all that which is comprehended by Your Knowledge."
+      },
+      {
+        "arabic": "وَلَكَ ٱلْحَمْدُ عَدَدَ ٱلإِنْسِ وَٱلْجِنِّ",
+        "transliteration": "wa laka alhamdu `adada al-insi waljinni",
+        "english": "To You be all praise as many as the numbers of men, jinn,"
+      },
+      {
+        "arabic": "وَٱلْهَوَامِّ وَٱلطَّيْرِ وَٱلْبَهَائِمِ وَٱلسِّبَاعِ",
+        "transliteration": "walhawammi walttayri walbaha'imi walssiba`i",
+        "english": "pests, birds, animals, and beasts—"
+      },
+      {
+        "arabic": "حَمْداً كَثِيراً طَيِّباً",
+        "transliteration": "hamdan kathiran tayyiban",
+        "english": "praise that is abundant, pleasant,"
+      },
+      {
+        "arabic": "مُبَارَكاً فِيهِ كَمَا تُحِبُّ رَبَّنَا وَتَرْضَىٰ",
+        "transliteration": "mubarakan fihi kama tuhibbu rabbana wa tarda",
+        "english": "and as blessed as You, our Lord, please and gratify"
+      },
+      {
+        "arabic": "وَكَمَا يَنْبَغِي لِكَرَمِ وَجْهِكَ وَعِزِّ جَلاَلِكَ",
+        "transliteration": "wa kama yanbaghi likarami wajhika wa `izzi jalalika",
+        "english": "so much so that it befits the majesty of Your Face and the dignity of Your splendor."
+      },
+      {
+        "isSeparator": true,
+        "english": "Then, repeat the following statements ten times each:"
+      },
+      {
+        "arabic": "لاَ إِلٰهَ إِلاَّ ٱللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ لَهُ ٱلْمُلْكُ وَلَهُ ٱلْحَمْدُ وَهُوَ ٱللَّطِيفُ ٱلْخَبِيرُ",
+        "transliteration": "la ilaha illa allahu wahdahu la sharika lahu lahu almulku wa lahu alhamdu wa huwa allatifu alkhabiru",
+        "english": "There is no god save Allah; One and Only and having no partner. To Him is the Kingdom and to Him is (all) praise. He is the Knower of subtleties, the Aware."
+      },
+      {
+        "arabic": "لاَ إِلٰهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ لَهُ ٱلْمُلْكُ وَلَهُ ٱلْحَمْدُ يُحْيِي وَيُمِيتُ وَيُمِيتُ وَيُحْيِي وَهُوَحَيٌّ لاَ يَمُوتُ بِيَدِهِ ٱلْخَيْرُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+        "transliteration": "la ilaha illa allahu wahdahu la sharika lahu lahu almulku wa lahu alhamdu yuhyi wa yumitu wa yumitu wa yuhyi wa huwa hayyun la yamutu biyadihi alkhayru wa huwa `ala kulli shay'in qadirun",
+        "english": "There is no god save Allah; One and Only and having no partner. To Him is the Kingdom and to Him is (all) praise. He gives life and causes to die and causes to die and gives life, while He is ever-living and never dies. In His Hand is the entire goodness and He has power over all things."
+      },
+      {
+        "arabic": "اسْتَغْفِرُ ٱللَّهَ ٱلَّذِي لاَ إِلٰهَ إِلاَّ هُوَ ٱلْحَيُّ ٱلْقَيُّومُ وَاتُوبُ إِلَيْه",
+        "transliteration": "astaghfiru allaha alladhi la ilaha illa huwa alhayyu alqayyumu wa atubu ilayhi",
+        "english": "I pray the forgiveness of Allah; there is no god save Him, the Ever-living, the Self-subsistent, and I repent to Him."
+      },
+      {
+        "arabic": "يَا ٱللَّهُ يَا ٱللَّهُ",
+        "transliteration": "ya allahu ya allahu",
+        "english": "O Allah, O Allah!"
+      },
+      {
+        "arabic": "يَا رَحْمٰنُ يَا رَحْمٰنُ",
+        "transliteration": "ya rahmanu ya rahmanu",
+        "english": "O All-beneficent, O All-beneficent!"
+      },
+      {
+        "arabic": "يَا رَحِيمُ يَا رَحِيمُ",
+        "transliteration": "yarahimu ya rahimu",
+        "english": "O All-merciful, O All-merciful!"
+      },
+      {
+        "arabic": "يَا بَدِيعَ ٱلسَّمَاوَاتِ وَٱلارْضِ",
+        "transliteration": "ya badi`a alssamawati wal-ardi",
+        "english": "O Fashioner of the heavens and the earth!"
+      },
+      {
+        "arabic": "يَا ذَا ٱلْجَلاَلِ وَٱلإِكْرَامِ",
+        "transliteration": "ya dhaljalali wal-ikrami",
+        "english": "O Lord of Majesty and Dignity!"
+      },
+      {
+        "arabic": "يَا حَنَّانُ يَا مَنَّانُ",
+        "transliteration": "ya hannanu ya mannanu",
+        "english": "O All-compassionate! O Grantor (of graces)!"
+      },
+      {
+        "arabic": "يَا حَيُّ يَا قَيُّومُ",
+        "transliteration": "ya hayyu yaqayyumu",
+        "english": "O Ever-living! O Self-Subsistent!"
+      },
+      {
+        "arabic": "يَا حَيُّ لاَ إِلٰهَ إِلاَّ انْتَ",
+        "transliteration": "ya hayyu la ilaha illa anta",
+        "english": "O Ever-living! There is no god save You!"
+      },
+      {
+        "arabic": "يَا ٱللَّهُ يَا لاَ إِلٰهَ إِلاَّ انْتَ",
+        "transliteration": "ya allahu ya la ilaha illa anta",
+        "english": "O Allah! O He save Whom there is no god!"
+      },
+      {
+        "arabic": "بِسْمِ ٱللَّهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ",
+        "transliteration": "bismi allahi alrrahmani alrrahimi",
+        "english": "In the Name of Allah, the All-beneficent, the All-merciful."
+      },
+      {
+        "arabic": "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَآلِ مُحَمَّدٍ",
+        "transliteration": "allahumma salli `ala muhammadin wa ali muhammadin",
+        "english": "O Allah, bless Muhammad and the Household of Muhammad."
+      },
+      {
+        "arabic": "اللَّهُمَّ ٱفْعَلْ بِي مَا انْتَ اهْلُهُ",
+        "transliteration": "allahumma if`al bi ma anta ahluhu",
+        "english": "O Allah, do to me that which You are worthy to do."
+      },
+      {
+        "arabic": "آمِينَ آمِينَ",
+        "transliteration": "amina amina",
+        "english": "(please do) Respond, respond."
+      },
+      {
+        "arabic": "قُلْ هُوَ ٱللَّهُ احَدٌ",
+        "transliteration": "qul huwa allahu ahadun",
+        "english": "Say: He, Allah, is One."
+      },
+      {
+        "isSeparator": true,
+        "english": "You should then say the following:"
+      },
+      {
+        "arabic": "اللَّهُمَّ ٱصْنَعْ بِي مَا انْتَ اهْلُهُ",
+        "transliteration": "allahumma isna` bi ma anta ahluhu",
+        "english": "O Allah, do with me that which You are worthy to do"
+      },
+      {
+        "arabic": "وَلاَ تَصْنَعْ بِي مَا انَا اهْلُهُ",
+        "transliteration": "wa la tasna` bi ma ana ahluhu",
+        "english": "but do not do to me that which I deserve,"
+      },
+      {
+        "arabic": "فَإِنَّكَ اهْلُ ٱلتَّقْوَىٰ وَاهْلُ ٱلْمَغْفِرَةِ",
+        "transliteration": "fa'innaka ahlu alttaqwa wa ahlu almaghfirati",
+        "english": "for You are worthy to be feared and worthy to forgive,"
+      },
+      {
+        "arabic": "وَانَا اهْلُ ٱلذُّنُوبِ وَٱلْخَطَايَا",
+        "transliteration": "wa ana ahlu aldhdhunubi walkhataya",
+        "english": "while I am the one of sins and faults."
+      },
+      {
+        "arabic": "فَٱرْحَمْنِي يَا مَوْلاَيَ",
+        "transliteration": "farhamni ya mawlaya",
+        "english": "So, have mercy upon me, O my Lord,"
+      },
+      {
+        "arabic": "وَانْتَ ارْحَمُ ٱلرَّاحِمِينَ",
+        "transliteration": "wa anta arhamu alrrahimina",
+        "english": "and You are the most merciful of all those who show mercy."
+      },
+      {
+        "isSeparator": true,
+        "english": "Then repeat the following ten times:"
+      },
+      {
+        "arabic": "لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِٱللَّهِ",
+        "transliteration": "la hawla wa la quwwata illa billahi",
+        "english": "There is neither power nor might save with Allah."
+      },
+      {
+        "arabic": "تَوَكَّلْتُ عَلَىٰ ٱلْحَيِّ ٱلَّذِي لاَ يَمُوتُ",
+        "transliteration": "tawakkaltu `ala alhayyi alladhi la yamutu",
+        "english": "I trust in the Ever-living (Lord) Who never dies."
+      },
+      {
+        "arabic": "وَٱلْحَمْدُ لِلَّهِ ٱلَّذِي لَمْ يَتَّخِذْ وَلَداً",
+        "transliteration": "walhamdu lillahi alladhi lm yattakhidh waladan",
+        "english": "All praise be to Allah, Who begets no son,"
+      },
+      {
+        "arabic": "وَلَمْ يَكُنْ لَهُ شَرِيكٌ فِي ٱلْمُلْكِ",
+        "transliteration": "wa lam yakun lahu sharikun fi almulki",
+        "english": "and has no partner in His dominion"
+      },
+      {
+        "arabic": "وَلَمْ يَكُنْ لَهُ وَلِيٌّ مِنَ ٱلذُّلِّ",
+        "transliteration": "wa lam yakun lahu waliyyun mina aldhdhulli",
+        "english": "nor needs He any to protect Him from humiliation:"
+      },
+      {
+        "arabic": "وَكَبِّرْهُ تَكْبِيراً",
+        "transliteration": "wa kabbirhu takbiran",
+        "english": "yea, magnify Him for His greatness and glory!"
+      }

@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Lateef&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-serif: "Cormorant Garamond", serif;
   --font-sans: "Inter", sans-serif;
-  --font-arabic: "Amiri", serif;
+  --font-arabic: "Amiri Quran", "Amiri", serif;
+  --font-display: "Cinzel", serif;
   
   --color-warm-bg: #fdfbf7;
   --color-olive: #5a5a40;
@@ -25,4 +26,8 @@ body {
 
 .font-arabic {
   font-family: var(--font-arabic);
+}
+
+.font-display {
+  font-family: var(--font-display);
 }

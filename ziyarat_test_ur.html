@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" href="assets/css/style.css?v=33">
+</head>
+
+<body class="lang-ur">
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+let pageName = "maf_ziy124";
+
+if (typeof gtag === "function") {
+
+gtag('event', 'dua_open', {
+    'dua_name': pageName
+});
+
+}
+
+});
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L333RSVPNG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-L333RSVPNG');
+</script>
+
+
+<div class="main-header">
+
+    <!-- DESKTOP LANG -->
+    <div class="header-left desktop-lang">
+        
+        <span id="settingsBtn" class="icon-btn">⚙️</span>
+        
+        <a href="?cat=maf_ziy124&lang=en" class="lang-link ">EN</a>
+        <a href="?cat=maf_ziy124&lang=ur" class="lang-link active">اردو</a>
+        <a href="?cat=maf_ziy124&lang=ro" class="lang-link ">RO</a>
+        <a href="?cat=maf_ziy124&lang=az" class="lang-link ">AZ</a>
+    </div>
+
+    <!-- MOBILE LANGUAGE BUTTON -->
+    
+    <div class="mobile-lang-btn" id="langToggle">🌐</div>
+    
+    <span id="settingsBtnMobile" class="icon-btn mobile-lang-btn">⚙️</span>
+    
+    
+    <!-- MOBILE MENU -->
+    <div class="mobile-lang-menu" id="langMenu">
+        
+        <a href="?cat=maf_ziy124&lang=en">English</a>
+        <a href="?cat=maf_ziy124&lang=ur">اردو</a>
+        <a href="?cat=maf_ziy124&lang=ro">Roman</a>
+        <a href="?cat=maf_ziy124&lang=az">Azerbaijani</a>
+    </div>
+<div class="mobile-menu-btn" id="menuToggle">☰</div>
+    <!-- LOGO -->
+    <div class="header-center">
+        <img src="assets/logo2.png" class="logo">
+    </div>
+<div class="mobile-menu" id="mobileMenu">
+
+<a href="index.php?lang=ur">🏠 Home</a>
+<a href="favorites.php?lang=ur">⭐ Favorites</a>
+<a href="#" id="mobileSearch">🔍 Search</a>
+<a href="#" id="mobileSettings">⚙ Settings</a>
+<a href="videos.php?lang=ur">🎥 Videos</a>
+
+</div>
+    <!-- RIGHT -->
+    <div class="header-right">
+        <a href="favorites.php?lang=ur" class="icon-btn">⭐</a>
+        <a href="index.php?lang=ur" class="icon-btn">🏠</a>
+        <span class="icon-btn" id="searchToggle">🔍</span>
+    </div>
+
+</div>
+
+<div class="search-bar" id="searchBar">
+
+<input type="text" placeholder="Search..." id="searchInput" autocomplete="off">
+
+<div id="searchSuggestions"></div>
+
+</div>
+
+    
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const input = document.getElementById("searchInput");
+const box = document.getElementById("searchSuggestions");
+
+if(!input) return;
+
+input.addEventListener("input", function(){
+
+let q = input.value.trim();
+
+if(q.length < 2){
+box.style.display = "none";
+return;
+}
+
+let lang = document.body.className.replace("lang-","") || "en";
+
+fetch("search-category.php?q=" + encodeURIComponent(q) + "&lang=" + lang)
+.then(r => r.json())
+.then(data => {
+
+if(!data || data.length === 0){
+box.style.display = "none";
+return;
+}
+
+let html = "";
+
+data.forEach(item => {
+html += `<div class="search-item" data-code="${item.code}">
+${item.title}
+</div>`;
+});
+
+box.innerHTML = html;
+box.style.display = "block";
+
+});
+
+});
+
+/* click suggestion */
+
+document.addEventListener("click", function(e){
+
+if(e.target.classList.contains("search-item")){
+
+let code = e.target.dataset.code;
+let lang = document.body.className.replace("lang-","") || "en";
+
+window.location =
+"category.php?code=" + encodeURIComponent(code) +
+"&lang=" + lang;
+
+}
+
+});
+
+});
+/* ================= MOBILE MENU ================= */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const menuToggle = document.getElementById("menuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
+
+if(!menuToggle || !mobileMenu) return;
+
+/* TOGGLE MENU */
+
+menuToggle.addEventListener("click", function(e){
+
+e.stopPropagation();   // prevent outside-click from firing
+
+if(mobileMenu.style.display === "block"){
+
+mobileMenu.style.display = "none";
+
+}else{
+
+mobileMenu.style.display = "block";
+mobileMenu.style.animation = "menuDrop 0.2s ease";
+
+}
+
+});
+
+/* MOBILE SETTINGS */
+
+const mobileSettings = document.getElementById("mobileSettings");
+
+if(mobileSettings){
+
+mobileSettings.addEventListener("click", function(e){
+
+e.preventDefault();
+e.stopPropagation();
+
+/* OPEN SETTINGS PANEL DIRECTLY */
+
+const settingsPanel = document.getElementById("settingsPanel");
+
+if(settingsPanel){
+settingsPanel.style.display = "block";
+}
+
+/* CLOSE MENU */
+
+const mobileMenu = document.getElementById("mobileMenu");
+
+if(mobileMenu){
+mobileMenu.style.display = "none";
+}
+
+});
+
+}
+
+/* CLOSE MENU WHEN CLICKING OUTSIDE */
+
+document.addEventListener("click", function(e){
+
+if(!mobileMenu.contains(e.target) && e.target !== menuToggle){
+
+mobileMenu.style.display = "none";
+
+}
+
+});
+
+});
+
+/* MOBILE SEARCH */
+
+const mobileSearch = document.getElementById("mobileSearch");
+
+if(mobileSearch){
+
+mobileSearch.addEventListener("click", function(e){
+
+e.preventDefault();
+
+const searchBar = document.getElementById("searchBar");
+
+if(searchBar){
+
+searchBar.classList.toggle("show");
+
+searchBar.scrollIntoView({behavior:"smooth"});
+
+}
+
+mobileMenu.style.display = "none";
+
+});
+
+}
+</script>
+
+<div class="audio-bar">
+    <button id="playBtn">▶</button>
+    <input type="range" id="progress" value="0" step="1">
+    <span id="time">0:00</span>
+    <audio id="audioPlayer" src="https://www.ya-mahdi.net/apps_audio/mahdi_sedghi/aleyasin_sedqi.m4a"></audio>
+</div>
+
+
+
+
+<div class="breadcrumb-wrap">
+
+<div class="breadcrumb">
+
+<a href="index.php?lang=ur">Home</a>
+
+
+<span class="sep">›</span>
+
+<a href="category.php?code=maf_ziy&lang=ur">
+زیارات</a>
+
+
+<span class="sep">›</span>
+
+<a href="category.php?code=maf_ziy124&lang=ur">
+زیارت اٰلِ يٰسٓ</a>
+
+
+</div>
+
+<span id="favBtn" class="fav-btn">☆</span>
+
+</div>
+
+<div class="container">
+<div class="card big-card">
+
+<div class='translation'>زیارت اٰلِ يٰسٓ</div><div class='translation'>شیخ جلیل احمد بن ابوطالب طبرسی نے اپنی کتاب شریف احتجاج میں یہ روایت نقل کی ہے کہ امام عصرؑ کی طرف سے محمد حمیدی کے پاس خط آیا جس میں سوالات کے جوابات کے بعد لکھا تھا۔</div></div><div class='arabic arabic-line first-arabic'>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class='card big-card'><div class='arabic arabic-line'>لَا لِاَمْرِهِ تَعْقِلُوْنَ</div><div class='arabic arabic-line'>وَ لَا مِنْ اَوْلِيَاۤئِهِ تَقْبَلُوْنَ</div><div class='arabic arabic-line'>حِكْمَةٌ بَالِغَةٌ فَمَا تُغْنِيْ النُّذُرُ</div><div class='arabic arabic-line'>عَنْ قَوْمٍ لَایُؤْمِنُونَ،</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْنَا وَ عَلٰى عِبَادِ اللّٰهِ الصَّالِحِيْنَ</div><div class='translation'>بہر حال جب کبھی چاہو کہ ہمارے ذریعہ خدا کی طرف یا ہماری طرف توجہ کرو تو ویسے کہو جیسے پروردگار نے فرمایا ہے۔</div><div class='arabic arabic-line'>سَلَامٌ عَلٰىۤ اٰلِ يٰسٓ,</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ يَا دَاعِيَ اللّٰهِ وَ رَبَّانِيَّ اٰيَاتِهِ،</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ يَا بَابَ اللّٰهِ وَ دَيَّانَ دِيْنِهِ،</div><div class='arabic arabic-line'>اَلسَّلَام�� عَلَيْكَ يَا خَلِيْفَةَ اللّٰهِ وَ نَاصِرَ حَقِّهِ،</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ يَا حُجَّةَ اللّٰهِ وَ دَلِيْلَ اِرَادَتِهِ،</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ يَا تَالِيَ كِتَابِ اللّٰهِ وَ تَرْجُمَانَهُ،</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ فِيۤ اٰنَاۤءِ لَيْلِكَ وَ اَطْرَافِ نَهَارِكَ،</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ يَا بَقِيَّةَ اللّٰهِ فِيْ اَرْضِهِ،</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ يَا مِيْثَاقَ اللّٰهِ، الَّذِيْ اَخَذَهُ وَ وَكَّدَهُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ يَا وَعْدَ اللّٰهِ، الَّذِيْ ضَمِنَهُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ اَيُّهَا الْعَلَمُ الْمَنْصُوْبُ،</div><div class='arabic arabic-line'>وَ الْعِلْمُ الْمَصْبُوْبُ،</div><div class='arabic arabic-line'>وَ الْغَوْثُ وَ الرَّحْمَةُ الْوَاسِعَةُ</div><div class='arabic arabic-line'>وَعْدًا غَيْرَ مَكْذُوْبٍ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تَقُوْمُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تَقْعُدُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تَقْرَاُ وَ تُبَيِّنُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تُصَلِّيْ وَ تَقْنُتُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تَرْكَعُ وَ تَسْجُدُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تُهَلِّلُ وَ تُكَبِّرُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تَحْمَدُ وَ تَسْتَغْفِرُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ حِيْنَ تُصْبِحُ وَ تُمْسِيۤ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ فِي اللَّيْلِ اِذَا يَغْشٰى،</div><div class='arabic arabic-line'>وَ النَّهَارِ اِذَا تَجَلّٰىۤ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ اَيُّهَا الْاِمَامُ الْمَأْمُوْنُ.</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ اَيُّهَا الْمُقَدَّمُ الْمَأْمُوْلُ</div><div class='arabic arabic-line'>اَلسَّلَامُ عَلَيْكَ بِجَوَامِعِ السَّلَامِ.</div><div class='arabic arabic-line'>اُشْهِدُكَ يَا مَوْلَايَ،</div><div class='arabic arabic-line'>اَنِّيۤ اَشْهَدُ اَنْ لَاۤ اِلٰهَ اِلَّا اللّٰهُ،</div><div class='arabic arabic-line'>وَحْدَهُ لَا شَرِيْكَ لَهُ،</div><div class='arabic arabic-line'>وَ اَنَّ مُحَمَّدًا عَبْدُهُ وَ رَسُوْلُهُ،</div><div class='arabic arabic-line'>لَا حَبِيْبَ اِلَّا هُوَ وَ اَهْلُهُ،</div><div class='arabic arabic-line'>وَ اُشْهِدُكَ يَا مَوْلَايَ،</div><div class='arabic arabic-line'>اَنَّ عَلِيًّا اَمِيْرَ الْمُؤْمِنِيْنَ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ الْحَسَنَ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ الْحُسَيْنَ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ عَلِيَّ بْنَ الْحُسَيْنِ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ مُحَمَّدَ بْنَ عَلِيٍّ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ جَعْفَرَ بْنَ مُحَمَّدٍ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ مُوْسَى بْنَ جَعْفَرٍ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ عَلِيَّ بْنَ مُوْسٰى حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ مُحَمَّدَ بْنَ عَلِيٍّ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ عَلِيَّ بْنَ مُحَمَّدٍ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ الْحَسَنَ بْنَ عَلِيٍّ حُجَّتُهُ،</div><div class='arabic arabic-line'>وَ اَشْهَدُ اَنَّكَ حُجَّةُ اللّٰهِ،</div><div class='arabic arabic-line'>اَنْتُمُ الْاَوَّلُ وَ الْاٰخِرُ،</div><div class='arabic arabic-line'>وَ اَنَّ رَجْعَتَكُمْ حَقٌّ لَا رَيْبَ فِيْهَا،</div><div class='arabic arabic-line'>يَوْمَ لَا يَنْفَعُ نَفْسًا اِيْمَانُهَا،</div><div class='arabic arabic-line'>لَمْ تَكُنْ اٰمَنَتْ مِنْ قَبْلُ</div><div class='arabic arabic-line'>اَوْ كَسَبَتْ فِيۤ اِيْمَانِهَا خَيْرًا.</div><div class='arabic arabic-line'>وَ اَنَّ الْمَوْتَ حَقٌّ،</div><div class='arabic arabic-line'>وَ اَنَّ نَاكِرًا وَ نَكِيْرًا حَقٌّ،</div><div class='arabic arabic-line'>وَ اَشْهَدُ اَنَّ النَّشْرَ حَقٌّ،</div><div class='arabic arabic-line'>وَ الْبَعْثَ حَقٌّ،</div><div class='arabic arabic-line'>وَ اَنَّ الصِّرَاطَ حَقٌّ،</div><div class='arabic arabic-line'>وَ الْمِرْصَادَ حَقٌّ،</div><div class='arabic arabic-line'>وَ الْمِيْزَانَ حَقٌّ،</div><div class='arabic arabic-line'>وَ الْحَشْرَ حَقٌّ،</div><div class='arabic arabic-line'>وَ الْحِسَابَ حَقٌّ،</div><div class='arabic arabic-line'>وَ الْجَنَّةَ وَ النَّارَ حَقٌّ،</div><div class='arabic arabic-line'>وَ الْوَعْدَ وَ الْوَعِيْدَ بِهِمَا حَقٌّ.</div><div class='arabic arabic-line'>يَا مَوْلَايَ شَقِيَ مَنْ خَالَفَكُمْ،</div><div class='arabic arabic-line'>وَ سَعِدَ مَنْ اَطَاعَكُمْ،</div><div class='arabic arabic-line'>فَاشْهَدْ عَلٰى مَاۤ اَشْهَدْتُكَ عَلَيْهِ،</div><div class='arabic arabic-line'>وَ اَنَا وَلِيٌّ لَكَ،</div><div class='arabic arabic-line'>بَرِيۤ‏ءٌ مِنْ عَدُوِّكَ،</div><div class='arabic arabic-line'>فَالْحَقُّ مَا رَضِيْتُمُوْهُ،</div><div class='arabic arabic-line'>وَ الْبَاطِلُ مَاۤ اَسْخَطْتُمُوْهُ،</div><div class='arabic arabic-line'>وَ الْمَعْرُوْفُ مَاۤ اَمَرْتُمْ بِهِ،</div><div class='arabic arabic-line'>وَ الْمُنْكَرُ مَا نَهَيْتُمْ عَنْهُ،</div><div class='arabic arabic-line'>فَنَفْسِيْ مُؤْمِنَةٌ بِاللّٰهِ،</div><div class='arabic arabic-line'>وَحْدَهُ لَا شَرِيْكَ لَهُ،</div><div class='arabic arabic-line'>وَ بِرَسُوْلِهِ وَ بِاَمِيْرِ الْمُؤْمِنِيْنَ،</div><div class='arabic arabic-line'>وَ بِكُمْ يَا مَوْلَايَ، اَوَّلِكُمْ وَ اٰخِرِكُمْ،</div><div class='arabic arabic-line'>وَ نُصْرَتِيْ مُعَدَّةٌ لَكُمْ،</div><div class='arabic arabic-line'>وَ مَوَدَّتِيْ خَالِصَةٌ لَكُمْ،</div><div class='arabic arabic-line'>اٰمِيْنَ اٰمِيْنَ۔</div><div class='arabic arabic-line'>اَللّٰهُمَّ اِنِّيۤ اَسْاَلُكَ، اَنْ تُصَلِّيَ عَلٰى مُحَمَّدٍ</div><div class='translation'>اس کے بعد یہ دعا پڑھے۔</div><div class='arabic arabic-line'>نَبِيِّ رَحْمَتِكَ، وَ كَلِمَةِ نُوْرِكَ،</div><div class='arabic arabic-line'>وَ اَنْ تَمْلَاَ قَلْبِيْ نُورَ الْيَقِيْنِ،</div><div class='arabic arabic-line'>وَ صَدْرِيْ نُوْرَ الْاِيْمَانِ،</div><div class='arabic arabic-line'>وَ فِكْرِيْ نُوْرَ النِّيَّاتِ،</div><div class='arabic arabic-line'>وَ عَزْمِيْ نُوْرَ الْعِلْمِ،</div><div class='arabic arabic-line'>وَ قُوَّتِيْ نُوْرَ الْعَمَلِ،</div><div class='arabic arabic-line'>وَ لِسَانِيْ نُوْرَ الصِّدْقِ،</div><div class='arabic arabic-line'>وَ دِيْنِيْ نُوْرَ الْبَصَاۤئِرِ مِنْ عِنْدِكَ،</div><div class='arabic arabic-line'>وَ بَصَرِيْ نُوْرَ الضِّيَاۤءِ،</div><div class='arabic arabic-line'>وَ سَمْعِيْ نُوْرَ الْحِكْمَةِ،</div><div class='arabic arabic-line'>وَ مَوَدَّتِيْ نُوْرَ الْمُوَالَاةِ لِمُحَمَّدٍ وَ اٰلِهِ</div><div class='arabic arabic-line'>عَلَيْهِمُ السَّلَامُ،</div><div class='arabic arabic-line'>حَتّٰىۤ اَلْقَاكَ وَ قَدْ وَفَيْتُ بِعَهْدِكَ وَ مِيْثَاقِكَ،</div><div class='arabic arabic-line'>فَتُغَشِّيَنِيْ رَحْمَتَكَ [رَحْمَتُكَ‏]</div><div class='arabic arabic-line'>يَا وَلِيُّ يَا حَمِيْدُ.</div><div class='arabic arabic-line'>اَللّٰهُمَّ صَلِّ عَلٰى مُحَمَّدٍ</div><div class='arabic arabic-line'>حُجَّتِكَ فِيۤ اَرْضِكَ،</div><div class='arabic arabic-line'>وَ خَلِيْفَتِكَ فِيْ بِلَادِكَ،</div><div class='arabic arabic-line'>وَ الدَّاعِيۤ اِلٰى سَبِيْلِكَ،</div><div class='arabic arabic-line'>وَ الْقَاۤئِمِ بِقِسْطِكَ،</div><div class='arabic arabic-line'>وَ الثَّاۤئِرِ بِاَمْرِكَ،</div><div class='arabic arabic-line'>وَلِيِّ الْمُؤْمِنِيْنَ</div><div class='arabic arabic-line'>وَ بَوَارِ الْكَافِرِيْنَ،</div><div class='arabic arabic-line'>وَ مُجَلِّيْ الظُّلْمَةِ</div><div class='arabic arabic-line'>وَ مُنِيْرِ الْحَقِّ،</div><div class='arabic arabic-line'>وَ النَّاطِقِ بِالْحِكْمَةِ وَ الصِّدْقِ،</div><div class='arabic arabic-line'>وَ كَلِمَتِكَ التَّآمَّةِ فِيۤ اَرْضِكَ،</div><div class='arabic arabic-line'>الْمُرْتَقِبِ الْخَاۤئِفِ،</div><div class='arabic arabic-line'>وَ الْوَلِيِّ النَّاصِحِ،</div><div class='arabic arabic-line'>سَفِيْنَةِ النَّجَاةِ</div><div class='arabic arabic-line'>وَ عَلَمِ الْهُدٰى،</div><div class='arabic arabic-line'>وَ نُوْرِ اَبْصَارِ الْوَرٰى،</div><div class='arabic arabic-line'>وَ خَيْرِ مَنْ تَقَمَّصَ وَ ارْتَدٰى،</div><div class='arabic arabic-line'>وَ مُجَلِّي الْعَمٰىۤ،</div><div class='arabic arabic-line'>اَلَّذِيْ يَمْلَاُ الْاَرْضَ عَدْلًا وَ قِسْطًا،</div><div class='arabic arabic-line'>كَمَا مُلِئَتْ ظُلْمًا وَ جَوْرًا،</div><div class='arabic arabic-line'>اِنَّكَ عَلٰى كُلِّ شَيْ‏ءٍ قَدِيْرٌ.</div><div class='arabic arabic-line'>اَللّٰهُمَّ صَلِّ عَلٰى وَلِيِّكَ</div><div class='arabic arabic-line'>وَ ابْنِ اَوْلِيَاۤئِكَ، الَّذِيْنَ فَرَضْتَ طَاعَتَهُمْ،</div><div class='arabic arabic-line'>وَ اَوْجَبْتَ حَقَّهُمْ،</div><div class='arabic arabic-line'>وَ اَذْهَبْتَ عَنْهُمُ الرِّجْسَ</div><div class='arabic arabic-line'>وَ طَهَّرْتَهُمْ تَطْهِيْرًا.</div><div class='arabic arabic-line'>اَللّٰهُمَّ انْصُرْهُ وَ انْتَصِرْ بِهِ لِدِيْنِكَ،</div><div class='arabic arabic-line'>وَ انْصُرْ بِهِ اَوْلِيَاۤءَكَ، وَ اَوْلِيَاۤءَهُ</div><div class='arabic arabic-line'>وَ شِيْعَتَهُ وَ اَنْصَارَهُ</div><div class='arabic arabic-line'>وَ اجْعَلْنَا مِنْهُمْ.</div><div class='arabic arabic-line'>اَللّٰهُمَّ اَعِذْهُ مِنْ شَرِّ كُلِّ بَاغٍ وَ طَاغٍ،</div><div class='arabic arabic-line'>وَ مِنْ شَرِّ جَمِيْعِ خَلْقِكَ،</div><div class='arabic arabic-line'>وَ احْفَظْهُ مِنْ بَيْنِ يَدَيْهِ وَ مِنْ خَلْفِهِ</div><div class='arabic arabic-line'>وَ عَنْ يَمِيْنِهِ وَ عَنْ شِمَالِهِ،</div><div class='arabic arabic-line'>وَ احْرُسْهُ وَ امْنَعْهُ مِنْ اَنْ يُوْصَلَ اِلَيْهِ بِسُوۤءٍ،</div><div class='arabic arabic-line'>وَ احْفَظْ فِيْهِ رَسُوْلَكَ وَ اٰلَ رَسُوْلِكَ،</div><div class='arabic arabic-line'>وَ اَظْهِرْ بِهِ الْعَدْلَ،</div><div class='arabic arabic-line'>وَ اَيِّدْهُ بِالنَّصْرِ،</div><div class='arabic arabic-line'>وَ انْصُرْ نَاصِرِيْهِ،</div><div class='arabic arabic-line'>وَ اخْذُلْ خَاذِلِيْهِ،</div><div class='arabic arabic-line'>وَ اقْصِمْ قَاصِمِيْهِ،</div><div class='arabic arabic-line'>وَ اقْصِمْ بِهِ جَبَابِرَةَ الْكُفْرِ،</div><div class='arabic arabic-line'>وَ اقْتُلْ بِهِ الْكُفَّارَ وَ الْمُنَافِقِيْنَ</div><div class='arabic arabic-line'>وَ جَمِيْعَ الْمُلْحِدِيْنَ،</div><div class='arabic arabic-line'>حَيْثُ كَانُوْا مِنْ مَشَارِقِ الْاَرْضِ وَ مَغَارِبِهَا،</div><div class='arabic arabic-line'>بَرِّهَا وَ بَحْرِهَا،</div><div class='arabic arabic-line'>وَ امْلَأْ بِهِ الْاَرْضَ عَدْلًا،</div><div class='arabic arabic-line'>وَ اَظْهِرْ بِهِ دِيْنَ نَبِيِّكَ،</div><div class='arabic arabic-line'>صَلَّى اللّٰهُ عَلَيْهِ وَ اٰلِهِ،</div><div class='arabic arabic-line'>وَ اجْعَلْنِيْ اللّٰهُمَّ مِنْ اَنْصَارِهِ وَ اَعْوَانِهِ</div><div class='arabic arabic-line'>وَ اَتْبَاعِهِ وَ شِيْعَتِهِ،</div><div class='arabic arabic-line'>وَ اَرِنِيْ فِيۤ اٰلِ مُحَمَّدٍ عَلَيْهِمُ السَّلَامُ مَا يَأْمُلُوْنَ،</div><div class='arabic arabic-line'>وَ فِي عَدُوِّهِمْ مَا يَحْذَرُوْنَ،</div><div class='arabic arabic-line'>اِلٰهَ الْحَقِّ، اٰمِيْنَ</div><div class='arabic arabic-line'>يَا ذَا الْجَلَالِ وَ الْاِكْرَامِ،</div><div class='arabic arabic-line'>يَاۤ اَرْحَمَ الرَّاحِمِيْنَ۔</div>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* ================= SEARCH ================= */
+    const searchToggle = document.getElementById('searchToggle');
+    const searchBar = document.getElementById('searchBar');
+
+    if (searchToggle && searchBar) {
+        searchToggle.addEventListener("click", function () {
+            searchBar.style.display =
+                (searchBar.style.display === 'block') ? 'none' : 'block';
+        });
+    }
+
+    /* ================= MOBILE LANGUAGE MENU ================= */
+    const langToggle = document.getElementById("langToggle");
+    const langMenu   = document.getElementById("langMenu");
+
+    if (langToggle && langMenu) {
+
+        langToggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            langMenu.style.display =
+                (langMenu.style.display === "block") ? "none" : "block";
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!langMenu.contains(e.target) && e.target !== langToggle) {
+                langMenu.style.display = "none";
+            }
+        });
+    }
+
+    /* ================= AUDIO ================= */
+    const audio = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playBtn');
+    const progress = document.getElementById('progress');
+    const time = document.getElementById('time');
+
+    if (audio && playBtn && progress && time) {
+
+        playBtn.addEventListener("click", function () {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "❚❚";
+            } else {
+                audio.pause();
+                playBtn.textContent = "▶";
+            }
+        });
+
+        audio.addEventListener("timeupdate", function () {
+            if (audio.duration) {
+                progress.value = (audio.currentTime / audio.duration) * 100;
+            }
+
+            const mins = Math.floor(audio.currentTime / 60);
+            const secs = Math.floor(audio.currentTime % 60).toString().padStart(2,'0');
+            time.textContent = mins + ":" + secs;
+        });
+
+        progress.addEventListener("input", function () {
+            if (audio.duration) {
+                audio.currentTime = (progress.value / 100) * audio.duration;
+            }
+        });
+    }
+
+    /* ================= TRANSLATION TOGGLE ================= */
+    function applyTranslationSetting() {
+        const showTrans = localStorage.getItem("showTranslation") || "on";
+        document.querySelectorAll(".translatable").forEach(function(el) {
+            el.style.display = (showTrans === "off") ? "none" : "block";
+        });
+    }
+
+    /* ================= FONT SIZE CONTROL ================= */
+    function applyFontSettings() {
+        const arabicSize = localStorage.getItem("arabicFontSize") || 30;
+        const transSize  = localStorage.getItem("transFontSize") || 18;
+
+        document.querySelectorAll(".arabic").forEach(function(el) {
+            el.style.fontSize = arabicSize + "px";
+        });
+
+        document.querySelectorAll(".translation").forEach(function(el) {
+            el.style.fontSize = transSize + "px";
+        });
+    }
+
+    const toggleTrans = document.getElementById("toggleTrans");
+    const arabicSize  = document.getElementById("arabicSize");
+    const transSize   = document.getElementById("transSize");
+
+    if (toggleTrans) {
+        toggleTrans.checked =
+            (localStorage.getItem("showTranslation") || "on") !== "off";
+
+        toggleTrans.addEventListener("change", function () {
+            localStorage.setItem("showTranslation", this.checked ? "on" : "off");
+            applyTranslationSetting();
+        });
+    }
+
+    if (arabicSize) {
+        arabicSize.value = localStorage.getItem("arabicFontSize") || 30;
+
+        arabicSize.addEventListener("input", function () {
+            localStorage.setItem("arabicFontSize", this.value);
+            applyFontSettings();
+        });
+    }
+
+    if (transSize) {
+        transSize.value = localStorage.getItem("transFontSize") || 18;
+
+        transSize.addEventListener("input", function () {
+            localStorage.setItem("transFontSize", this.value);
+            applyFontSettings();
+        });
+    }
+
+    applyTranslationSetting();
+    applyFontSettings();
+
+});
+</script>
+<div id="settingsPanel" style="
+position: fixed;
+right: 20px;
+bottom: 90px;
+background: white;
+border-radius: 12px;
+padding: 14px;
+box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+display: none;
+z-index: 9999;
+width: 220px;
+font-size: 14px;
+">
+
+<b>Translation</b><br>
+<label>
+<input type="checkbox" id="toggleTrans"> Show Translation
+</label>
+<hr>
+
+<b>Arabic Font</b><br>
+<input type="range" id="arabicSize" min="18" max="40">
+
+<br><br>
+
+<b>Translation Font</b><br>
+<input type="range" id="transSize" min="14" max="30">
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsBtnMobile = document.getElementById("settingsBtnMobile");
+const settingsPanel = document.getElementById("settingsPanel");
+
+/* OPEN / CLOSE SETTINGS */
+
+function toggleSettings(e){
+
+e.stopPropagation();
+
+if(!settingsPanel) return;
+
+settingsPanel.style.display =
+settingsPanel.style.display === "block" ? "none" : "block";
+
+}
+
+/* attach buttons */
+
+if(settingsBtn){
+settingsBtn.addEventListener("click", toggleSettings);
+}
+
+if(settingsBtnMobile){
+settingsBtnMobile.addEventListener("click", toggleSettings);
+}
+
+/* prevent closing when clicking inside */
+
+if(settingsPanel){
+settingsPanel.addEventListener("click", function(e){
+e.stopPropagation();
+});
+}
+
+/* close when clicking outside */
+
+document.addEventListener("click", function(){
+
+if(settingsPanel && settingsPanel.style.display === "block"){
+settingsPanel.style.display = "none";
+}
+
+});
+
+});
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const favBtn = document.getElementById("favBtn");
+
+if(!favBtn) return;
+
+let favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+let page = window.location.pathname + "?cat=maf_ziy124";
+
+function updateIcon(){
+if(favs.includes(page)){
+favBtn.textContent = "★";
+favBtn.classList.add("active");
+}else{
+favBtn.textContent = "☆";
+favBtn.classList.remove("active");
+}
+}
+
+updateIcon();
+
+favBtn.onclick = function(){
+
+if(favs.includes(page)){
+favs = favs.filter(p => p !== page);
+}else{
+favs.push(page);
+}
+
+localStorage.setItem("favorites", JSON.stringify(favs));
+updateIcon();
+
+};
+
+});
+
+</script>
+</body>
+</html>

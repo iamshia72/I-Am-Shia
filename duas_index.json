@@ -1,0 +1,53 @@
+{
+    "metadata": {
+        "title": "Duas.org - Home",
+        "description": "The largest collection of Duas and Ziaraat from the Holy Prophet (saww) and Ahlulbayt (AS)."
+    },
+    "navbar": {
+        "logo": "DUAS.org",
+        "logoImage": "./images_v2/duas_new_logo.png",
+        "links": [
+            {
+                "text": "Home",
+                "href": "index.html"
+            },
+            {
+                "text": "About",
+                "href": "#"
+            }
+        ]
+    },
+    "features": {
+        "title": "",
+        "items": [
+            {
+                "title": "Events & Recommended",
+                "description": "Events / recommendations based the day and date"
+            },
+            {
+                "title": "Daily Taqibat",
+                "description": "RegularPost-prayer supplications and invocations."
+            },
+            {
+                "title": "Ziyarat",
+                "description": "Comprehensive collection of Visitations for the Alhulbayt(as)."
+            },
+            {
+                "title": "Specific Needs",
+                "description": "Duas tailored for health, sustenance, protection, and forgiveness."
+            },
+            {
+                "title": "Sahifa of Masumeen",
+                "description": "Psalms and prayer collections from the Infallibles (AS)."
+            },
+            {
+                "title": "Sections",
+                "description": "Browse the library by category, topic, or source material."
+            }
+        ]
+    },
+    "footer": {
+        "copyright": "No Copyright - Extend credit if using the content",
+        "disclaimer": "* Hijri dates are indicative, may vary based on local moonsighting and rulings."
+    }
+}
