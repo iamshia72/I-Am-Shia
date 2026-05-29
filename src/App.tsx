@@ -652,6 +652,15 @@ export default function App() {
     return saved ? JSON.parse(saved) : {};
   });
 
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2800);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Track scroll position
   useEffect(() => {
     if (!selectedDua && !selectedZiyarat) return;
@@ -1335,6 +1344,94 @@ export default function App() {
 
   return (
     <AudioProvider>
+      <AnimatePresence>
+        {showSplash && (
+          <motion.div
+            key="splash-screen"
+            initial={{ opacity: 1 }}
+            exit={{ 
+              opacity: 0,
+              scale: 1.05,
+              filter: "blur(8px)",
+              transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } 
+            }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-between bg-olive max-w-md mx-auto p-8 overflow-hidden select-none"
+          >
+            {/* Top decorative geometric block */}
+            <div className="pt-8 opacity-20">
+              <div className="w-16 h-16 border border-gold/30 rounded-full rotate-45 flex items-center justify-center">
+                <div className="w-12 h-12 border border-dashed border-gold/40 rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 border border-gold/50 rounded-full" />
+                </div>
+              </div>
+            </div>
+
+            {/* Middle Logo & Title branding with ambient light radial circles */}
+            <div className="flex flex-col items-center justify-center relative w-full pt-12">
+              <div className="absolute w-72 h-72 rounded-full bg-gold/5 filter blur-[60px] animate-pulse" />
+              
+              {/* Spinning geometric halo */}
+              <div className="relative w-44 h-44 flex items-center justify-center">
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+                  className="absolute inset-0 border border-gold/15 rounded-[46px] opacity-60"
+                />
+                <motion.div 
+                  animate={{ rotate: -360 }}
+                  transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
+                  className="absolute inset-4 border border-dashed border-gold/10 rounded-full"
+                />
+                <div className="absolute inset-8 rounded-full bg-paper/5 border border-gold/20 flex items-center justify-center shadow-inner">
+                  <motion.div
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="text-gold"
+                  >
+                    <BookOpen size={48} className="drop-shadow-[0_0_15px_rgba(197,168,128,0.4)]" />
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Text titles */}
+              <div className="text-center mt-10 space-y-2 z-10">
+                <h1 className="font-serif text-5xl font-semibold tracking-[0.25em] text-gold drop-shadow-sm select-none">
+                  NOOR
+                </h1>
+                
+                <div className="flex items-center justify-center gap-3 w-48 mx-auto py-1">
+                  <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-gold/40" />
+                  <div className="w-1.5 h-1.5 rotate-45 bg-gold" />
+                  <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-gold/40" />
+                </div>
+
+                <p className="font-serif tracking-[0.35em] text-[11px] uppercase text-[#E5D5BC] font-medium opacity-90 select-none">
+                  SHIA COMPANION
+                </p>
+              </div>
+            </div>
+
+            {/* Bottom Quote & loading bar */}
+            <div className="w-full space-y-6 pb-12 z-10">
+              <div className="flex flex-col items-center text-center space-y-2">
+                <p className="text-xs text-[#E5D5BC]/85 font-serif tracking-widest uppercase font-medium select-none">
+                  Created By I Am SHIA
+                </p>
+              </div>
+
+              {/* Progress Line */}
+              <div className="w-36 h-[1.5px] bg-paper/10 mx-auto rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 2.4, ease: "easeInOut" }}
+                  className="h-full bg-gradient-to-r from-gold/50 via-gold to-gold/50"
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div 
         className="h-screen overflow-hidden flex flex-col max-w-md mx-auto bg-warm-bg shadow-xl"
         onTouchStart={onTouchStart}
@@ -2075,7 +2172,11 @@ function SettingsView({
       await signInWithPopup(auth, googleProvider);
     } catch (err: any) {
       console.error(err);
-      setAuthError(err?.message || "Failed to sign in. Please try again.");
+      if (err?.code === 'auth/popup-closed-by-user' || err?.message?.includes('popup-closed-by-user')) {
+        setAuthError("The pop-up was closed before completing Google Sign-In. If you are using the embedded browser preview, please open the app in a new window/tab (using the top-right button) to let the Google account sign-in pop-up run cleanly.");
+      } else {
+        setAuthError(err?.message || "Failed to sign in. Please try again.");
+      }
     } finally {
       setLocalSyncing(false);
     }
