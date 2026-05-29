@@ -652,14 +652,7 @@ export default function App() {
     return saved ? JSON.parse(saved) : {};
   });
 
-  const [showSplash, setShowSplash] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2800);
-    return () => clearTimeout(timer);
-  }, []);
 
   // Track scroll position
   useEffect(() => {
@@ -725,30 +718,69 @@ export default function App() {
   const mainRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<{ x: number, y: number } | null>(null);
   const [touchEnd, setTouchEnd] = useState<{ x: number, y: number } | null>(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
 
   // min swipe distance
-  const minSwipeDistance = 50;
+  const minSwipeDistance = 40;
 
   const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart({ x: e.targetTouches[0].clientX, y: e.targetTouches[0].clientY });
+    const firstTouch = e.touches[0] || e.changedTouches[0];
+    if (firstTouch) {
+      setTouchEnd(null);
+      setTouchStart({ x: firstTouch.clientX, y: firstTouch.clientY });
+    }
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd({ x: e.targetTouches[0].clientX, y: e.targetTouches[0].clientY });
+    const firstTouch = e.touches[0] || e.changedTouches[0];
+    if (firstTouch) {
+      setTouchEnd({ x: firstTouch.clientX, y: firstTouch.clientY });
+    }
   };
 
   const onTouchEnd = () => {
+    handleSwipeCheck();
+  };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('button') || target.closest('input') || target.closest('textarea') || target.closest('select') || target.closest('.no-swipe')) {
+      return;
+    }
+    setTouchEnd(null);
+    setTouchStart({ x: e.clientX, y: e.clientY });
+    setIsMouseDown(true);
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (isMouseDown && touchStart) {
+      setTouchEnd({ x: e.clientX, y: e.clientY });
+    }
+  };
+
+  const onMouseUp = () => {
+    if (isMouseDown) {
+      handleSwipeCheck();
+      setIsMouseDown(false);
+    }
+  };
+
+  const onMouseLeave = () => {
+    if (isMouseDown) {
+      handleSwipeCheck();
+      setIsMouseDown(false);
+    }
+  };
+
+  const handleSwipeCheck = () => {
     if (!touchStart || !touchEnd) return;
     const distanceX = touchStart.x - touchEnd.x;
     const distanceY = touchStart.y - touchEnd.y;
     
     const isRightSwipe = distanceX < -minSwipeDistance;
     
-    // Only trigger if horizontal movement is greater than vertical movement
-    if (Math.abs(distanceX) > Math.abs(distanceY)) {
-      // Swipe from left portion of screen to go back (generous edge threshold)
-      const edgeThreshold = 100; // px from left edge
+    if (Math.abs(distanceX) > Math.abs(distanceY) * 1.2) {
+      const edgeThreshold = 180; // generous left edge region mapping (180px)
       const canGoBack = activeTab !== 'home' || 
                         selectedDua !== null || 
                         selectedZiyarat !== null || 
@@ -760,6 +792,8 @@ export default function App() {
         goBack();
       }
     }
+    setTouchStart(null);
+    setTouchEnd(null);
   };
 
   const [bookmarks, setBookmarks] = useState<any[]>(() => {
@@ -1344,99 +1378,15 @@ export default function App() {
 
   return (
     <AudioProvider>
-      <AnimatePresence>
-        {showSplash && (
-          <motion.div
-            key="splash-screen"
-            initial={{ opacity: 1 }}
-            exit={{ 
-              opacity: 0,
-              scale: 1.05,
-              filter: "blur(8px)",
-              transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } 
-            }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-between bg-olive max-w-md mx-auto p-8 overflow-hidden select-none"
-          >
-            {/* Top decorative geometric block */}
-            <div className="pt-8 opacity-20">
-              <div className="w-16 h-16 border border-gold/30 rounded-full rotate-45 flex items-center justify-center">
-                <div className="w-12 h-12 border border-dashed border-gold/40 rounded-full flex items-center justify-center">
-                  <div className="w-6 h-6 border border-gold/50 rounded-full" />
-                </div>
-              </div>
-            </div>
-
-            {/* Middle Logo & Title branding with ambient light radial circles */}
-            <div className="flex flex-col items-center justify-center relative w-full pt-12">
-              <div className="absolute w-72 h-72 rounded-full bg-gold/5 filter blur-[60px] animate-pulse" />
-              
-              {/* Spinning geometric halo */}
-              <div className="relative w-44 h-44 flex items-center justify-center">
-                <motion.div 
-                  animate={{ rotate: 360 }}
-                  transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-                  className="absolute inset-0 border border-gold/15 rounded-[46px] opacity-60"
-                />
-                <motion.div 
-                  animate={{ rotate: -360 }}
-                  transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
-                  className="absolute inset-4 border border-dashed border-gold/10 rounded-full"
-                />
-                <div className="absolute inset-8 rounded-full bg-paper/5 border border-gold/20 flex items-center justify-center shadow-inner">
-                  <motion.div
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="text-gold"
-                  >
-                    <BookOpen size={48} className="drop-shadow-[0_0_15px_rgba(197,168,128,0.4)]" />
-                  </motion.div>
-                </div>
-              </div>
-
-              {/* Text titles */}
-              <div className="text-center mt-10 space-y-2 z-10">
-                <h1 className="font-serif text-5xl font-semibold tracking-[0.25em] text-gold drop-shadow-sm select-none">
-                  NOOR
-                </h1>
-                
-                <div className="flex items-center justify-center gap-3 w-48 mx-auto py-1">
-                  <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-gold/40" />
-                  <div className="w-1.5 h-1.5 rotate-45 bg-gold" />
-                  <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-gold/40" />
-                </div>
-
-                <p className="font-serif tracking-[0.35em] text-[11px] uppercase text-[#E5D5BC] font-medium opacity-90 select-none">
-                  SHIA COMPANION
-                </p>
-              </div>
-            </div>
-
-            {/* Bottom Quote & loading bar */}
-            <div className="w-full space-y-6 pb-12 z-10">
-              <div className="flex flex-col items-center text-center space-y-2">
-                <p className="text-xs text-[#E5D5BC]/85 font-serif tracking-widest uppercase font-medium select-none">
-                  Created By I Am SHIA
-                </p>
-              </div>
-
-              {/* Progress Line */}
-              <div className="w-36 h-[1.5px] bg-paper/10 mx-auto rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 2.4, ease: "easeInOut" }}
-                  className="h-full bg-gradient-to-r from-gold/50 via-gold to-gold/50"
-                />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
       <div 
-        className="h-screen overflow-hidden flex flex-col max-w-md mx-auto bg-warm-bg shadow-xl"
+        className="h-screen overflow-hidden flex flex-col max-w-md mx-auto bg-warm-bg shadow-xl select-none"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
       >
       {/* Header */}
       <header className="px-6 py-1 flex justify-between items-center border-b border-olive/10 bg-paper/50 backdrop-blur-md sticky top-0 z-50">
