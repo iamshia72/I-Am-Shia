@@ -697,12 +697,17 @@ export default function App() {
     
     // Only trigger if horizontal movement is greater than vertical movement
     if (Math.abs(distanceX) > Math.abs(distanceY)) {
-      // Only go back on Right Swipe (left to right) starting from the left edge
-      const edgeThreshold = 40; // px from edge
-      if (isRightSwipe && touchStart.x < edgeThreshold) {
-        if (activeTab !== 'home') {
-          goBack();
-        }
+      // Swipe from left portion of screen to go back (generous edge threshold)
+      const edgeThreshold = 100; // px from left edge
+      const canGoBack = activeTab !== 'home' || 
+                        selectedDua !== null || 
+                        selectedZiyarat !== null || 
+                        selectedSurahNumber !== null || 
+                        selectedNamaz !== null || 
+                        selectedSalawat !== null || 
+                        targetHadith !== null;
+      if (isRightSwipe && touchStart.x < edgeThreshold && canGoBack) {
+        goBack();
       }
     }
   };
@@ -796,6 +801,14 @@ export default function App() {
     }
     if (targetHadith) {
       setTargetHadith(null);
+      return;
+    }
+    if (selectedNamaz) {
+      setSelectedNamaz(null);
+      return;
+    }
+    if (selectedSalawat) {
+      setSelectedSalawat(null);
       return;
     }
 
@@ -1402,14 +1415,6 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
   const [nextPrayer, setNextPrayer] = useState<PrayerTime | null>(null);
   const [countdown, setCountdown] = useState<string>('');
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [hideUpdateBanner, setHideUpdateBanner] = useState(() => {
-    return localStorage.getItem('hide_update_banner_v1.0.2') === 'true';
-  });
-
-  const handleDismissBanner = () => {
-    localStorage.setItem('hide_update_banner_v1.0.2', 'true');
-    setHideUpdateBanner(true);
-  };
 
   const isEidDay = useMemo(() => {
     const { day, month } = getHijriDateParts(currentDate, settings.hijriOffset);
@@ -1490,47 +1495,6 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
       exit={{ opacity: 0 }}
       className="p-6 space-y-8"
     >
-      {/* Update Announcement Banner (Shows for 7 days, hidden after June 2, 2026 or when ignored) */}
-      {(() => {
-        if (hideUpdateBanner) return null;
-        const currentDate = new Date();
-        const expiryDate = new Date('2026-06-02T07:15:59Z');
-        if (currentDate < expiryDate) {
-          return (
-            <motion.div 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-gold/10 border border-gold/25 rounded-2xl p-4 flex items-start sm:items-center justify-between gap-3 text-sm text-olive shadow-sm"
-            >
-              <div className="flex items-start sm:items-center gap-3 flex-1">
-                <div className="w-2 h-2 rounded-full bg-gold animate-pulse shrink-0 mt-1.5 sm:mt-0" />
-                <p className="font-medium text-xs sm:text-sm leading-relaxed">
-                  <a 
-                    href="https://limewire.com/d/N1SBw#GRX4G2NV3Y" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="underline font-bold text-gold hover:text-gold/80 transition-colors cursor-pointer"
-                    style={{ textDecorationColor: 'var(--color-gold)' }}
-                  >
-                    Update
-                  </a>{' '}
-                  App now, uninstall previous version 1.0.1  and install new version 1.0.2. Already Updated Ignore this message
-                </p>
-              </div>
-              <button 
-                onClick={handleDismissBanner}
-                className="p-1 hover:bg-gold/15 rounded-full text-olive/60 hover:text-olive transition-colors shrink-0"
-                aria-label="Ignore message"
-                title="Ignore this message"
-              >
-                <X size={16} />
-              </button>
-            </motion.div>
-          );
-        }
-        return null;
-      })()}
-
       {/* Eid Mubarak Banner */}
       {isEidDay && (
         <div className="flex justify-center -mb-8">
@@ -1819,43 +1783,7 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
         );
       })()}
 
-      {/* Under Development Disclaimer */}
-      <motion.section 
-        whileHover={{ scale: 1.02, translateY: -5 }}
-        className="bg-gradient-to-br from-paper to-warm-bg/30 rounded-[28px] p-8 border border-gold/20 shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.15)] transition-all duration-300 text-center relative overflow-hidden group"
-      >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
-        <div className="flex flex-col items-center gap-3 mb-4">
-          <motion.div 
-            animate={{ 
-              rotateY: [0, 10, 0, -10, 0],
-              y: [0, -2, 0]
-            }}
-            transition={{ 
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="w-14 h-14 rounded-2xl bg-gold/10 flex items-center justify-center text-2xl shadow-inner border border-gold/5"
-          >
-            📢
-          </motion.div>
-          <h3 className="serif text-lg font-bold text-olive tracking-tight">Under Development</h3>
-        </div>
-        <div className="space-y-3 text-[12px] text-olive/80 leading-relaxed mx-auto max-w-sm">
-          <p className="font-medium italic">
-            "Noor Shia Companion is currently being crafted."
-          </p>
-          <p className="opacity-70">
-            Features, content, and design may evolve as we polish the experience. We appreciate your patience and feedback during this journey.
-          </p>
-        </div>
-        <div className="mt-4 flex justify-center gap-1">
-          <div className="w-1 h-1 rounded-full bg-gold/40"></div>
-          <div className="w-8 h-1 rounded-full bg-gold/20"></div>
-          <div className="w-1 h-1 rounded-full bg-gold/40"></div>
-        </div>
-      </motion.section>
+      {/* Under Development Disclaimer removed */}
     </motion.div>
   );
 }
@@ -2704,7 +2632,9 @@ function RecommendedSection({ settings, onNavigate, hijriDate, onSelectDua, onSe
   onSelectSalawat: (salawat: any) => void,
   onSelectNamaz: (namaz: any) => void
 }) {
-  const recommendations = useMemo(() => getDailyRecommendations(hijriDate, new Date()), [hijriDate]);
+  const recommendations = useMemo(() => {
+    return getDailyRecommendations(hijriDate, new Date()).filter(item => item.type !== 'event');
+  }, [hijriDate]);
   const t = useTranslation(settings.language);
 
   const getTypeColor = (type: string) => {
