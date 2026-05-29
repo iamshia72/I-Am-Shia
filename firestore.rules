@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net (default-deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Hardened Helper functions for security
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Validation Blueprint for User Sync Data
+    function isValidUserSync(data) {
+      return data.userId == request.auth.uid
+        && data.updatedAt == request.time
+        && (!('prayerSettings' in data) || data.prayerSettings is map)
+        && (!('readingProgress' in data) || data.readingProgress is map)
+        && (!('journalEntries' in data) || (data.journalEntries is list && data.journalEntries.size() <= 200))
+        && (!('bookmarks' in data) || (data.bookmarks is list && data.bookmarks.size() <= 200))
+        && (!('customTasbihs' in data) || (data.customTasbihs is list && data.customTasbihs.size() <= 100))
+        && (!('reminders' in data) || (data.reminders is list && data.reminders.size() <= 100));
+    }
+
+    // Secured subcollection for backups and synchronization
+    match /users/{userId}/sync/{documentId} {
+      allow get, delete: if isSignedIn() && isOwner(userId) && isValidId(userId) && isValidId(documentId);
+      allow create, update: if isSignedIn() && isOwner(userId) && isValidId(userId) && isValidId(documentId) && isValidUserSync(incoming());
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "UserSync": {
+      "title": "UserSync",
+      "description": "Stores synchronized settings, bookmarks, custom tasbihs, reading progress, reminders, and journal entries for cloud backup.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The unique Firebase Authentication UID of the owner."
+        },
+        "prayerSettings": {
+          "type": "object",
+          "description": "User's location and preferred methods for prayer calculations."
+        },
+        "journalEntries": {
+          "type": "array",
+          "description": "Array of personal journal reflections."
+        },
+        "bookmarks": {
+          "type": "array",
+          "description": "Saves of favorite Quran passages, supplications, and holy events."
+        },
+        "customTasbihs": {
+          "type": "array",
+          "description": "Custom counter presets."
+        },
+        "readingProgress": {
+          "type": "object",
+          "description": "Tracking of currently reading sections and completed verses."
+        },
+        "reminders": {
+          "type": "array",
+          "description": "User custom reminder alerts."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last write."
+        }
+      },
+      "required": [
+        "userId",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/sync/data": {
+      "schema": "UserSync",
+      "description": "Cloud backup of all user customized states."
+    }
+  }
+}

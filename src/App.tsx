@@ -37,8 +37,15 @@ import {
   History,
   Plus,
   List,
-  ArrowUp
+  ArrowUp,
+  Cloud,
+  CloudOff,
+  LogIn,
+  LogOut,
+  Database
 } from 'lucide-react';
+import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { auth, googleProvider, backupToCloud, fetchFromCloud } from './services/firebase';
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay } from 'date-fns';
 import { cn } from './lib/utils';
 import { getDailyHadith } from './services/geminiService';
@@ -606,6 +613,40 @@ export default function App() {
   const [selectedNamaz, setSelectedNamaz] = useState<any | null>(null);
   const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
   const [selectedSurahNumber, setSelectedSurahNumber] = useState<number | null>(null);
+
+  // Lifted States for unified cloud sync
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>(() => {
+    const saved = localStorage.getItem('noor_journal_entries');
+    if (saved) {
+      try {
+        const loaded: JournalEntry[] = JSON.parse(saved);
+        const now = new Date();
+        const thirtyDaysAgo = 30 * 24 * 60 * 60 * 1000;
+        return loaded.filter(e => {
+          if (e.deletedAt) {
+            return (now.getTime() - new Date(e.deletedAt).getTime()) < thirtyDaysAgo;
+          }
+          return true;
+        });
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
+
+  const [customTasbihs, setCustomTasbihs] = useState<{id: string, name: string, target: number}[]>(() => {
+    const saved = localStorage.getItem('custom_tasbihs');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Firebase auth & cloud sync states
+  const [firebaseUser, setFirebaseUser] = useState<any | null>(null);
+  const [isSyncing, setIsSyncing] = useState<boolean>(false);
+  const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'success' | 'error'>('idle');
+  const [lastSync, setLastSync] = useState<string | null>(null);
+  const [settingsSubPage, setSettingsSubPage] = useState<string | null>(null);
+
   const [readingProgress, setReadingProgress] = useState<Record<string, number>>(() => {
     const saved = localStorage.getItem('reading_progress');
     return saved ? JSON.parse(saved) : {};
@@ -965,6 +1006,166 @@ export default function App() {
   const [prayerTimes, setPrayerTimes] = useState<PrayerTime[]>([]);
   const [locationError, setLocationError] = useState<string | null>(null);
 
+  // Inteligent auto merge on login
+  const handleAutoSyncOnLogin = async (user: any) => {
+    setIsSyncing(true);
+    setSyncStatus('syncing');
+    try {
+      const cloudData = await fetchFromCloud(user.uid);
+      if (cloudData) {
+        let updated = false;
+
+        if (cloudData.bookmarks && Array.isArray(cloudData.bookmarks)) {
+          setBookmarks(prev => {
+            const merged = [...prev];
+            cloudData.bookmarks!.forEach((cb: any) => {
+              if (!merged.some(mb => mb.id === cb.id)) {
+                merged.push(cb);
+                updated = true;
+              }
+            });
+            if (updated) {
+              localStorage.setItem('app_bookmarks', JSON.stringify(merged));
+            }
+            return merged;
+          });
+        }
+
+        if (cloudData.prayerSettings) {
+          setPrayerSettings(prev => {
+            const merged = { ...prev, ...cloudData.prayerSettings };
+            localStorage.setItem('noor_prayer_settings', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        if (cloudData.reminders && Array.isArray(cloudData.reminders)) {
+          setReminders(prev => {
+            const merged = [...prev];
+            cloudData.reminders!.forEach((cr: any) => {
+              if (!merged.some(mr => mr.id === cr.id)) {
+                merged.push(cr);
+                updated = true;
+              }
+            });
+            if (updated) {
+              localStorage.setItem('noor_reminders', JSON.stringify(merged));
+            }
+            return merged;
+          });
+        }
+
+        if (cloudData.readingProgress) {
+          setReadingProgress(prev => {
+            const merged = { ...prev, ...cloudData.readingProgress };
+            localStorage.setItem('reading_progress', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        if (cloudData.journalEntries && Array.isArray(cloudData.journalEntries)) {
+          setJournalEntries(prev => {
+            const merged = [...prev];
+            cloudData.journalEntries!.forEach((cj: any) => {
+              if (!merged.some(mj => mj.id === cj.id)) {
+                merged.push(cj);
+                updated = true;
+              }
+            });
+            if (updated) {
+              localStorage.setItem('noor_journal_entries', JSON.stringify(merged));
+            }
+            return merged;
+          });
+        }
+
+        if (cloudData.customTasbihs && Array.isArray(cloudData.customTasbihs)) {
+          setCustomTasbihs(prev => {
+            const merged = [...prev];
+            cloudData.customTasbihs!.forEach((ct: any) => {
+              if (!merged.some(mt => mt.id === ct.id)) {
+                merged.push(ct);
+                updated = true;
+              }
+            });
+            if (updated) {
+              localStorage.setItem('custom_tasbihs', JSON.stringify(merged));
+            }
+            return merged;
+          });
+        }
+
+        setSyncStatus('success');
+        setLastSync(new Date().toISOString());
+      } else {
+        // No backup exists on cloud, upload current local state instantly to set up initial copy
+        const localJournal = JSON.parse(localStorage.getItem('noor_journal_entries') || '[]');
+        const localTasbihs = JSON.parse(localStorage.getItem('custom_tasbihs') || '[]');
+
+        await backupToCloud(user.uid, {
+          prayerSettings,
+          journalEntries: localJournal,
+          bookmarks,
+          customTasbihs: localTasbihs,
+          readingProgress,
+          reminders
+        });
+        setSyncStatus('success');
+        setLastSync(new Date().toISOString());
+      }
+    } catch (err) {
+      console.error("Cloud auto sync login failed:", err);
+      setSyncStatus('error');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  const triggerSync = async () => {
+    if (!auth.currentUser) return;
+    setIsSyncing(true);
+    setSyncStatus('syncing');
+    try {
+      await backupToCloud(auth.currentUser.uid, {
+        prayerSettings,
+        journalEntries,
+        bookmarks,
+        customTasbihs,
+        readingProgress,
+        reminders
+      });
+      setSyncStatus('success');
+      setLastSync(new Date().toISOString());
+    } catch (err) {
+      console.error("Background sync failed:", err);
+      setSyncStatus('error');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  // Auth observer
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setFirebaseUser(user);
+      if (user) {
+        handleAutoSyncOnLogin(user);
+      } else {
+        setSyncStatus('idle');
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Background auto sync trigger on state changes (4 seconds debounce)
+  useEffect(() => {
+    if (!firebaseUser) return;
+    const timer = setTimeout(() => {
+      triggerSync();
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [bookmarks, prayerSettings, reminders, readingProgress, journalEntries, customTasbihs, firebaseUser]);
+
   useEffect(() => {
     getDailyHadith().then(setHadith);
     
@@ -1233,10 +1434,34 @@ export default function App() {
           </div>
 
           <button 
-            onClick={() => navigateTo('settings')}
+            onClick={() => {
+              navigateTo('settings');
+              setSettingsSubPage('sync_page');
+            }}
             className={cn(
-              "p-1 rounded-full transition-colors",
-              activeTab === 'settings' ? "bg-olive/10 text-gold" : "hover:bg-olive/5 text-olive"
+              "p-1.5 rounded-full transition-colors relative flex items-center justify-center",
+              (activeTab === 'settings' && settingsSubPage === 'sync_page') ? "bg-olive/10 text-gold" : "hover:bg-olive/5 text-olive"
+            )}
+            title={firebaseUser ? `Linked Backup Account: ${firebaseUser.email}` : "Cloud Backup Disabled - Tap to Sign In"}
+          >
+            {firebaseUser ? (
+              <>
+                <Cloud size={16} className={cn(syncStatus === 'syncing' ? "text-gold animate-pulse" : "text-green-600")} />
+                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-green-500 ring-1 ring-paper" />
+              </>
+            ) : (
+              <CloudOff size={16} className="opacity-60" />
+            )}
+          </button>
+
+          <button 
+            onClick={() => {
+              navigateTo('settings');
+              setSettingsSubPage(null);
+            }}
+            className={cn(
+              "p-1.5 rounded-full transition-colors",
+              (activeTab === 'settings' && settingsSubPage !== 'sync_page') ? "bg-olive/10 text-gold" : "hover:bg-olive/5 text-olive"
             )}
             title="Settings"
           >
@@ -1316,7 +1541,17 @@ export default function App() {
             />
           )}
           {activeTab === 'calendar' && <CalendarView settings={prayerSettings} />}
-          {activeTab === 'journal' && <JournalView settings={prayerSettings} goBack={goBack} />}
+          {activeTab === 'journal' && (
+            <JournalView 
+              settings={prayerSettings} 
+              goBack={goBack}
+              entries={journalEntries}
+              onSaveEntries={(updated) => {
+                setJournalEntries(updated);
+                localStorage.setItem('noor_journal_entries', JSON.stringify(updated));
+              }}
+            />
+          )}
           {activeTab === 'namaz' && (
             <NamazView 
               settings={prayerSettings} 
@@ -1330,9 +1565,26 @@ export default function App() {
             <SettingsView 
               settings={prayerSettings} 
               onUpdateSettings={setPrayerSettings} 
+              firebaseUser={firebaseUser}
+              isSyncing={isSyncing}
+              syncStatus={syncStatus}
+              lastSync={lastSync}
+              onSyncNow={triggerSync}
+              activeSubPage={settingsSubPage}
+              onActiveSubPageChange={setSettingsSubPage}
             />
           )}
-          {activeTab === 'tasbih' && <TasbihView onBack={goBack} settings={prayerSettings} />}
+          {activeTab === 'tasbih' && (
+            <TasbihView 
+              onBack={goBack} 
+              settings={prayerSettings} 
+              customTasbihs={customTasbihs}
+              onUpdateCustomTasbihs={(tasbihs) => {
+                setCustomTasbihs(tasbihs);
+                localStorage.setItem('custom_tasbihs', JSON.stringify(tasbihs));
+              }}
+            />
+          )}
           {activeTab === 'salawaat' && (
             <SalawaatView 
               settings={prayerSettings} 
@@ -1788,9 +2040,56 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
   );
 }
 
-function SettingsView({ settings, onUpdateSettings }: { settings: PrayerSettings, onUpdateSettings: (s: PrayerSettings) => void }) {
-  const [activeSubPage, setActiveSubPage] = useState<string | null>(null);
+function SettingsView({ 
+  settings, 
+  onUpdateSettings,
+  firebaseUser,
+  isSyncing,
+  syncStatus,
+  lastSync,
+  onSyncNow,
+  activeSubPage: propActiveSubPage,
+  onActiveSubPageChange
+}: { 
+  settings: PrayerSettings, 
+  onUpdateSettings: (s: PrayerSettings) => void,
+  firebaseUser: any | null,
+  isSyncing: boolean,
+  syncStatus: string,
+  lastSync: string | null,
+  onSyncNow: () => void,
+  activeSubPage: string | null,
+  onActiveSubPageChange: (page: string | null) => void
+}) {
+  const activeSubPage = propActiveSubPage;
+  const setActiveSubPage = onActiveSubPageChange;
   const t = useTranslation(settings.language);
+  
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [localSyncing, setLocalSyncing] = useState(false);
+
+  const handleSignIn = async () => {
+    setAuthError(null);
+    setLocalSyncing(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err: any) {
+      console.error(err);
+      setAuthError(err?.message || "Failed to sign in. Please try again.");
+    } finally {
+      setLocalSyncing(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    setAuthError(null);
+    try {
+      await signOut(auth);
+    } catch (err: any) {
+      console.error(err);
+      setAuthError(err?.message || "Failed to sign out.");
+    }
+  };
   
   const [city, setCity] = useState(settings.manualLocation?.city || '');
   const [country, setCountry] = useState(settings.manualLocation?.country || '');
@@ -1982,6 +2281,106 @@ function SettingsView({ settings, onUpdateSettings }: { settings: PrayerSettings
     );
   }
 
+  if (activeSubPage === 'sync_page') {
+    return (
+      <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="p-6 space-y-8">
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={() => setActiveSubPage(null)} className="p-2 rounded-full hover:bg-olive/5 text-olive transition-colors">
+            <ChevronLeft size={24} />
+          </button>
+          <h2 className="serif text-2xl text-olive">Cloud Backup & Sync</h2>
+        </div>
+
+        <div className="bg-paper rounded-[24px] p-6 border border-olive/10 space-y-6">
+          <div className="flex flex-col items-center text-center space-y-4">
+            <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+              <Database size={32} />
+            </div>
+            <p className="text-sm text-olive/80 select-none">
+              Save your settings, Quran reading progress, checklists, customized counters, reminders, and diary journal entries securely in the cloud.
+            </p>
+          </div>
+
+          {authError && (
+            <p className="text-xs text-red-500 font-bold text-center bg-red-50 p-3 rounded-xl border border-red-100">{authError}</p>
+          )}
+
+          {!firebaseUser ? (
+            <div className="space-y-4 pt-4">
+              <p className="text-xs text-olive/50 text-center font-medium">Link your account to backup your data automatically in background.</p>
+              <button 
+                onClick={handleSignIn}
+                disabled={localSyncing}
+                className="w-full bg-olive text-paper rounded-xl py-3 text-xs font-bold uppercase tracking-widest hover:bg-olive/90 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <LogIn size={16} />
+                {localSyncing ? "Signing In..." : "Sign in with Google"}
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-6 pt-2">
+              <div className="bg-olive/5 p-4 rounded-2xl border border-olive/10 flex items-center gap-4">
+                {firebaseUser.photoURL ? (
+                  <img src={firebaseUser.photoURL} alt="Profile" className="w-12 h-12 rounded-full border border-gold" referrerPolicy="no-referrer" />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-gold text-paper flex items-center justify-center font-bold text-lg">
+                    {firebaseUser.displayName?.charAt(0) || "U"}
+                  </div>
+                )}
+                <div className="flex-1 min-w-0 text-left">
+                  <h4 className="text-sm font-bold text-olive truncate">{firebaseUser.displayName}</h4>
+                  <p className="text-xs text-olive/60 truncate">{firebaseUser.email}</p>
+                </div>
+              </div>
+
+              <div className="space-y-3 bg-paper p-4 rounded-2xl border border-olive/5 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-olive/65">Status:</span>
+                  <span className={cn(
+                    "font-bold capitalize flex items-center gap-1.5",
+                    syncStatus === 'success' ? "text-green-600" :
+                    syncStatus === 'syncing' ? "text-gold animate-pulse" :
+                    syncStatus === 'error' ? "text-red-500" : "text-olive"
+                  )}>
+                    {syncStatus === 'success' ? "In Sync" :
+                     syncStatus === 'syncing' ? "Syncing..." :
+                     syncStatus === 'error' ? "Sync Failed" : "Connected"}
+                  </span>
+                </div>
+                {lastSync && (
+                  <div className="flex justify-between">
+                    <span className="text-olive/60">Last Backup:</span>
+                    <span className="font-medium text-olive/85">
+                      {new Date(lastSync).toLocaleDateString()} {new Date(lastSync).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-2 pt-2">
+                <button 
+                  onClick={onSyncNow}
+                  disabled={isSyncing}
+                  className="w-full bg-olive text-paper rounded-xl py-3 text-xs font-bold uppercase tracking-widest hover:bg-olive/90 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <RefreshCw size={16} className={cn(isSyncing && "animate-spin")} />
+                  {isSyncing ? "Syncing..." : "Sync / Backup Now"}
+                </button>
+                <button 
+                  onClick={handleSignOut}
+                  className="w-full bg-paper text-red-500 border border-red-500/20 rounded-xl py-3 text-xs font-bold uppercase tracking-widest hover:bg-red-50 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <LogOut size={16} />
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
@@ -2003,6 +2402,13 @@ function SettingsView({ settings, onUpdateSettings }: { settings: PrayerSettings
           </button>
           <button onClick={() => setActiveSubPage('hijri_adj')} className="w-full bg-paper p-4 rounded-2xl border border-olive/10 flex justify-between items-center hover:bg-olive/5 transition-colors">
             <span className="text-sm font-bold text-olive">{t('hijriAdjustment')}</span>
+            <ChevronRight size={20} className="text-olive/40" />
+          </button>
+          <button onClick={() => setActiveSubPage('sync_page')} className="w-full bg-paper p-4 rounded-2xl border border-olive/10 flex justify-between items-center hover:bg-olive/5 transition-colors">
+            <span className="text-sm font-bold text-olive flex items-center gap-2">
+              <Cloud size={16} className="text-gold" />
+              Cloud Sync & Backup
+            </span>
             <ChevronRight size={20} className="text-olive/40" />
           </button>
         </div>
@@ -3482,12 +3888,19 @@ function CalendarView({ settings }: { settings: PrayerSettings }) {
   );
 }
 
-function TasbihView({ onBack, settings }: { onBack: () => void, settings: PrayerSettings }) {
+function TasbihView({ 
+  onBack, 
+  settings,
+  customTasbihs,
+  onUpdateCustomTasbihs
+}: { 
+  onBack: () => void, 
+  settings: PrayerSettings,
+  customTasbihs: any[],
+  onUpdateCustomTasbihs: (tasbihs: any[]) => void
+}) {
   const [viewMode, setViewMode] = useState<'list' | 'counter' | 'add'>('list');
-  const [customTasbihs, setCustomTasbihs] = useState<{id: string, name: string, target: number}[]>(() => {
-    const saved = localStorage.getItem('custom_tasbihs');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const setCustomTasbihs = onUpdateCustomTasbihs;
   
   const [activeTasbih, setActiveTasbih] = useState<any | null>(null);
   const [count, setCount] = useState(0);
@@ -5100,37 +5513,22 @@ function ZiyaratsView({
   );
 }
 
-function JournalView({ settings, goBack }: { settings: PrayerSettings, goBack: () => void }) {
+function JournalView({ 
+  settings, 
+  goBack,
+  entries,
+  onSaveEntries
+}: { 
+  settings: PrayerSettings, 
+  goBack: () => void,
+  entries: JournalEntry[],
+  onSaveEntries: (entries: JournalEntry[]) => void
+}) {
   const t = useTranslation(settings.language);
   const [showBin, setShowBin] = useState(false);
-  const [entries, setEntries] = useState<JournalEntry[]>(() => {
-    const saved = localStorage.getItem('noor_journal_entries');
-    if (saved) {
-      try {
-        const loaded: JournalEntry[] = JSON.parse(saved);
-        // Auto-clean entries older than 30 days in bin
-        const now = new Date();
-        const thirtyDaysAgo = 30 * 24 * 60 * 60 * 1000;
-        const cleaned = loaded.filter(e => {
-          if (e.deletedAt) {
-            return (now.getTime() - new Date(e.deletedAt).getTime()) < thirtyDaysAgo;
-          }
-          return true;
-        });
-        return cleaned;
-      } catch (e) {
-        return [];
-      }
-    }
-    return [];
-  });
   const [newEntry, setNewEntry] = useState('');
 
-  const saveEntries = (updatedEntries: JournalEntry[]) => {
-    setEntries(updatedEntries);
-    const stringified = safeStringify(updatedEntries, 'noor_journal_entries');
-    if (stringified) localStorage.setItem('noor_journal_entries', stringified);
-  };
+  const saveEntries = onSaveEntries;
 
   const saveEntry = () => {
     if (!newEntry.trim()) return;
