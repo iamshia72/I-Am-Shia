@@ -3877,19 +3877,18 @@ function CalendarView({ settings }: { settings: PrayerSettings }) {
                 <X size={20} />
               </button>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {selectedDateEvents.events.map((event, idx) => (
-                <div key={`event-detail-${idx}-${event.title}`} className="p-4 rounded-2xl bg-olive/5 border border-olive/10 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className={cn(
-                      "w-2 h-2 rounded-full",
-                      event.type === 'Wiladat' ? "bg-green-500" : 
-                      event.type === 'Shahadat' ? "bg-red-500" : 
-                      event.type === 'Eid' ? "bg-amber-400" : "bg-blue-400"
-                    )} />
-                    <span className="text-[10px] uppercase tracking-widest text-olive/60 font-bold">{event.type}</span>
+                <div key={`event-detail-${idx}-${event.title}`} className="p-4 rounded-2xl bg-olive/5 border border-olive/10 flex items-start gap-3">
+                  <div className={cn(
+                    "w-2 h-2 rounded-full mt-2 shrink-0",
+                    event.type === 'Wiladat' ? "bg-green-500" : 
+                    event.type === 'Shahadat' ? "bg-red-500" : 
+                    event.type === 'Eid' ? "bg-amber-400" : "bg-blue-400"
+                  )} />
+                  <div className="space-y-1">
+                    <h4 className="serif text-base text-olive leading-snug">{event.title}</h4>
                   </div>
-                  <h4 className="serif text-lg text-olive leading-tight">{event.title}</h4>
                 </div>
               ))}
             </div>
@@ -3898,32 +3897,32 @@ function CalendarView({ settings }: { settings: PrayerSettings }) {
       </AnimatePresence>
 
       {!selectedDateEvents && (
-        <div className="space-y-6">
-          <h3 className="serif text-xl text-olive">Events this Month</h3>
+        <div className="space-y-4">
+          <h3 className="serif text-lg text-olive">Events this Month</h3>
           {filteredEvents.length > 0 ? (
             filteredEvents.map((event, idx) => {
               const isToday = isSameDay(event.gregorianDate, new Date());
               return (
                 <div key={`month-event-${idx}-${event.title}`} className={cn(
-                  "relative pl-8 border-l border-olive/10 pb-8 last:pb-0 transition-all",
+                  "relative pl-6 border-l border-olive/10 pb-4 last:pb-0 transition-all",
                   isToday && "border-gold"
                 )}>
                   <div className={cn(
-                    "absolute -left-[5px] top-0 w-[9px] h-[9px] rounded-full",
+                    "absolute -left-[5px] top-1.5 w-[9px] h-[9px] rounded-full",
                     event.type === 'Wiladat' ? "bg-green-500" : 
                     event.type === 'Shahadat' ? "bg-red-500" : 
                     event.type === 'Eid' ? "bg-amber-400" : "bg-blue-400",
                     isToday && "ring-4 ring-gold/20"
                   )} />
                   <div className={cn(
-                    "space-y-2 p-4 rounded-2xl transition-all",
-                    isToday && "bg-paper border border-gold/30 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(186,155,90,0.1)] translate-x-1"
+                    "space-y-1 p-2.5 rounded-xl transition-all",
+                    isToday ? "bg-paper border border-gold/30 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05)] translate-x-1" : "bg-olive/5"
                   )}>
-                    <p className="text-[10px] uppercase tracking-widest text-gold font-bold">
+                    <p className="text-[9px] uppercase tracking-wider text-gold font-semibold">
                       {format(event.gregorianDate, 'MMMM do, yyyy')} • {getHijriDateString(event.gregorianDate, settings.hijriOffset)}
-                      {isToday && <span className="ml-2 bg-gold text-paper px-2 py-0.5 rounded-full text-[8px]">TODAY</span>}
+                      {isToday && <span className="ml-2 bg-gold text-paper px-1.5 py-0.5 rounded-full text-[7px]">TODAY</span>}
                     </p>
-                    <h4 className="serif text-2xl text-olive leading-tight">{event.title}</h4>
+                    <h4 className="serif text-sm font-semibold text-olive leading-snug">{event.title}</h4>
                   </div>
                 </div>
               );
