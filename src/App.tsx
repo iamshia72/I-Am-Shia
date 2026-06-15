@@ -2353,11 +2353,6 @@ function HomeView({ hadith, onRefreshHadith, prayerTimes, reminders, onToggleRem
                     — {hadith.source}
                   </p>
                   <div className="flex items-center gap-3">
-                    {!isTargetHadith && onRefreshHadith && (
-                      <button onClick={onRefreshHadith} className="p-2 hover:bg-paper/10 rounded-full transition-colors" title="Get New Wisdom">
-                        <RefreshCw size={16} />
-                      </button>
-                    )}
                     <button onClick={handleCopyHadith} className="p-2 hover:bg-paper/10 rounded-full transition-colors" title="Copy Hadith">
                       <Copy size={16} />
                     </button>
