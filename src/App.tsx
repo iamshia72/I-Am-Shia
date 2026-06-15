@@ -952,6 +952,10 @@ export default function App() {
   }, []);
 
   const [hadith, setHadith] = useState<Hadith | null>(null);
+  const refreshHadith = useCallback(() => {
+    setHadith(null);
+    getDailyHadith({ forceRefresh: true }).then(setHadith);
+  }, []);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
@@ -1524,6 +1528,7 @@ export default function App() {
           {activeTab === 'home' && (
             <HomeView 
               hadith={targetHadith || hadith} 
+              onRefreshHadith={refreshHadith}
               prayerTimes={prayerTimes} 
               reminders={reminders} 
               onToggleReminder={toggleReminder}
@@ -1692,6 +1697,7 @@ export default function App() {
 
 interface HomeViewProps {
   hadith: Hadith | null;
+  onRefreshHadith?: () => void;
   prayerTimes: PrayerTime[];
   reminders: PrayerReminder[];
   onToggleReminder: (id: string) => void;
@@ -1710,7 +1716,7 @@ interface HomeViewProps {
   onSelectNamaz: (namaz: any) => void;
 }
 
-function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationError, onNavigate, settings, tabs, bookmarks, toggleBookmark, isTargetHadith, onClearTargetHadith, cityName, onSelectDua, onSelectZiyarat, onSelectSalawat, onSelectNamaz }: HomeViewProps) {
+function HomeView({ hadith, onRefreshHadith, prayerTimes, reminders, onToggleReminder, locationError, onNavigate, settings, tabs, bookmarks, toggleBookmark, isTargetHadith, onClearTargetHadith, cityName, onSelectDua, onSelectZiyarat, onSelectSalawat, onSelectNamaz }: HomeViewProps) {
   const [nextPrayer, setNextPrayer] = useState<PrayerTime | null>(null);
   const [countdown, setCountdown] = useState<string>('');
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -2347,6 +2353,11 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
                     — {hadith.source}
                   </p>
                   <div className="flex items-center gap-3">
+                    {!isTargetHadith && onRefreshHadith && (
+                      <button onClick={onRefreshHadith} className="p-2 hover:bg-paper/10 rounded-full transition-colors" title="Get New Wisdom">
+                        <RefreshCw size={16} />
+                      </button>
+                    )}
                     <button onClick={handleCopyHadith} className="p-2 hover:bg-paper/10 rounded-full transition-colors" title="Copy Hadith">
                       <Copy size={16} />
                     </button>
