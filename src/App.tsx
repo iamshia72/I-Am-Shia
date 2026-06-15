@@ -1726,6 +1726,103 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
 
   const t = useTranslation(settings.language);
 
+  // Generate randomized blood splashes, splatters, drips and sliding droplets.
+  // Using useMemo with empty dependency bounds it to the lifetime of the mounted banner,
+  // preventing chaotic jumping/flickering on every single second of the countdown tick,
+  // while ensuring a bespoke fresh randomized pattern is generated each time the banner component mounts/renders.
+  const { karbalaSplashes, karbalaQuote } = useMemo(() => {
+    const quotes = [
+      { text: "The land of supreme sacrifice, parched shorelines, and the eternal victory of truth over tyranny.", source: "" },
+      { text: "I learned from Hussain how to achieve victory while being oppressed.", source: "Mahatma Gandhi" },
+      { text: "In a distant age and climate, the tragic scene of the death of Hosein will awaken the sympathy of the coldest reader.", source: "Edward Gibbon" },
+      { text: "If Husain had fought to quench his worldly desires, I do not understand why his sister, wife, and children accompanied him. He sacrificed purely for Islam.", source: "Thomas Carlyle" },
+      { text: "Death with dignity is better than a life of humiliation.", source: "Imam al-Hussain (as)" },
+      { text: "I have not risen for mischief or oppression, but to seek reform in the nation of my grandfather.", source: "Imam al-Hussain (as)" },
+      { text: "If the religion of Muhammad cannot survive except by my death, then O swords, take me!", source: "Imam al-Hussain (as)" },
+      { text: "The best lesson which we get from the tragedy of Karbala is that Husain and his companions were rigid believers in God.", source: "Sir Muhammad Iqbal" },
+      { text: "Every land is Karbala, and every day is Ashura.", source: "Reflective Proverb" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+    // Left-side splash position & transformation details
+    const splashLeftStyle = {
+      top: `${-20 + Math.random() * 32}px`,
+      left: `${-25 + Math.random() * 40}px`,
+      scale: 0.85 + Math.random() * 0.35,
+      rotate: Math.floor(Math.random() * 70) - 35,
+      opacity: 0.5 + Math.random() * 0.25
+    };
+
+    // Right-side splash position & transformation details
+    const splashRightStyle = {
+      top: `${-20 + Math.random() * 32}px`,
+      right: `${-25 + Math.random() * 40}px`,
+      scale: 0.85 + Math.random() * 0.35,
+      rotate: Math.floor(Math.random() * 70) - 35,
+      opacity: 0.5 + Math.random() * 0.25
+    };
+
+    // Splatters scattered across the background safely
+    const splattersCount = 6 + Math.floor(Math.random() * 5); // 6 to 10 splatters
+    const splatters = Array.from({ length: splattersCount }).map((_, idx) => {
+      // Avoid cluttering the very text center
+      const side = Math.random() > 0.5 ? 'left' : 'right';
+      const xPercent = side === 'left' 
+        ? Math.random() * 35  // left 0% to 35%
+        : 65 + Math.random() * 25; // right 65% to 90%
+      
+      return {
+        top: `${10 + Math.random() * 75}%`,
+        left: `${xPercent}%`,
+        size: `${3 + Math.random() * 10}px`,
+        delay: Math.random() * 4.5,
+        duration: 3 + Math.random() * 5,
+        rotate: Math.floor(Math.random() * 360),
+        colorClass: idx % 3 === 0 ? "bg-red-800" : (idx % 3 === 1 ? "bg-red-900" : "bg-red-950"),
+        blurClass: Math.random() > 0.6 ? "filter blur-[0.4px]" : "filter blur-[0.1px]",
+        opacity: 0.45 + Math.random() * 0.45,
+        scale: [0.8, 1.25, 0.8]
+      };
+    });
+
+    // Drips hanging from top border with random left offsets
+    const dripsCount = 4 + Math.floor(Math.random() * 4); // 4 to 7 drips
+    const drips = Array.from({ length: dripsCount }).map((_, idx) => {
+      const spacingGroup = 80 / dripsCount;
+      const leftPercent = 10 + idx * spacingGroup + (Math.random() * (spacingGroup - 4));
+      return {
+        left: `${leftPercent}%`,
+        width: Math.random() > 0.65 ? '3.5px' : '2px',
+        colorClass: Math.random() > 0.5 ? 'from-red-800 to-red-950' : 'from-red-900 to-red-950',
+        heights: [
+          `${10 + Math.random() * 12}px`,
+          `${28 + Math.random() * 26}px`,
+          `${16 + Math.random() * 14}px`,
+          `${32 + Math.random() * 18}px`,
+          `${10 + Math.random() * 12}px`
+        ],
+        duration: 6.5 + Math.random() * 4.5,
+        delay: Math.random() * 2.5
+      };
+    });
+
+    // Droplets sliding downwards below the drips
+    const slidingDroplets = Array.from({ length: 2 + Math.floor(Math.random() * 2) }).map(() => ({
+      left: `${15 + Math.random() * 70}%`,
+      colorClass: Math.random() > 0.5 ? 'bg-red-800' : 'bg-red-950',
+      y: [12 + Math.random() * 15, 55 + Math.random() * 25, 95 + Math.random() * 20],
+      duration: 3.8 + Math.random() * 3,
+      delay: Math.random() * 3.5,
+      size: `${1 + Math.random() * 1.5}px`
+    }));
+
+    return { 
+      karbalaSplashes: { splashLeftStyle, splashRightStyle, splatters, drips, slidingDroplets },
+      karbalaQuote: randomQuote
+    };
+  }, []);
+
   const handleCopyHadith = () => {
     if (hadith) {
       navigator.clipboard.writeText(`${hadith.arabic}\n\n${hadith.english}\n\n— ${hadith.source}`);
@@ -1852,13 +1949,19 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
         <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-45">
           {/* Animated Liquid Blood Splash (Left Side) */}
           <motion.svg 
-            className="absolute -top-4 -left-4 w-40 h-40 fill-red-800/60"
+            className="absolute fill-red-800/60"
             viewBox="0 0 200 200"
+            style={{
+              top: karbalaSplashes.splashLeftStyle.top,
+              left: karbalaSplashes.splashLeftStyle.left,
+              transform: `scale(${karbalaSplashes.splashLeftStyle.scale}) rotate(${karbalaSplashes.splashLeftStyle.rotate}deg)`,
+              opacity: karbalaSplashes.splashLeftStyle.opacity
+            }}
             initial={{ scale: 0.8, opacity: 0, rotate: -20 }}
             animate={{ 
-              scale: [0.9, 1.05, 0.98, 1.03, 0.9],
-              rotate: [-5, 2, -2, 5, -5],
-              opacity: [0.6, 0.75, 0.65, 0.8, 0.6]
+              scale: [0.9 * karbalaSplashes.splashLeftStyle.scale, 1.05 * karbalaSplashes.splashLeftStyle.scale, 0.98 * karbalaSplashes.splashLeftStyle.scale, 1.03 * karbalaSplashes.splashLeftStyle.scale, 0.9 * karbalaSplashes.splashLeftStyle.scale],
+              rotate: [karbalaSplashes.splashLeftStyle.rotate - 5, karbalaSplashes.splashLeftStyle.rotate + 5, karbalaSplashes.splashLeftStyle.rotate - 2, karbalaSplashes.splashLeftStyle.rotate + 3, karbalaSplashes.splashLeftStyle.rotate - 5],
+              opacity: [karbalaSplashes.splashLeftStyle.opacity, karbalaSplashes.splashLeftStyle.opacity + 0.15, karbalaSplashes.splashLeftStyle.opacity - 0.05, karbalaSplashes.splashLeftStyle.opacity + 0.1, karbalaSplashes.splashLeftStyle.opacity]
             }}
             transition={{
               duration: 12,
@@ -1876,12 +1979,18 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
 
           {/* Animated Liquid Blood Splash & Dripping (Right Side) */}
           <motion.svg 
-            className="absolute -top-6 -right-6 w-44 h-44 fill-red-900/65"
+            className="absolute fill-red-900/65"
             viewBox="0 0 200 200"
+            style={{
+              top: karbalaSplashes.splashRightStyle.top,
+              right: karbalaSplashes.splashRightStyle.right,
+              transform: `scale(${karbalaSplashes.splashRightStyle.scale}) rotate(${karbalaSplashes.splashRightStyle.rotate}deg)`,
+              opacity: karbalaSplashes.splashRightStyle.opacity
+            }}
             animate={{ 
-              scale: [0.95, 1.02, 0.97, 1.05, 0.95],
-              rotate: [5, -4, 3, -1, 5],
-              opacity: [0.7, 0.85, 0.75, 0.9, 0.7]
+              scale: [0.95 * karbalaSplashes.splashRightStyle.scale, 1.02 * karbalaSplashes.splashRightStyle.scale, 0.97 * karbalaSplashes.splashRightStyle.scale, 1.05 * karbalaSplashes.splashRightStyle.scale, 0.95 * karbalaSplashes.splashRightStyle.scale],
+              rotate: [karbalaSplashes.splashRightStyle.rotate + 5, karbalaSplashes.splashRightStyle.rotate - 4, karbalaSplashes.splashRightStyle.rotate + 3, karbalaSplashes.splashRightStyle.rotate - 1, karbalaSplashes.splashRightStyle.rotate + 5],
+              opacity: [karbalaSplashes.splashRightStyle.opacity, karbalaSplashes.splashRightStyle.opacity + 0.1, karbalaSplashes.splashRightStyle.opacity - 0.05, karbalaSplashes.splashRightStyle.opacity + 0.12, karbalaSplashes.splashRightStyle.opacity]
             }}
             transition={{
               duration: 10,
@@ -1897,80 +2006,79 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
             <circle cx="95" cy="12" r="4.5" />
           </motion.svg>
 
-          {/* Animated Drips flowing down from the top edge */}
-          <div className="absolute top-0 inset-x-0 flex justify-between px-16">
-            {/* Drip 1 */}
-            <motion.div 
-              className="w-[3px] bg-gradient-to-b from-red-800 to-red-950 rounded-b-full origin-top"
-              initial={{ height: 10 }}
-              animate={{ height: [15, 38, 20, 28, 15] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            />
-            {/* Drip 2 */}
-            <motion.div 
-              className="w-[4px] bg-gradient-to-b from-red-900 to-red-950 rounded-b-full origin-top"
-              initial={{ height: 20 }}
-              animate={{ height: [25, 52, 35, 42, 25] }}
-              transition={{ duration: 9, delay: 1, repeat: Infinity, ease: "easeInOut" }}
-            />
-            {/* Drip 3 */}
-            <motion.div 
-              className="w-[2.5px] bg-gradient-to-b from-[#800] to-red-950 rounded-b-full origin-top"
-              initial={{ height: 5 }}
-              animate={{ height: [12, 26, 18, 22, 12] }}
-              transition={{ duration: 6, delay: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-            {/* Drip 4 */}
-            <motion.div 
-              className="w-[3.5px] bg-gradient-to-b from-red-850 to-red-950 rounded-b-full origin-top"
-              initial={{ height: 18 }}
-              animate={{ height: [22, 45, 30, 38, 22] }}
-              transition={{ duration: 8.2, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
-            />
+          {/* Animated Drips flowing down from the top edge with dynamic positions */}
+          <div className="absolute top-0 inset-x-0 w-full h-full">
+            {karbalaSplashes.drips.map((drip, idx) => (
+              <motion.div 
+                key={`drip-${idx}`}
+                className={`absolute bg-gradient-to-b ${drip.colorClass} rounded-b-full origin-top`}
+                style={{
+                  left: drip.left,
+                  width: drip.width,
+                  top: 0
+                }}
+                initial={{ height: 10 }}
+                animate={{ height: drip.heights }}
+                transition={{ 
+                  duration: drip.duration, 
+                  delay: drip.delay, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              />
+            ))}
           </div>
 
-          {/* Dripping sliding droplets under the drips */}
-          <motion.div 
-            className="absolute left-[78px] w-1.5 h-2 rounded-full bg-red-900"
-            animate={{ 
-              y: [15, 55, 95], 
-              scale: [1, 0.8, 0],
-              opacity: [0.9, 0.8, 0] 
-            }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeIn" }}
-          />
+          {/* Dripping sliding droplets under the drips with dynamic positions */}
+          {karbalaSplashes.slidingDroplets.map((droplet, idx) => (
+            <motion.div 
+              key={`sliding-droplet-${idx}`}
+              className={`absolute rounded-full ${droplet.colorClass}`}
+              style={{
+                left: droplet.left,
+                width: droplet.size,
+                height: `calc(${droplet.size} * 1.5)`,
+                top: 0
+              }}
+              animate={{ 
+                y: droplet.y, 
+                scale: [1, 0.82, 0],
+                opacity: [0.9, 0.75, 0] 
+              }}
+              transition={{ 
+                duration: droplet.duration, 
+                delay: droplet.delay, 
+                repeat: Infinity, 
+                ease: "easeIn" 
+              }}
+            />
+          ))}
 
-          <motion.div 
-            className="absolute right-[112px] w-1 h-1.5 rounded-full bg-red-950"
-            animate={{ 
-              y: [22, 65, 110], 
-              scale: [1, 0.82, 0],
-              opacity: [0.9, 0.75, 0] 
-            }}
-            transition={{ duration: 6.2, delay: 1.8, repeat: Infinity, ease: "easeIn" }}
-          />
-
-          {/* Splattered fine spots that pulse gently like fresh paint */}
-          <motion.div 
-            className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-red-800 filter blur-[0.2px]"
-            animate={{ scale: [0.9, 1.25, 0.9], opacity: [0.4, 0.8, 0.4] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute bottom-1/4 right-1/4 w-1.5 h-1.5 rounded-full bg-red-700"
-            animate={{ scale: [0.8, 1.3, 0.8], opacity: [0.5, 0.9, 0.5] }}
-            transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute top-1/3 right-[15%] w-2.5 h-2 rounded-full bg-red-900/70 rotate-12"
-            animate={{ scale: [0.95, 1.15, 0.95], opacity: [0.35, 0.75, 0.35] }}
-            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="absolute bottom-1/3 left-[18%] w-1.5 h-2.5 rounded-full bg-red-850/80 -rotate-45"
-            animate={{ scale: [0.85, 1.2, 0.85], opacity: [0.4, 0.85, 0.4] }}
-            transition={{ duration: 4.9, repeat: Infinity, ease: "easeInOut" }}
-          />
+          {/* Splattered fine spots that pulse gently with random size, coordinates and delays */}
+          {karbalaSplashes.splatters.map((splat, idx) => (
+            <motion.div 
+              key={`splat-${idx}`}
+              className={`absolute rounded-full ${splat.colorClass} ${splat.blurClass}`}
+              style={{
+                top: splat.top,
+                left: splat.left,
+                width: splat.size,
+                height: splat.size,
+                transform: `rotate(${splat.rotate}deg)`,
+                opacity: splat.opacity
+              }}
+              animate={{ 
+                scale: splat.scale, 
+                opacity: [splat.opacity, splat.opacity * 1.6, splat.opacity] 
+              }}
+              transition={{ 
+                duration: splat.duration, 
+                delay: splat.delay, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+          ))}
 
           {/* Bottom subtle red ambient vignette */}
           <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-red-950/20 to-transparent" />
@@ -2003,8 +2111,13 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
             <h2 className="font-display text-xl tracking-[0.3em] text-[#fdfbf7] font-semibold">KARBALA</h2>
             <div className="h-px w-16 bg-red-500/25 mx-auto" />
             <p className="font-serif text-xs italic text-red-100/70 max-w-[280px] mx-auto leading-relaxed">
-              "The land of supreme sacrifice, parched shorelines, and the eternal victory of truth over tyranny."
+              "{karbalaQuote.text}"
             </p>
+            {karbalaQuote.source && (
+              <p className="font-sans text-[10px] uppercase tracking-wider text-red-300/60 mt-1">
+                — {karbalaQuote.source}
+              </p>
+            )}
           </div>
         </div>
       </div>
