@@ -50,32 +50,51 @@ export async function geocodeLocation(city: string, country: string): Promise<{ 
   try {
     const query = encodeURIComponent(`${city}, ${country}`);
     const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1`);
-    const data = await res.json();
-    if (data && data.length > 0) {
-      return {
-        lat: parseFloat(data[0].lat),
-        lng: parseFloat(data[0].lon)
-      };
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.length > 0) {
+        return {
+          lat: parseFloat(data[0].lat),
+          lng: parseFloat(data[0].lon)
+        };
+      }
     }
     return null;
   } catch (e) {
-    console.error("Geocoding error:", e);
+    console.warn("Geocoding failed gracefully:", e);
     return null;
   }
 }
 
 export async function reverseGeocode(lat: number, lng: number): Promise<string | null> {
+  // Try BigDataCloud reverse geocoding API first (extremely reliable, CORS-friendly, fast)
+  try {
+    const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`);
+    if (res.ok) {
+      const data = await res.json();
+      const city = data.city || data.locality || data.principalSubdivision;
+      if (city) {
+        return city;
+      }
+    }
+  } catch (e) {
+    console.warn("Primary reverse geocoding failed, trying fallback...", e);
+  }
+
+  // Fallback to OSM Nominatim
   try {
     const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10`);
-    const data = await res.json();
-    if (data && data.address) {
-      return data.address.city || data.address.town || data.address.village || data.address.suburb || data.address.county || null;
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.address) {
+        return data.address.city || data.address.town || data.address.village || data.address.suburb || data.address.county || null;
+      }
     }
-    return null;
   } catch (e) {
-    console.error("Reverse geocoding error:", e);
-    return null;
+    console.warn("Fallback reverse geocoding failed gracefully:", e);
   }
+
+  return null;
 }
 
 export const CALCULATION_METHODS = [

@@ -1846,6 +1846,169 @@ function HomeView({ hadith, prayerTimes, reminders, onToggleReminder, locationEr
         </div>
       )}
 
+      {/* Karbala Calligraphy & Blood Stains Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#1c0404] via-[#2d0707] to-[#120202] rounded-[28px] border border-red-900/45 p-6 text-center shadow-lg group">
+        {/* Blood stains background decorative elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-45">
+          {/* Animated Liquid Blood Splash (Left Side) */}
+          <motion.svg 
+            className="absolute -top-4 -left-4 w-40 h-40 fill-red-800/60"
+            viewBox="0 0 200 200"
+            initial={{ scale: 0.8, opacity: 0, rotate: -20 }}
+            animate={{ 
+              scale: [0.9, 1.05, 0.98, 1.03, 0.9],
+              rotate: [-5, 2, -2, 5, -5],
+              opacity: [0.6, 0.75, 0.65, 0.8, 0.6]
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {/* Primary organic central splash */}
+            <path d="M 40,10 C 60,10 70,30 85,35 C 105,40 120,20 130,35 C 140,50 125,70 145,85 C 165,100 180,90 175,115 C 170,140 145,145 135,160 C 120,180 110,195 90,190 C 70,185 80,150 65,140 C 50,130 20,140 15,115 C 10,90 35,80 30,60 C 25,40 20,10 40,10 Z" />
+            {/* Extended secondary splat blobs */}
+            <path d="M 120,12 Q 135,5 140,12 Q 142,20 128,18 Z" />
+            <path d="M 25,45 Q 12,35 8,45 Q 5,55 18,52 Z" />
+            <path d="M 155,140 Q 170,145 174,135 Q 178,125 162,130 Z" />
+          </motion.svg>
+
+          {/* Animated Liquid Blood Splash & Dripping (Right Side) */}
+          <motion.svg 
+            className="absolute -top-6 -right-6 w-44 h-44 fill-red-900/65"
+            viewBox="0 0 200 200"
+            animate={{ 
+              scale: [0.95, 1.02, 0.97, 1.05, 0.95],
+              rotate: [5, -4, 3, -1, 5],
+              opacity: [0.7, 0.85, 0.75, 0.9, 0.7]
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {/* Complex splatter shape */}
+            <path d="M 160,20 C 140,25 130,45 115,40 C 95,35 85,15 70,25 C 55,35 70,60 50,75 C 30,90 10,85 15,110 C 20,135 45,130 55,150 C 70,175 80,190 105,185 C 130,180 120,150 135,135 C 150,120 180,125 185,100 C 190,75 165,70 170,50 C 175,30 180,15 160,20 Z" />
+            {/* Floating minor drops */}
+            <circle cx="50" cy="30" r="6" />
+            <circle cx="160" cy="135" r="5" />
+            <circle cx="95" cy="12" r="4.5" />
+          </motion.svg>
+
+          {/* Animated Drips flowing down from the top edge */}
+          <div className="absolute top-0 inset-x-0 flex justify-between px-16">
+            {/* Drip 1 */}
+            <motion.div 
+              className="w-[3px] bg-gradient-to-b from-red-800 to-red-950 rounded-b-full origin-top"
+              initial={{ height: 10 }}
+              animate={{ height: [15, 38, 20, 28, 15] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Drip 2 */}
+            <motion.div 
+              className="w-[4px] bg-gradient-to-b from-red-900 to-red-950 rounded-b-full origin-top"
+              initial={{ height: 20 }}
+              animate={{ height: [25, 52, 35, 42, 25] }}
+              transition={{ duration: 9, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Drip 3 */}
+            <motion.div 
+              className="w-[2.5px] bg-gradient-to-b from-[#800] to-red-950 rounded-b-full origin-top"
+              initial={{ height: 5 }}
+              animate={{ height: [12, 26, 18, 22, 12] }}
+              transition={{ duration: 6, delay: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Drip 4 */}
+            <motion.div 
+              className="w-[3.5px] bg-gradient-to-b from-red-850 to-red-950 rounded-b-full origin-top"
+              initial={{ height: 18 }}
+              animate={{ height: [22, 45, 30, 38, 22] }}
+              transition={{ duration: 8.2, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+
+          {/* Dripping sliding droplets under the drips */}
+          <motion.div 
+            className="absolute left-[78px] w-1.5 h-2 rounded-full bg-red-900"
+            animate={{ 
+              y: [15, 55, 95], 
+              scale: [1, 0.8, 0],
+              opacity: [0.9, 0.8, 0] 
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeIn" }}
+          />
+
+          <motion.div 
+            className="absolute right-[112px] w-1 h-1.5 rounded-full bg-red-950"
+            animate={{ 
+              y: [22, 65, 110], 
+              scale: [1, 0.82, 0],
+              opacity: [0.9, 0.75, 0] 
+            }}
+            transition={{ duration: 6.2, delay: 1.8, repeat: Infinity, ease: "easeIn" }}
+          />
+
+          {/* Splattered fine spots that pulse gently like fresh paint */}
+          <motion.div 
+            className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-red-800 filter blur-[0.2px]"
+            animate={{ scale: [0.9, 1.25, 0.9], opacity: [0.4, 0.8, 0.4] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 right-1/4 w-1.5 h-1.5 rounded-full bg-red-700"
+            animate={{ scale: [0.8, 1.3, 0.8], opacity: [0.5, 0.9, 0.5] }}
+            transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute top-1/3 right-[15%] w-2.5 h-2 rounded-full bg-red-900/70 rotate-12"
+            animate={{ scale: [0.95, 1.15, 0.95], opacity: [0.35, 0.75, 0.35] }}
+            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-1/3 left-[18%] w-1.5 h-2.5 rounded-full bg-red-850/80 -rotate-45"
+            animate={{ scale: [0.85, 1.2, 0.85], opacity: [0.4, 0.85, 0.4] }}
+            transition={{ duration: 4.9, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          {/* Bottom subtle red ambient vignette */}
+          <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-red-950/20 to-transparent" />
+        </div>
+
+        {/* Inner gold/crimson border framework */}
+        <div className="absolute inset-2 border border-red-700/10 rounded-[22px] pointer-events-none" />
+        <div className="absolute inset-3 border border-dashed border-red-500/10 rounded-[20px] pointer-events-none" />
+
+        <div className="relative z-10 space-y-3 py-1">
+          {/* Majestic Calligraphy Header Container */}
+          <div className="flex flex-col items-center">
+            {/* Custom crafted Calligraphy SVG */}
+            <svg className="w-56 h-14 text-gold drop-shadow-[0_4px_16px_rgba(197,160,89,0.35)]" viewBox="0 0 250 100" fill="currentColor">
+              {/* Artistic vector outline representing "كربلاء" in elegant Thuluth/Naskh-inspired curves */}
+              <path d="M 60 70 C 60 62 65 55 75 50 C 85 45 98 42 110 45 C 112 40 110 32 105 25 C 100 18 90 15 80 15 C 72 15 65 18 60 22 C 58 24 55 22 56 20 C 58 15 66 10 78 10 C 92 10 105 15 112 25 C 118 32 120 42 118 50 C 122 48 128 45 132 40 C 135 35 137 28 135 22 C 133 16 128 12 120 12 C 118 12 116 10 117 8 C 119 5 125 3 135 5 C 145 7 152 15 150 25 C 148 35 142 45 135 52 C 145 52 155 50 165 45 C 175 40 180 30 180 20 C 180 18 182 17 184 18 C 186 20 185 24 182 28 C 178 38 170 48 158 52 C 168 53 178 52 188 47 C 198 42 205 32 208 22 C 209 20 211 20 212 21 C 213 23 211 28 208 32 C 202 45 192 55 180 58 C 170 60 160 60 150 58 C 145 61 140 65 135 70 C 125 80 110 88 95 90 C 80 92 68 88 62 80 C 60 77 60 73 60 70 Z M 72 70 C 72 75 78 80 88 80 C 100 80 112 72 122 62 C 112 55 100 52 88 55 C 78 58 72 64 72 70 Z" />
+              {/* Additional accent calligraphic shapes & flow lines */}
+              <circle cx="118" cy="85" r="4.5" />
+              <path d="M 155 15 Q 165 10 170 12 Q 172 14 167 18 Q 162 20 155 15 Z" />
+              <path d="M 95 10 Q 100 5 105 7 Q 107 9 102 12 Q 98 14 95 10 Z" />
+            </svg>
+            
+            {/* Live rendered text using Amiri/Noto font fallback for high definition scaling */}
+            <span className="font-arabic text-5xl text-gold mt-2 leading-none drop-shadow-[0_2px_12px_rgba(197,160,89,0.3)] select-none">
+              كَرْبَلَاء
+            </span>
+          </div>
+
+          <div className="space-y-1.5">
+            <h2 className="font-display text-xl tracking-[0.3em] text-[#fdfbf7] font-semibold">KARBALA</h2>
+            <div className="h-px w-16 bg-red-500/25 mx-auto" />
+            <p className="font-serif text-xs italic text-red-100/70 max-w-[280px] mx-auto leading-relaxed">
+              "The land of supreme sacrifice, parched shorelines, and the eternal victory of truth over tyranny."
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Date & Location */}
       <section className="text-center space-y-2">
         <div className="flex items-center justify-center gap-3 flex-wrap">
