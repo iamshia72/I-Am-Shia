@@ -44,8 +44,15 @@ import {
   LogOut,
   Database
 } from 'lucide-react';
-import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { auth, googleProvider, backupToCloud, fetchFromCloud } from './services/firebase';
+import { 
+  backupToGoogleDrive, 
+  restoreFromGoogleDrive, 
+  getCachedDriveToken, 
+  setCachedDriveToken, 
+  hasDriveToken 
+} from './services/driveService';
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay } from 'date-fns';
 import { cn } from './lib/utils';
 import { getDailyHadith } from './services/geminiService';
@@ -645,6 +652,11 @@ export default function App() {
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
   const [syncStatus, setSyncStatus] = useState<'idle' | 'syncing' | 'success' | 'error'>('idle');
   const [lastSync, setLastSync] = useState<string | null>(null);
+  const [driveToken, setDriveToken] = useState<string | null>(getCachedDriveToken());
+  const [isDriveSyncing, setIsDriveSyncing] = useState<boolean>(false);
+  const [driveSyncStatus, setDriveSyncStatus] = useState<string>('idle');
+  const [lastDriveSync, setLastDriveSync] = useState<string | null>(() => localStorage.getItem('noor_last_drive_sync'));
+  const isRestoringRef = useRef<boolean>(false);
   const [settingsSubPage, setSettingsSubPage] = useState<string | null>(null);
 
   const [readingProgress, setReadingProgress] = useState<Record<string, number>>(() => {
@@ -1057,6 +1069,7 @@ export default function App() {
   const handleAutoSyncOnLogin = async (user: any) => {
     setIsSyncing(true);
     setSyncStatus('syncing');
+    isRestoringRef.current = true;
     try {
       const cloudData = await fetchFromCloud(user.uid);
       if (cloudData) {
@@ -1071,9 +1084,7 @@ export default function App() {
                 updated = true;
               }
             });
-            if (updated) {
-              localStorage.setItem('app_bookmarks', JSON.stringify(merged));
-            }
+            localStorage.setItem('app_bookmarks', JSON.stringify(merged));
             return merged;
           });
         }
@@ -1095,9 +1106,7 @@ export default function App() {
                 updated = true;
               }
             });
-            if (updated) {
-              localStorage.setItem('noor_reminders', JSON.stringify(merged));
-            }
+            localStorage.setItem('noor_reminders', JSON.stringify(merged));
             return merged;
           });
         }
@@ -1119,9 +1128,7 @@ export default function App() {
                 updated = true;
               }
             });
-            if (updated) {
-              localStorage.setItem('noor_journal_entries', JSON.stringify(merged));
-            }
+            localStorage.setItem('noor_journal_entries', JSON.stringify(merged));
             return merged;
           });
         }
@@ -1135,9 +1142,7 @@ export default function App() {
                 updated = true;
               }
             });
-            if (updated) {
-              localStorage.setItem('custom_tasbihs', JSON.stringify(merged));
-            }
+            localStorage.setItem('custom_tasbihs', JSON.stringify(merged));
             return merged;
           });
         }
@@ -1165,6 +1170,166 @@ export default function App() {
       setSyncStatus('error');
     } finally {
       setIsSyncing(false);
+      setTimeout(() => {
+        isRestoringRef.current = false;
+      }, 2000);
+    }
+  };
+
+  const triggerDriveBackup = async (tokenToUse?: string) => {
+    const activeToken = tokenToUse || driveToken;
+    if (!activeToken) return;
+    setIsDriveSyncing(true);
+    setDriveSyncStatus('syncing');
+    try {
+      await backupToGoogleDrive(activeToken, {
+        prayerSettings,
+        journalEntries,
+        bookmarks,
+        customTasbihs,
+        readingProgress,
+        reminders
+      });
+      setDriveSyncStatus('success');
+      const nowStr = new Date().toISOString();
+      setLastDriveSync(nowStr);
+      localStorage.setItem('noor_last_drive_sync', nowStr);
+    } catch (err) {
+      console.error("Google Drive sync failed:", err);
+      setDriveSyncStatus('error');
+    } finally {
+      setIsDriveSyncing(false);
+    }
+  };
+
+  const handleRestoreFromDrive = async (token: string): Promise<boolean> => {
+    setIsDriveSyncing(true);
+    setDriveSyncStatus('syncing');
+    isRestoringRef.current = true;
+    try {
+      const driveData = await restoreFromGoogleDrive(token);
+      if (driveData) {
+        let updated = false;
+
+        if (driveData.bookmarks && Array.isArray(driveData.bookmarks)) {
+          setBookmarks(prev => {
+            const merged = [...prev];
+            driveData.bookmarks!.forEach((cb: any) => {
+              if (!merged.some(mb => mb.id === cb.id)) {
+                merged.push(cb);
+                updated = true;
+              }
+            });
+            localStorage.setItem('app_bookmarks', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        if (driveData.prayerSettings) {
+          setPrayerSettings(prev => {
+            const merged = { ...prev, ...driveData.prayerSettings };
+            localStorage.setItem('noor_prayer_settings', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        if (driveData.reminders && Array.isArray(driveData.reminders)) {
+          setReminders(prev => {
+            const merged = [...prev];
+            driveData.reminders!.forEach((cr: any) => {
+              if (!merged.some(mr => mr.id === cr.id)) {
+                merged.push(cr);
+                updated = true;
+              }
+            });
+            localStorage.setItem('noor_reminders', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        if (driveData.readingProgress) {
+          setReadingProgress(prev => {
+            const merged = { ...prev, ...driveData.readingProgress };
+            localStorage.setItem('reading_progress', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        if (driveData.journalEntries && Array.isArray(driveData.journalEntries)) {
+          setJournalEntries(prev => {
+            const merged = [...prev];
+            driveData.journalEntries!.forEach((cj: any) => {
+              if (!merged.some(mj => mj.id === cj.id)) {
+                merged.push(cj);
+                updated = true;
+              }
+            });
+            localStorage.setItem('noor_journal_entries', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        if (driveData.customTasbihs && Array.isArray(driveData.customTasbihs)) {
+          setCustomTasbihs(prev => {
+            const merged = [...prev];
+            driveData.customTasbihs!.forEach((ct: any) => {
+              if (!merged.some(mt => mt.id === ct.id)) {
+                merged.push(ct);
+                updated = true;
+              }
+            });
+            localStorage.setItem('custom_tasbihs', JSON.stringify(merged));
+            return merged;
+          });
+        }
+
+        setDriveSyncStatus('success');
+        const nowStr = new Date().toISOString();
+        setLastDriveSync(nowStr);
+        localStorage.setItem('noor_last_drive_sync', nowStr);
+
+        // Also push the merged state back to Firestore as well to keep in perfect alignment
+        if (auth.currentUser) {
+          await backupToCloud(auth.currentUser.uid, {
+            prayerSettings,
+            journalEntries,
+            bookmarks,
+            customTasbihs,
+            readingProgress,
+            reminders
+          });
+        }
+
+        return true;
+      } else {
+        // No backup file existed, upload current state to drive to initialize
+        const localJournal = JSON.parse(localStorage.getItem('noor_journal_entries') || '[]');
+        const localTasbihs = JSON.parse(localStorage.getItem('custom_tasbihs') || '[]');
+
+        await backupToGoogleDrive(token, {
+          prayerSettings,
+          journalEntries: localJournal,
+          bookmarks,
+          customTasbihs: localTasbihs,
+          readingProgress,
+          reminders
+        });
+
+        setDriveSyncStatus('success');
+        const nowStr = new Date().toISOString();
+        setLastDriveSync(nowStr);
+        localStorage.setItem('noor_last_drive_sync', nowStr);
+        return false;
+      }
+    } catch (err) {
+      console.error("Google Drive sync restore failed:", err);
+      setDriveSyncStatus('error');
+      return false;
+    } finally {
+      setIsDriveSyncing(false);
+      setTimeout(() => {
+        isRestoringRef.current = false;
+      }, 2000);
     }
   };
 
@@ -1183,6 +1348,12 @@ export default function App() {
       });
       setSyncStatus('success');
       setLastSync(new Date().toISOString());
+
+      // If Google Drive token exists, automatically dual-sync to Drive!
+      const activeDriveToken = getCachedDriveToken();
+      if (activeDriveToken) {
+        await triggerDriveBackup(activeDriveToken);
+      }
     } catch (err) {
       console.error("Background sync failed:", err);
       setSyncStatus('error');
@@ -1207,6 +1378,7 @@ export default function App() {
   // Background auto sync trigger on state changes (4 seconds debounce)
   useEffect(() => {
     if (!firebaseUser) return;
+    if (isRestoringRef.current) return;
     const timer = setTimeout(() => {
       triggerSync();
     }, 4000);
@@ -1393,7 +1565,7 @@ export default function App() {
         onMouseLeave={onMouseLeave}
       >
       {/* Header */}
-      <header className="px-6 py-1 flex justify-between items-center border-b border-olive/10 bg-paper/50 backdrop-blur-md sticky top-0 z-50">
+      <header className="relative px-6 py-1 flex justify-between items-center border-b border-olive/10 bg-paper/50 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-3">
           {activeTab !== 'home' && (
             <button onClick={goBack} className="p-1 rounded-full text-olive hover:bg-olive/10 transition-colors">
@@ -1403,6 +1575,23 @@ export default function App() {
           <div onClick={() => navigateTo('home')} className="cursor-pointer">
             <h1 className="font-display text-xl font-bold text-olive tracking-wider">Noor</h1>
             <p className="text-[8px] uppercase tracking-[0.2em] text-gold font-semibold -mt-0.5">Shia Companion</p>
+          </div>
+        </div>
+
+        {/* Majestic "Ya Hussain" Calligraphy Centerpiece */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center">
+          <div className="relative flex items-center justify-center px-4 py-0.5 rounded-full border border-gold/15 bg-olive/[0.03] backdrop-blur-[2px]">
+            {/* Subtle spiritual red core background glow */}
+            <div className="absolute inset-0 bg-radial from-red-500/5 via-transparent to-transparent rounded-full" />
+            
+            {/* Elegant Calligraphy Text using Amiri font */}
+            <span className="font-arabic text-xl md:text-2xl text-gold drop-shadow-[0_2px_10px_rgba(197,160,89,0.55)] select-none font-bold tracking-wide mt-1">
+              يَا حُسَيْنُ
+            </span>
+            
+            {/* Symmetrical ornamental diamonds (Nuqtas) reflecting traditional Islamic calligraphy */}
+            <div className="absolute -top-1 left-2 w-1.5 h-1.5 bg-gold/55 rotate-45" />
+            <div className="absolute -bottom-1 right-2 w-1.5 h-1.5 bg-gold/55 rotate-45" />
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -1624,6 +1813,14 @@ export default function App() {
               onSyncNow={triggerSync}
               activeSubPage={settingsSubPage}
               onActiveSubPageChange={setSettingsSubPage}
+              driveToken={driveToken}
+              onDriveTokenChange={setDriveToken}
+              isDriveSyncing={isDriveSyncing}
+              driveSyncStatus={driveSyncStatus}
+              lastDriveSync={lastDriveSync}
+              onDriveBackupNow={() => triggerDriveBackup()}
+              onDriveRestoreNow={async () => { if (driveToken) await handleRestoreFromDrive(driveToken); }}
+              onRestoreFromDriveWithToken={handleRestoreFromDrive}
             />
           )}
           {activeTab === 'tasbih' && (
@@ -2204,16 +2401,6 @@ function HomeView({ hadith, onRefreshHadith, prayerTimes, reminders, onToggleRem
         <div className="relative z-10 space-y-3 py-1">
           {/* Majestic Calligraphy Header Container */}
           <div className="flex flex-col items-center">
-            {/* Custom crafted Calligraphy SVG */}
-            <svg className="w-56 h-14 text-gold drop-shadow-[0_4px_16px_rgba(197,160,89,0.35)]" viewBox="0 0 250 100" fill="currentColor">
-              {/* Artistic vector outline representing "كربلاء" in elegant Thuluth/Naskh-inspired curves */}
-              <path d="M 60 70 C 60 62 65 55 75 50 C 85 45 98 42 110 45 C 112 40 110 32 105 25 C 100 18 90 15 80 15 C 72 15 65 18 60 22 C 58 24 55 22 56 20 C 58 15 66 10 78 10 C 92 10 105 15 112 25 C 118 32 120 42 118 50 C 122 48 128 45 132 40 C 135 35 137 28 135 22 C 133 16 128 12 120 12 C 118 12 116 10 117 8 C 119 5 125 3 135 5 C 145 7 152 15 150 25 C 148 35 142 45 135 52 C 145 52 155 50 165 45 C 175 40 180 30 180 20 C 180 18 182 17 184 18 C 186 20 185 24 182 28 C 178 38 170 48 158 52 C 168 53 178 52 188 47 C 198 42 205 32 208 22 C 209 20 211 20 212 21 C 213 23 211 28 208 32 C 202 45 192 55 180 58 C 170 60 160 60 150 58 C 145 61 140 65 135 70 C 125 80 110 88 95 90 C 80 92 68 88 62 80 C 60 77 60 73 60 70 Z M 72 70 C 72 75 78 80 88 80 C 100 80 112 72 122 62 C 112 55 100 52 88 55 C 78 58 72 64 72 70 Z" />
-              {/* Additional accent calligraphic shapes & flow lines */}
-              <circle cx="118" cy="85" r="4.5" />
-              <path d="M 155 15 Q 165 10 170 12 Q 172 14 167 18 Q 162 20 155 15 Z" />
-              <path d="M 95 10 Q 100 5 105 7 Q 107 9 102 12 Q 98 14 95 10 Z" />
-            </svg>
-            
             {/* Live rendered text using Amiri/Noto font fallback for high definition scaling */}
             <span className="font-arabic text-5xl text-gold mt-2 leading-none drop-shadow-[0_2px_12px_rgba(197,160,89,0.3)] select-none">
               كَرْبَلَاء
@@ -2223,11 +2410,11 @@ function HomeView({ hadith, onRefreshHadith, prayerTimes, reminders, onToggleRem
           <div className="space-y-1.5">
             <h2 className="font-display text-xl tracking-[0.3em] text-[#fdfbf7] font-semibold">KARBALA</h2>
             <div className="h-px w-16 bg-red-500/25 mx-auto" />
-            <p className="font-serif text-xs italic text-red-100/70 max-w-[280px] mx-auto leading-relaxed">
+            <p className="font-serif text-base md:text-lg italic text-red-100/80 max-w-[440px] mx-auto leading-relaxed">
               "{karbalaQuote.text}"
             </p>
             {karbalaQuote.source && (
-              <p className="font-sans text-[10px] uppercase tracking-wider text-red-300/60 mt-1">
+              <p className="font-sans text-[11px] md:text-xs uppercase tracking-wider text-red-300/70 mt-1.5">
                 — {karbalaQuote.source}
               </p>
             )}
@@ -2485,7 +2672,15 @@ function SettingsView({
   lastSync,
   onSyncNow,
   activeSubPage: propActiveSubPage,
-  onActiveSubPageChange
+  onActiveSubPageChange,
+  driveToken,
+  onDriveTokenChange,
+  isDriveSyncing,
+  driveSyncStatus,
+  lastDriveSync,
+  onDriveBackupNow,
+  onDriveRestoreNow,
+  onRestoreFromDriveWithToken
 }: { 
   settings: PrayerSettings, 
   onUpdateSettings: (s: PrayerSettings) => void,
@@ -2495,7 +2690,15 @@ function SettingsView({
   lastSync: string | null,
   onSyncNow: () => void,
   activeSubPage: string | null,
-  onActiveSubPageChange: (page: string | null) => void
+  onActiveSubPageChange: (page: string | null) => void,
+  driveToken: string | null,
+  onDriveTokenChange: (token: string | null) => void,
+  isDriveSyncing: boolean,
+  driveSyncStatus: string,
+  lastDriveSync: string | null,
+  onDriveBackupNow: () => void,
+  onDriveRestoreNow: () => void,
+  onRestoreFromDriveWithToken: (token: string) => Promise<boolean>
 }) {
   const activeSubPage = propActiveSubPage;
   const setActiveSubPage = onActiveSubPageChange;
@@ -2508,7 +2711,13 @@ function SettingsView({
     setAuthError(null);
     setLocalSyncing(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (credential?.accessToken) {
+        setCachedDriveToken(credential.accessToken);
+        onDriveTokenChange(credential.accessToken);
+        await onRestoreFromDriveWithToken(credential.accessToken);
+      }
     } catch (err: any) {
       console.error(err);
       if (err?.code === 'auth/popup-closed-by-user' || err?.message?.includes('popup-closed-by-user')) {
@@ -2817,6 +3026,83 @@ function SettingsView({
             </div>
           )}
         </div>
+
+        {firebaseUser && (
+          <div className="bg-paper rounded-[24px] p-6 border border-olive/10 space-y-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <div className="w-16 h-16 rounded-full bg-[#4285F4]/10 flex items-center justify-center text-[#4285F4]">
+                <Cloud size={32} />
+              </div>
+              <p className="text-base font-bold text-olive">Google Drive Dual Backup</p>
+              <p className="text-xs text-olive/70 leading-relaxed -mt-2 select-none text-center">
+                Securely saves your My Journal diaries, customized tasbih routines, reminders, and bookmarked holy verses directly as a JSON file in your personal Google Drive storage space.
+              </p>
+            </div>
+
+            <div className="space-y-3 bg-paper p-4 rounded-2xl border border-olive/5 text-sm">
+              <div className="flex justify-between items-center">
+                <span className="text-olive/65">Drive Integration:</span>
+                <span className={cn(
+                  "font-bold capitalize flex items-center gap-1.5",
+                  driveToken ? (
+                    driveSyncStatus === 'success' ? "text-green-600" :
+                    driveSyncStatus === 'syncing' ? "text-gold animate-pulse" :
+                    driveSyncStatus === 'error' ? "text-red-500" : "text-green-600"
+                  ) : "text-amber-600"
+                )}>
+                  {!driveToken ? "Not Linked" : (
+                    driveSyncStatus === 'success' ? "Linked & Up-to-date" :
+                    driveSyncStatus === 'syncing' ? "Syncing..." :
+                    driveSyncStatus === 'error' ? "Sync Failed" : "Active"
+                  )}
+                </span>
+              </div>
+              {lastDriveSync && (
+                <div className="flex justify-between">
+                  <span className="text-olive/60">Last Drive Sync:</span>
+                  <span className="font-medium text-olive/85">
+                    {new Date(lastDriveSync).toLocaleDateString()} {new Date(lastDriveSync).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {!driveToken ? (
+              <div className="space-y-3">
+                <p className="text-xs text-amber-600 font-medium text-center leading-relaxed">
+                  Google Drive access is transient. Link Google Drive under this secure session to activate drive sync.
+                </p>
+                <button 
+                  onClick={handleSignIn}
+                  disabled={localSyncing}
+                  className="w-full bg-[#4285F4] text-white rounded-xl py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#4285F4]/90 transition-all flex items-center justify-center gap-2 cursor-pointer border-none"
+                >
+                  <Cloud size={16} />
+                  {localSyncing ? "Connecting..." : "Link Google Drive Storage"}
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-2">
+                <button 
+                  onClick={onDriveBackupNow}
+                  disabled={isDriveSyncing}
+                  className="bg-olive text-paper rounded-xl py-3 text-xs font-bold uppercase tracking-widest hover:bg-olive/90 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Cloud size={16} className={cn(isDriveSyncing && "animate-spin")} />
+                  {isDriveSyncing ? "Saving..." : "Backup to Drive"}
+                </button>
+                <button 
+                  onClick={onDriveRestoreNow}
+                  disabled={isDriveSyncing}
+                  className="bg-paper text-olive border border-olive/20 rounded-xl py-3 text-xs font-bold uppercase tracking-widest hover:bg-olive/5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <RotateCcw size={16} className={cn(isDriveSyncing && "animate-spin")} />
+                  {isDriveSyncing ? "Restoring..." : "Restore Drive"}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </motion.div>
     );
   }
