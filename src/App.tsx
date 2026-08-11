@@ -721,7 +721,18 @@ export default function App() {
   };
   const [targetAyahNumber, setTargetAyahNumber] = useState<number | null>(null);
   const [targetHadith, setTargetHadith] = useState<Hadith | null>(null);
-  const [cityName, setCityName] = useState<string>('');
+  const [cityName, setCityName] = useState<string>(() => {
+    const saved = localStorage.getItem('noor_prayer_settings');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.manualLocation?.city) {
+          return parsed.manualLocation.city;
+        }
+      } catch (e) {}
+    }
+    return 'Tehran';
+  });
   const [surahs, setSurahs] = useState<any[]>([]);
   const [isLoadingSurahs, setIsLoadingSurahs] = useState(false);
   const [surahsError, setSurahsError] = useState<string | null>(null);
@@ -1016,7 +1027,18 @@ export default function App() {
   }, [activeTab]);
 
   // Prayer related state
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [location, setLocation] = useState<{ lat: number; lng: number }>(() => {
+    const saved = localStorage.getItem('noor_prayer_settings');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.manualLocation?.lat && parsed.manualLocation?.lng) {
+          return { lat: parsed.manualLocation.lat, lng: parsed.manualLocation.lng };
+        }
+      } catch (e) {}
+    }
+    return { lat: 35.6892, lng: 51.3890 }; // Tehran default
+  });
   const [prayerSettings, setPrayerSettings] = useState<PrayerSettings>(() => {
     const saved = localStorage.getItem('noor_prayer_settings');
     if (saved) {
@@ -1455,15 +1477,15 @@ export default function App() {
           setLocationError(null);
         },
         (error) => {
-          console.error("Geolocation error:", error);
+          console.warn("Geolocation fallback applied:", error.message || error);
           setLocationError("Could not get location. Using default (Tehran).");
-          // Default to Tehran if geolocation fails
-          setLocation({ lat: 35.6892, lng: 51.3890 });
-        }
+          setLocation(prev => prev || { lat: 35.6892, lng: 51.3890 });
+        },
+        { timeout: 5000, enableHighAccuracy: false }
       );
     } else {
       setLocationError("Geolocation not supported. Using default (Tehran).");
-      setLocation({ lat: 35.6892, lng: 51.3890 });
+      setLocation(prev => prev || { lat: 35.6892, lng: 51.3890 });
     }
   }, [prayerSettings.manualLocation]);
 
@@ -1927,6 +1949,18 @@ function HomeView({ hadith, onRefreshHadith, prayerTimes, reminders, onToggleRem
     return isEidAlFitr || isEidAlAdha;
   }, [currentDate, settings.hijriOffset]);
 
+  const isMuharramPeriod = useMemo(() => {
+    const { day, month } = getHijriDateParts(currentDate, settings.hijriOffset);
+    // Muharram mourning period banner is visible from 1 Muharram 12:00 AM to 9 Rabi' al-Awwal 12:00 AM
+    // Month 1 = Muharram (1 to 29/30)
+    // Month 2 = Safar (1 to 29/30)
+    // Month 3 = Rabi' al-Awwal (Days 1 to 8, ending at 12:00 AM on 9 Rabi' al-Awwal)
+    if (month === 1) return true;
+    if (month === 2) return true;
+    if (month === 3 && day < 9) return true;
+    return false;
+  }, [currentDate, settings.hijriOffset]);
+
   const t = useTranslation(settings.language);
 
   // Generate randomized blood splashes, splatters, drips and sliding droplets.
@@ -2254,173 +2288,175 @@ function HomeView({ hadith, onRefreshHadith, prayerTimes, reminders, onToggleRem
       )}
 
       {/* Karbala Calligraphy & Blood Stains Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-[#1c0404] via-[#2d0707] to-[#120202] rounded-[28px] border border-red-900/45 p-6 text-center shadow-lg group">
-        {/* Blood stains background decorative elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-45">
-          {/* Animated Liquid Blood Splash (Left Side) */}
-          <motion.svg 
-            className="absolute fill-red-800/60"
-            viewBox="0 0 200 200"
-            style={{
-              top: karbalaSplashes.splashLeftStyle.top,
-              left: karbalaSplashes.splashLeftStyle.left,
-              transform: `scale(${karbalaSplashes.splashLeftStyle.scale}) rotate(${karbalaSplashes.splashLeftStyle.rotate}deg)`,
-              opacity: karbalaSplashes.splashLeftStyle.opacity
-            }}
-            initial={{ scale: 0.8, opacity: 0, rotate: -20 }}
-            animate={{ 
-              scale: [0.9 * karbalaSplashes.splashLeftStyle.scale, 1.05 * karbalaSplashes.splashLeftStyle.scale, 0.98 * karbalaSplashes.splashLeftStyle.scale, 1.03 * karbalaSplashes.splashLeftStyle.scale, 0.9 * karbalaSplashes.splashLeftStyle.scale],
-              rotate: [karbalaSplashes.splashLeftStyle.rotate - 5, karbalaSplashes.splashLeftStyle.rotate + 5, karbalaSplashes.splashLeftStyle.rotate - 2, karbalaSplashes.splashLeftStyle.rotate + 3, karbalaSplashes.splashLeftStyle.rotate - 5],
-              opacity: [karbalaSplashes.splashLeftStyle.opacity, karbalaSplashes.splashLeftStyle.opacity + 0.15, karbalaSplashes.splashLeftStyle.opacity - 0.05, karbalaSplashes.splashLeftStyle.opacity + 0.1, karbalaSplashes.splashLeftStyle.opacity]
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            {/* Primary organic central splash */}
-            <path d="M 40,10 C 60,10 70,30 85,35 C 105,40 120,20 130,35 C 140,50 125,70 145,85 C 165,100 180,90 175,115 C 170,140 145,145 135,160 C 120,180 110,195 90,190 C 70,185 80,150 65,140 C 50,130 20,140 15,115 C 10,90 35,80 30,60 C 25,40 20,10 40,10 Z" />
-            {/* Extended secondary splat blobs */}
-            <path d="M 120,12 Q 135,5 140,12 Q 142,20 128,18 Z" />
-            <path d="M 25,45 Q 12,35 8,45 Q 5,55 18,52 Z" />
-            <path d="M 155,140 Q 170,145 174,135 Q 178,125 162,130 Z" />
-          </motion.svg>
+      {isMuharramPeriod && (
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#1c0404] via-[#2d0707] to-[#120202] rounded-[28px] border border-red-900/45 p-6 text-center shadow-lg group">
+          {/* Blood stains background decorative elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-45">
+            {/* Animated Liquid Blood Splash (Left Side) */}
+            <motion.svg 
+              className="absolute fill-red-800/60"
+              viewBox="0 0 200 200"
+              style={{
+                top: karbalaSplashes.splashLeftStyle.top,
+                left: karbalaSplashes.splashLeftStyle.left,
+                transform: `scale(${karbalaSplashes.splashLeftStyle.scale}) rotate(${karbalaSplashes.splashLeftStyle.rotate}deg)`,
+                opacity: karbalaSplashes.splashLeftStyle.opacity
+              }}
+              initial={{ scale: 0.8, opacity: 0, rotate: -20 }}
+              animate={{ 
+                scale: [0.9 * karbalaSplashes.splashLeftStyle.scale, 1.05 * karbalaSplashes.splashLeftStyle.scale, 0.98 * karbalaSplashes.splashLeftStyle.scale, 1.03 * karbalaSplashes.splashLeftStyle.scale, 0.9 * karbalaSplashes.splashLeftStyle.scale],
+                rotate: [karbalaSplashes.splashLeftStyle.rotate - 5, karbalaSplashes.splashLeftStyle.rotate + 5, karbalaSplashes.splashLeftStyle.rotate - 2, karbalaSplashes.splashLeftStyle.rotate + 3, karbalaSplashes.splashLeftStyle.rotate - 5],
+                opacity: [karbalaSplashes.splashLeftStyle.opacity, karbalaSplashes.splashLeftStyle.opacity + 0.15, karbalaSplashes.splashLeftStyle.opacity - 0.05, karbalaSplashes.splashLeftStyle.opacity + 0.1, karbalaSplashes.splashLeftStyle.opacity]
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              {/* Primary organic central splash */}
+              <path d="M 40,10 C 60,10 70,30 85,35 C 105,40 120,20 130,35 C 140,50 125,70 145,85 C 165,100 180,90 175,115 C 170,140 145,145 135,160 C 120,180 110,195 90,190 C 70,185 80,150 65,140 C 50,130 20,140 15,115 C 10,90 35,80 30,60 C 25,40 20,10 40,10 Z" />
+              {/* Extended secondary splat blobs */}
+              <path d="M 120,12 Q 135,5 140,12 Q 142,20 128,18 Z" />
+              <path d="M 25,45 Q 12,35 8,45 Q 5,55 18,52 Z" />
+              <path d="M 155,140 Q 170,145 174,135 Q 178,125 162,130 Z" />
+            </motion.svg>
 
-          {/* Animated Liquid Blood Splash & Dripping (Right Side) */}
-          <motion.svg 
-            className="absolute fill-red-900/65"
-            viewBox="0 0 200 200"
-            style={{
-              top: karbalaSplashes.splashRightStyle.top,
-              right: karbalaSplashes.splashRightStyle.right,
-              transform: `scale(${karbalaSplashes.splashRightStyle.scale}) rotate(${karbalaSplashes.splashRightStyle.rotate}deg)`,
-              opacity: karbalaSplashes.splashRightStyle.opacity
-            }}
-            animate={{ 
-              scale: [0.95 * karbalaSplashes.splashRightStyle.scale, 1.02 * karbalaSplashes.splashRightStyle.scale, 0.97 * karbalaSplashes.splashRightStyle.scale, 1.05 * karbalaSplashes.splashRightStyle.scale, 0.95 * karbalaSplashes.splashRightStyle.scale],
-              rotate: [karbalaSplashes.splashRightStyle.rotate + 5, karbalaSplashes.splashRightStyle.rotate - 4, karbalaSplashes.splashRightStyle.rotate + 3, karbalaSplashes.splashRightStyle.rotate - 1, karbalaSplashes.splashRightStyle.rotate + 5],
-              opacity: [karbalaSplashes.splashRightStyle.opacity, karbalaSplashes.splashRightStyle.opacity + 0.1, karbalaSplashes.splashRightStyle.opacity - 0.05, karbalaSplashes.splashRightStyle.opacity + 0.12, karbalaSplashes.splashRightStyle.opacity]
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            {/* Complex splatter shape */}
-            <path d="M 160,20 C 140,25 130,45 115,40 C 95,35 85,15 70,25 C 55,35 70,60 50,75 C 30,90 10,85 15,110 C 20,135 45,130 55,150 C 70,175 80,190 105,185 C 130,180 120,150 135,135 C 150,120 180,125 185,100 C 190,75 165,70 170,50 C 175,30 180,15 160,20 Z" />
-            {/* Floating minor drops */}
-            <circle cx="50" cy="30" r="6" />
-            <circle cx="160" cy="135" r="5" />
-            <circle cx="95" cy="12" r="4.5" />
-          </motion.svg>
+            {/* Animated Liquid Blood Splash & Dripping (Right Side) */}
+            <motion.svg 
+              className="absolute fill-red-900/65"
+              viewBox="0 0 200 200"
+              style={{
+                top: karbalaSplashes.splashRightStyle.top,
+                right: karbalaSplashes.splashRightStyle.right,
+                transform: `scale(${karbalaSplashes.splashRightStyle.scale}) rotate(${karbalaSplashes.splashRightStyle.rotate}deg)`,
+                opacity: karbalaSplashes.splashRightStyle.opacity
+              }}
+              animate={{ 
+                scale: [0.95 * karbalaSplashes.splashRightStyle.scale, 1.02 * karbalaSplashes.splashRightStyle.scale, 0.97 * karbalaSplashes.splashRightStyle.scale, 1.05 * karbalaSplashes.splashRightStyle.scale, 0.95 * karbalaSplashes.splashRightStyle.scale],
+                rotate: [karbalaSplashes.splashRightStyle.rotate + 5, karbalaSplashes.splashRightStyle.rotate - 4, karbalaSplashes.splashRightStyle.rotate + 3, karbalaSplashes.splashRightStyle.rotate - 1, karbalaSplashes.splashRightStyle.rotate + 5],
+                opacity: [karbalaSplashes.splashRightStyle.opacity, karbalaSplashes.splashRightStyle.opacity + 0.1, karbalaSplashes.splashRightStyle.opacity - 0.05, karbalaSplashes.splashRightStyle.opacity + 0.12, karbalaSplashes.splashRightStyle.opacity]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              {/* Complex splatter shape */}
+              <path d="M 160,20 C 140,25 130,45 115,40 C 95,35 85,15 70,25 C 55,35 70,60 50,75 C 30,90 10,85 15,110 C 20,135 45,130 55,150 C 70,175 80,190 105,185 C 130,180 120,150 135,135 C 150,120 180,125 185,100 C 190,75 165,70 170,50 C 175,30 180,15 160,20 Z" />
+              {/* Floating minor drops */}
+              <circle cx="50" cy="30" r="6" />
+              <circle cx="160" cy="135" r="5" />
+              <circle cx="95" cy="12" r="4.5" />
+            </motion.svg>
 
-          {/* Animated Drips flowing down from the top edge with dynamic positions */}
-          <div className="absolute top-0 inset-x-0 w-full h-full">
-            {karbalaSplashes.drips.map((drip, idx) => (
+            {/* Animated Drips flowing down from the top edge with dynamic positions */}
+            <div className="absolute top-0 inset-x-0 w-full h-full">
+              {karbalaSplashes.drips.map((drip, idx) => (
+                <motion.div 
+                  key={`drip-${idx}`}
+                  className={`absolute bg-gradient-to-b ${drip.colorClass} rounded-b-full origin-top`}
+                  style={{
+                    left: drip.left,
+                    width: drip.width,
+                    top: 0
+                  }}
+                  initial={{ height: 10 }}
+                  animate={{ height: drip.heights }}
+                  transition={{ 
+                    duration: drip.duration, 
+                    delay: drip.delay, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Dripping sliding droplets under the drips with dynamic positions */}
+            {karbalaSplashes.slidingDroplets.map((droplet, idx) => (
               <motion.div 
-                key={`drip-${idx}`}
-                className={`absolute bg-gradient-to-b ${drip.colorClass} rounded-b-full origin-top`}
+                key={`sliding-droplet-${idx}`}
+                className={`absolute rounded-full ${droplet.colorClass}`}
                 style={{
-                  left: drip.left,
-                  width: drip.width,
+                  left: droplet.left,
+                  width: droplet.size,
+                  height: `calc(${droplet.size} * 1.5)`,
                   top: 0
                 }}
-                initial={{ height: 10 }}
-                animate={{ height: drip.heights }}
+                animate={{ 
+                  y: droplet.y, 
+                  scale: [1, 0.82, 0],
+                  opacity: [0.9, 0.75, 0] 
+                }}
                 transition={{ 
-                  duration: drip.duration, 
-                  delay: drip.delay, 
+                  duration: droplet.duration, 
+                  delay: droplet.delay, 
+                  repeat: Infinity, 
+                  ease: "easeIn" 
+                }}
+              />
+            ))}
+
+            {/* Splattered fine spots that pulse gently with random size, coordinates and delays */}
+            {karbalaSplashes.splatters.map((splat, idx) => (
+              <motion.div 
+                key={`splat-${idx}`}
+                className={`absolute rounded-full ${splat.colorClass} ${splat.blurClass}`}
+                style={{
+                  top: splat.top,
+                  left: splat.left,
+                  width: splat.size,
+                  height: splat.size,
+                  transform: `rotate(${splat.rotate}deg)`,
+                  opacity: splat.opacity
+                }}
+                animate={{ 
+                  scale: splat.scale, 
+                  opacity: [splat.opacity, splat.opacity * 1.6, splat.opacity] 
+                }}
+                transition={{ 
+                  duration: splat.duration, 
+                  delay: splat.delay, 
                   repeat: Infinity, 
                   ease: "easeInOut" 
                 }}
               />
             ))}
+
+            {/* Bottom subtle red ambient vignette */}
+            <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-red-950/20 to-transparent" />
           </div>
 
-          {/* Dripping sliding droplets under the drips with dynamic positions */}
-          {karbalaSplashes.slidingDroplets.map((droplet, idx) => (
-            <motion.div 
-              key={`sliding-droplet-${idx}`}
-              className={`absolute rounded-full ${droplet.colorClass}`}
-              style={{
-                left: droplet.left,
-                width: droplet.size,
-                height: `calc(${droplet.size} * 1.5)`,
-                top: 0
-              }}
-              animate={{ 
-                y: droplet.y, 
-                scale: [1, 0.82, 0],
-                opacity: [0.9, 0.75, 0] 
-              }}
-              transition={{ 
-                duration: droplet.duration, 
-                delay: droplet.delay, 
-                repeat: Infinity, 
-                ease: "easeIn" 
-              }}
-            />
-          ))}
+          {/* Inner gold/crimson border framework */}
+          <div className="absolute inset-2 border border-red-700/10 rounded-[22px] pointer-events-none" />
+          <div className="absolute inset-3 border border-dashed border-red-500/10 rounded-[20px] pointer-events-none" />
 
-          {/* Splattered fine spots that pulse gently with random size, coordinates and delays */}
-          {karbalaSplashes.splatters.map((splat, idx) => (
-            <motion.div 
-              key={`splat-${idx}`}
-              className={`absolute rounded-full ${splat.colorClass} ${splat.blurClass}`}
-              style={{
-                top: splat.top,
-                left: splat.left,
-                width: splat.size,
-                height: splat.size,
-                transform: `rotate(${splat.rotate}deg)`,
-                opacity: splat.opacity
-              }}
-              animate={{ 
-                scale: splat.scale, 
-                opacity: [splat.opacity, splat.opacity * 1.6, splat.opacity] 
-              }}
-              transition={{ 
-                duration: splat.duration, 
-                delay: splat.delay, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
-            />
-          ))}
+          <div className="relative z-10 space-y-3 py-1">
+            {/* Majestic Calligraphy Header Container */}
+            <div className="flex flex-col items-center">
+              {/* Live rendered text using Amiri/Noto font fallback for high definition scaling */}
+              <span className="font-arabic text-5xl text-gold mt-2 leading-none drop-shadow-[0_2px_12px_rgba(197,160,89,0.3)] select-none">
+                كَرْبَلَاء
+              </span>
+            </div>
 
-          {/* Bottom subtle red ambient vignette */}
-          <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-red-950/20 to-transparent" />
-        </div>
-
-        {/* Inner gold/crimson border framework */}
-        <div className="absolute inset-2 border border-red-700/10 rounded-[22px] pointer-events-none" />
-        <div className="absolute inset-3 border border-dashed border-red-500/10 rounded-[20px] pointer-events-none" />
-
-        <div className="relative z-10 space-y-3 py-1">
-          {/* Majestic Calligraphy Header Container */}
-          <div className="flex flex-col items-center">
-            {/* Live rendered text using Amiri/Noto font fallback for high definition scaling */}
-            <span className="font-arabic text-5xl text-gold mt-2 leading-none drop-shadow-[0_2px_12px_rgba(197,160,89,0.3)] select-none">
-              كَرْبَلَاء
-            </span>
-          </div>
-
-          <div className="space-y-1.5">
-            <h2 className="font-display text-xl tracking-[0.3em] text-[#fdfbf7] font-semibold">KARBALA</h2>
-            <div className="h-px w-16 bg-red-500/25 mx-auto" />
-            <p className="font-serif text-base md:text-lg italic text-red-100/80 max-w-[440px] mx-auto leading-relaxed">
-              "{karbalaQuote.text}"
-            </p>
-            {karbalaQuote.source && (
-              <p className="font-sans text-[11px] md:text-xs uppercase tracking-wider text-red-300/70 mt-1.5">
-                — {karbalaQuote.source}
+            <div className="space-y-1.5">
+              <h2 className="font-display text-xl tracking-[0.3em] text-[#fdfbf7] font-semibold">KARBALA</h2>
+              <div className="h-px w-16 bg-red-500/25 mx-auto" />
+              <p className="font-serif text-base md:text-lg italic text-red-100/80 max-w-[440px] mx-auto leading-relaxed">
+                "{karbalaQuote.text}"
               </p>
-            )}
+              {karbalaQuote.source && (
+                <p className="font-sans text-[11px] md:text-xs uppercase tracking-wider text-red-300/70 mt-1.5">
+                  — {karbalaQuote.source}
+                </p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Date & Location */}
       <section className="text-center space-y-2">

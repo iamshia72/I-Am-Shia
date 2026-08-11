@@ -103,12 +103,12 @@ export function getRandomLocalWisdom() {
 
   const roll = Math.random();
 
-  if (roll < 0.25) {
-    // 25% chance of returning one of our amazing handcrafted static quotes
+  if (roll < 0.70) {
+    // 70% chance of returning one of our authentic handcrafted static quotes from Ahlulbayt (as)
     const rndIdx = Math.floor(Math.random() * staticQuotes.length);
     return staticQuotes[rndIdx];
-  } else if (roll < 0.55) {
-    // 30% chance for Template 1
+  } else if (roll < 0.85) {
+    // 15% chance for Template 1
     const adj = t1_adjectives[Math.floor(Math.random() * t1_adjectives.length)];
     const noun = t1_nouns[Math.floor(Math.random() * t1_nouns.length)];
     const virtue = t1_virtues[Math.floor(Math.random() * t1_virtues.length)];
@@ -120,8 +120,8 @@ export function getRandomLocalWisdom() {
     const source = sources[Math.floor(Math.random() * sources.length)];
 
     return { arabic, english, source };
-  } else if (roll < 0.8) {
-    // 25% chance for Template 2
+  } else {
+    // 15% chance for Template 2
     const attr = t2_attributes[Math.floor(Math.random() * t2_attributes.length)];
     const people = t2_people[Math.floor(Math.random() * t2_people.length)];
     const consequence = t2_consequences[Math.floor(Math.random() * t2_consequences.length)];
@@ -129,17 +129,6 @@ export function getRandomLocalWisdom() {
     const capitalizedAttr = attr.en.charAt(0).toUpperCase() + attr.en.slice(1);
     const english = `Be ${capitalizedAttr} to ${people.en}, ${consequence.en}.`;
     const arabic = `كُنْ ${attr.ar} مَعَ ${people.ar}، ${consequence.ar}.`;
-    const source = sources[Math.floor(Math.random() * sources.length)];
-
-    return { arabic, english, source };
-  } else {
-    // 20% chance for Template 3
-    const desire = t3_desires[Math.floor(Math.random() * t3_desires.length)];
-    const virtue = t3_virtues[Math.floor(Math.random() * t3_virtues.length)];
-    const truth = t3_truths[Math.floor(Math.random() * t3_truths.length)];
-
-    const english = `O child of Adam! If you desire ${desire.en}, seek it through ${virtue.en}, because ${truth.en}.`;
-    const arabic = `يَا ابْنَ آدَمَ! إِنْ أَرَدْتَ ${desire.ar} فَاطْلُبْهُ بِـ ${virtue.ar}، فَإِنَّ ${truth.ar}.`;
     const source = sources[Math.floor(Math.random() * sources.length)];
 
     return { arabic, english, source };

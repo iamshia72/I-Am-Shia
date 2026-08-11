@@ -1,13 +1,78 @@
 [
   {
     "arabic": "أَكْمَلُ الْمُؤْمِنِينَ إِيمَانًا أَحْسَنُهُمْ خُلُقًا",
-    "english": "The most complete of believers in faith is the one with the best character.",
-    "source": "Imam Ali (as), Nahjul Balagha"
+    "english": "The most complete of believers in faith is the one with the finest character.",
+    "source": "Imam Ali (as), Ghurar al-Hikam"
   },
   {
-    "arabic": "الْبُخْلُ عَارٌ، وَالْجُبْنُ مَنْقَصَةٌ، وَالْفَقْرُ يُخْرِسُ الْفَطِنَ عَنْ حُجَّتِهِ",
-    "english": "Greed is a permanent badge of dishonor; fear is a defect; poverty often mutes the tongue of a clever man from arguing his case.",
-    "source": "Imam Ali (as), Nahjul Balagha, Saying 3"
+    "arabic": "إِنَّمَا بُعِثْتُ لِأُتَمِّمَ مَكَارِمَ الْأَخْلَاقِ",
+    "english": "I was sent only to perfect noble character.",
+    "source": "Prophet Muhammad (saw), Bihar al-Anwar, vol. 67, p. 372"
+  },
+  {
+    "arabic": "مَنْ عَرَفَ نَفْسَهُ فَقَدْ عَرَفَ رَبَّهُ",
+    "english": "Whoever knows himself has truly known his Lord.",
+    "source": "Imam Ali (as), Ghurar al-Hikam"
+  },
+  {
+    "arabic": "مَنْ أَعْلَى إِلَى اللَّهِ خَالِصَ عِبَادَتِهِ، أَهْبَطَ اللَّهُ عَزَّ وَجَلَّ إِلَيْهِ أَفْضَلَ مَصْلَحَتِهِ",
+    "english": "Whoever offers pure and sincere worship to Allah, Allah Almighty sends down to them His finest guidance and blessings.",
+    "source": "Fatima al-Zahra (sa), Bihar al-Anwar, vol. 68, p. 184"
+  },
+  {
+    "arabic": "أَحْسَنُ الْحَسَنِ الْخُلُقُ الْحَسَنُ",
+    "english": "The finest of all good deeds is noble character.",
+    "source": "Imam al-Hassan (as), Al-Khisal, p. 29"
+  },
+  {
+    "arabic": "إِنِّي لَا أَرَى الْمَوْتَ إِلَّا سَعَادَةً، وَالْحَيَاةَ مَعَ الظَّالِمِينَ إِلَّا بَرَمًا",
+    "english": "Indeed, I see death as nothing but eternal bliss, and living under oppressors as nothing but misery.",
+    "source": "Imam al-Hussain (as), Tuhaf al-Uqul, p. 245"
+  },
+  {
+    "arabic": "مَنْ كَانَ لَهُ فِي نَفْسِهِ وَاعِظٌ، كَانَ عَلَيْهِ مِنَ اللَّهِ حَافِظٌ",
+    "english": "Whoever possesses an inner admonisher within their soul enjoys a divine guardian from Allah.",
+    "source": "Imam al-Sajjad (as), Bihar al-Anwar, vol. 78, p. 141"
+  },
+  {
+    "arabic": "لَا إِيمَانَ لِمَنْ لَا حَيَاءَ لَهُ",
+    "english": "There is no true faith for one who lacks modesty and self-respect.",
+    "source": "Imam al-Baqir (as), Bihar al-Anwar, vol. 78, p. 309"
+  },
+  {
+    "arabic": "كُونُوا دُعَاةً لِلنَّاسِ بِغَيْرِ أَلْسِنَتِكُمْ",
+    "english": "Be callers to righteousness among people through your actions, not merely your words.",
+    "source": "Imam al-Sadiq (as), Al-Kafi, vol. 2, p. 78"
+  },
+  {
+    "arabic": "لَيْسَ مِنَّا مَنْ لَمْ يُحَاسِبْ نَفْسَهُ فِي كُلِّ يَوْمٍ",
+    "english": "He is not one of us who does not take account of his soul every single day.",
+    "source": "Imam al-Kadhim (as), Al-Kafi, vol. 2, p. 453"
+  },
+  {
+    "arabic": "التَّوَدُّدُ إِلَى النَّاسِ نِصْفُ الْعَقْلِ",
+    "english": "Expressing affection and benevolence toward people is half of wisdom.",
+    "source": "Imam al-Rida (as), Tuhaf al-Uqul, p. 443"
+  },
+  {
+    "arabic": "الْمُؤْمِنُ يَحْتَاجُ إِلَى ثَلَاثِ خِصَالٍ: تَوْفِيقٍ مِنَ اللَّهِ، وَوَاعِظٍ مِنْ نَفْسِهِ، وَقَبُولٍ مِمَّنْ يَنْصَحُهُ",
+    "english": "A believer requires three traits: divine success from Allah, an inner admonisher within his soul, and acceptance of sincere advice.",
+    "source": "Imam al-Jawad (as), Tuhaf al-Uqul, p. 457"
+  },
+  {
+    "arabic": "الْحِكْمَةُ لَا تَنْجَعُ فِي الطِّبَاعِ الْفَاسِدَةِ",
+    "english": "Wisdom does not take root in corrupt dispositions.",
+    "source": "Imam al-Hadi (as), Bihar al-Anwar, vol. 75, p. 370"
+  },
+  {
+    "arabic": "مَا تَرَكَ الْحَقَّ عَزِيزٌ إِلَّا ذَلَّ، وَلَا أَخَذَ بِهِ ذَلِيلٌ إِلَّا عَزَّ",
+    "english": "No mighty person abandons the truth without becoming humiliated, and no humble person stands by the truth without gaining honor.",
+    "source": "Imam al-Askari (as), Tuhaf al-Uqul, p. 489"
+  },
+  {
+    "arabic": "أَكْثِرُوا الدُّعَاءَ بِتَعْجِيلِ الْفَرَجِ فَإِنَّ ذَلِكُ فَرَجُكُمْ",
+    "english": "Pray frequently for the hastenings of the Reappearance, for in that lies your own relief.",
+    "source": "Imam al-Mahdi (ajfs), Kamal al-Din, vol. 2, p. 485"
   },
   {
     "arabic": "الصَّبْرُ صَبْرَانِ: صَبْرٌ عَلَى مَا تَكْرَهُ، وَصَبْرٌ عَمَّا تُحِبُّ",
@@ -15,63 +80,73 @@
     "source": "Imam Ali (as), Nahjul Balagha, Saying 55"
   },
   {
-    "arabic": "أَفْضَلُ الْغِنَى تَرْكُ الْمُنَى",
-    "english": "The best wealth is the abandonment of desires.",
-    "source": "Imam Ali (as), Nahjul Balagha, Saying 34"
-  },
-  {
-    "arabic": "قِيمَةُ كُلِّ امْرِئٍ مَا يُحْسِنُهُ",
-    "english": "A man's worth is what he does well.",
-    "source": "Imam Ali (as), Nahjul Balagha, Saying 81"
-  },
-  {
-    "arabic": "أَفْضَلُ أَعْمَالِ أُمَّتِي انْتِظَارُ الْفَرَجِ",
-    "english": "The best deed of my nation is to wait for the reappearance (of Imam Mahdi).",
-    "source": "Prophet Muhammad (saw), Bihar al-Anwar, vol. 52, p. 122"
-  },
-  {
-    "arabic": "لِكُلِّ شَيْءٍ زَكَاةٌ وَزَكَاةُ الْأَبْدَانِ الصِّيَامُ",
-    "english": "Everything has a tax, and the tax of the body is fasting.",
-    "source": "Imam al-Sadiq (as), Bihar al-Anwar, vol. 93, p. 248"
-  },
-  {
-    "arabic": "لَا إِيمَانَ لِمَنْ لَا حَيَاءَ لَهُ",
-    "english": "He who has no modesty has no faith.",
-    "source": "Imam al-Baqir (as), Bihar al-Anwar, vol. 78, p. 309"
-  },
-  {
-    "arabic": "أَحَبُّ الْأَعْمَالِ إِلَى اللَّهِ الصَّلَاةُ فِي وَقْتِهَا",
-    "english": "The most beloved of deeds to Allah is the prayer at its proper time.",
-    "source": "Prophet Muhammad (saw), Bihar al-Anwar, vol. 82, p. 204"
-  },
-  {
-    "arabic": "الْعِلْمُ خَزَائِنُ وَمَفَاتِيحُهَا السُّؤَالُ",
-    "english": "Knowledge is a treasure and its keys are questions.",
-    "source": "Prophet Muhammad (saw), Bihar al-Anwar, vol. 1, p. 198"
-  },
-  {
-    "arabic": "مَنْ عَرَفَ نَفْسَهُ فَقَدْ عَرَفَ رَبَّهُ",
-    "english": "He who knows himself knows his Lord.",
-    "source": "Imam Ali (as), Nahjul Balagha"
+    "arabic": "إِنَّ لِقَتْلِ الْحُسَيْنِ حَرَارَةً فِي قُلُوبِ الْمُؤْمِنِينَ لَا تَبْرُدُ أَبَدًا",
+    "english": "Surely, regarding the martyrdom of Al-Hussain, there exists a heat in the hearts of the believers that will never cool down.",
+    "source": "Prophet Muhammad (saw), Mustadrak al-Wasa'il, vol. 10, p. 318"
   },
   {
     "arabic": "الْعِلْمُ خَيْرٌ مِنَ الْمَالِ، الْعِلْمُ يَحْرُسُكَ وَأَنْتَ تَحْرُسُ الْمَالَ",
-    "english": "Knowledge is better than wealth. Knowledge guards you, while you have to guard wealth.",
+    "english": "Knowledge is better than wealth. Knowledge guards you, while you must guard wealth.",
     "source": "Imam Ali (as), Nahjul Balagha, Saying 147"
+  },
+  {
+    "arabic": "قِيمَةُ كُلِّ امْرِئٍ مَا يُحْسِنُهُ",
+    "english": "A person's true worth lies in what they do well.",
+    "source": "Imam Ali (as), Nahjul Balagha, Saying 81"
+  },
+  {
+    "arabic": "أَحَبُّ الْأَعْمَالِ إِلَى اللَّهِ الصَّلَاةُ فِي وَقْتِهَا",
+    "english": "The most beloved of deeds to Allah is prayer at its prescribed time.",
+    "source": "Prophet Muhammad (saw), Bihar al-Anwar, vol. 82, p. 204"
+  },
+  {
+    "arabic": "الْجَارُ ثُمَّ الدَّارُ",
+    "english": "Consider the neighbor first, then one's own home.",
+    "source": "Fatima al-Zahra (sa), Bihar al-Anwar, vol. 43, p. 81"
+  },
+  {
+    "arabic": "عَلِّمِ النَّاسَ عِلْمَكَ، وَتَعَلَّمْ عِلْمَ غَيْرِكَ، فَتَكُونَ قَدْ أَتْقَنْتَ عِلْمَكَ وَعَلِمْتَ مَا لَمْ تَعْلَمْ",
+    "english": "Teach others your knowledge and learn from others; in doing so, you perfect your knowledge and gain what you lacked.",
+    "source": "Imam al-Hassan (as), Bihar al-Anwar, vol. 75, p. 111"
+  },
+  {
+    "arabic": "إِنَّ حَوَائِجَ النَّاسِ إِلَيْكُمْ مِنْ نِعَمِ اللَّهِ عَلَيْكُمْ، فَلَا تَمَلُّوا النِّعَمَ",
+    "english": "People's reliance upon you for their needs is among Allah's blessings upon you; so do not grow weary of His blessings.",
+    "source": "Imam al-Hussain (as), Bihar al-Anwar, vol. 75, p. 121"
+  },
+  {
+    "arabic": "إِنَّ الصَّبْرَ مِنَ الْإِيمَانِ كَالرَّأْسِ مِنَ الْجَسَدِ",
+    "english": "Patience in relation to faith is like the head in relation to the body.",
+    "source": "Imam al-Sadiq (as), Al-Kafi, vol. 2, p. 87"
+  },
+  {
+    "arabic": "عَوْنُكَ لِلضَّعِيفِ مِنْ أَفْضَلِ الصَّدَقَةِ",
+    "english": "Assisting the weak is among the highest forms of charity.",
+    "source": "Imam al-Rida (as), Bihar al-Anwar, vol. 75, p. 347"
+  },
+  {
+    "arabic": "الْعِلْمُ خَزَائِنُ وَمَفَاتِيحُهَا السُّؤَالُ",
+    "english": "Knowledge is a treasure house, and its keys are thoughtful questions.",
+    "source": "Prophet Muhammad (saw), Bihar al-Anwar, vol. 1, p. 198"
   },
   {
     "arabic": "إِنَّ هَذِهِ الْقُلُوبَ تَمَلُّ كَمَا تَمَلُّ الْأَبْدَانُ، فَابْتَغُوا لَهَا طَرَائِفَ الْحِكَمِ",
-    "english": "These hearts get tired just as bodies get tired; so seek for them beautiful wise sayings.",
+    "english": "These hearts tire just as bodies tire, so seek for them the wonders of wisdom.",
     "source": "Imam Ali (as), Nahjul Balagha, Saying 91"
   },
   {
-    "arabic": "مَنْ كَانَ لَهُ فِي نَفْسِهِ وَاعِظٌ، كَانَ عَلَيْهِ مِنَ اللَّهِ حَافِظٌ",
-    "english": "He who has a preacher within himself has a protector from Allah.",
-    "source": "Imam al-Sajjad (as), Bihar al-Anwar, vol. 78, p. 141"
+    "arabic": "لِكُلِّ شَيْءٍ زَكَاةٌ وَزَكَاةُ الْأَبْدَانِ الصِّيَامُ",
+    "english": "Everything has a purifying tax, and the purifying tax of the body is fasting.",
+    "source": "Imam al-Sadiq (as), Bihar al-Anwar, vol. 93, p. 248"
   },
   {
-    "arabic": "الْعُلَمَاءُ بَاقُونَ مَا بَقِيَ الدَّهْرُ",
-    "english": "Scholars remain as long as time remains.",
-    "source": "Imam Ali (as), Nahjul Balagha, Saying 147"
+    "arabic": "خَيْرُ النَّاسِ مَنْ نَفَعَ النَّاسَ",
+    "english": "The best of people is the one who brings the most benefit to humanity.",
+    "source": "Prophet Muhammad (saw), Al-Kafi, vol. 2, p. 164"
+  },
+  {
+    "arabic": "أَفْضَلُ الْغِنَى تَرْكُ الْمُنَى",
+    "english": "The highest wealth is abandoning endless false desires.",
+    "source": "Imam Ali (as), Nahjul Balagha, Saying 34"
   }
 ]
