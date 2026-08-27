@@ -74,7 +74,10 @@ export const getDailyRecommendations = (hijriDate: { day: number; month: number 
   // 3. Special Date Recommendations
   if (hijriDate.month === 1 && hijriDate.day === 10) { // Ashura
     addById(recommendations, 'ziyarat-ashura', 'ziyarat');
+    addById(recommendations, 'ziyarat-nahiya', 'ziyarat');
     addById(recommendations, 'dua-alqama', 'dua');
+  } else if (hijriDate.month === 1 || (hijriDate.month === 2 && hijriDate.day <= 20)) { // Muharram & Safar mourning period
+    addById(recommendations, 'ziyarat-nahiya', 'ziyarat');
   }
 
   if (hijriDate.month === 12 && hijriDate.day === 9) { // Day of Arafah
